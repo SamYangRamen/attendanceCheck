@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 public class BasicDTO {
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class fgMemberInfoDTO {
+    public static class FGMemberInfoDTO {
         private Integer fgMemberId;
         private Integer generation;
         private String fgMemberName;
@@ -24,7 +26,7 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class lcInfoDTO {
+    public static class LCInfoDTO {
         private Integer year;
         private String lc;
         private Integer fgMemberId1;
@@ -35,12 +37,22 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class lcMemberInfoDTO {
+    public static class LCMemberInfoDTO {
         private Integer lcMemberId;
         private String lcMemberName;
         private Integer year;
         private String lc;
         private String isPeerLeader;
         private String contact;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LCAttendanceCheckInfoDTO {
+        private Integer lcMemberId;
+        private Date date;
+        private String state;
     }
 }

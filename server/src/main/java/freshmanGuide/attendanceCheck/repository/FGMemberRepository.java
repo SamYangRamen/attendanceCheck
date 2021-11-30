@@ -1,16 +1,16 @@
 package freshmanGuide.attendanceCheck.repository;
 
-import freshmanGuide.attendanceCheck.entity.FGMemberEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import freshmanGuide.attendanceCheck.mapper.FGMemberMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-
 @Repository
-public interface FGMemberRepository extends JpaRepository<FGMemberEntity, Integer> {
+public class FGMemberRepository {
 
-    FGMemberEntity findByFgMemberId(Integer fgMemberId);
+    FGMemberMapper fgMemberMapper;
 
-    @Transactional
-    void deleteByFgMemberId(Integer fgMemberId);
+    @Autowired
+    public FGMemberRepository(FGMemberMapper fgMemberMapper) {
+        this.fgMemberMapper = fgMemberMapper;
+    }
 }
