@@ -40,14 +40,14 @@ public class BasicInsertAndDeleteTest {
     @Test
     public void insertFGMemberInfoAndDeleteTest() {
         try {
-            fgMemberMapper.save(
+            fgMemberMapper.save(new BasicDTO.FGMemberInfoDTO(
                     123,
                     13,
                     "testName",
                     null,
                     null,
                     "010-1111-1111"
-            );
+            ));
             System.out.println("FGMember data insert success.");
 
             BasicDTO.FGMemberInfoDTO fgMemberInfo = fgMemberMapper.findByFgMemberId(123);
@@ -59,6 +59,7 @@ public class BasicInsertAndDeleteTest {
 
         } catch (Exception e) {
             System.out.println("ERROR");
+            e.printStackTrace();
         }
     }
 
@@ -67,44 +68,47 @@ public class BasicInsertAndDeleteTest {
 
         try {
             System.out.println("Insert lc_list Test");
-            lcListMapper.save(
+            lcListMapper.save(new BasicDTO.LCInfoDTO(
                     2021,
                     "93",
                     null,
                     null
-            );
+            ));
             System.out.println("Insert lc_list finish");
         } catch (Exception e) {
             System.out.println("Insert lc_list Test Error");
+            e.printStackTrace();
         }
         try {
             System.out.println("Insert lc_member Test");
-            lcMemberMapper.save(
+            lcMemberMapper.save(new BasicDTO.LCMemberInfoDTO(
                     2021999999,
                     "전지현",
                     2021,
                     "93",
                     "N",
                     "010-1111-1111"
-            );
+            ));
             System.out.println("Insert lc_member finish");
 
         } catch (Exception e) {
             System.out.println("Insert lc_member Test Error");
+            e.printStackTrace();
         }
 
         try {
             System.out.println("Insert lc_member_attendance_check Test");
 
-            lcAttendanceCheckMapper.save(
+            lcAttendanceCheckMapper.save(new BasicDTO.LCAttendanceCheckInfoDTO(
                     2021999999,
                     attendanceCheckService.getTimeStamp(),
                     "출석"
-            );
+            ));
 
             System.out.println("Insert lc_member_attendance_check Finish");
         } catch (Exception e) {
             System.out.println("Insert lc_member_attendance_check Error");
+            e.printStackTrace();
         }
 
         try {
@@ -120,6 +124,7 @@ public class BasicInsertAndDeleteTest {
             System.out.println("find and print finish");
         } catch (Exception e) {
             System.out.println("find and print Test Error");
+            e.printStackTrace();
         }
 
         try {
@@ -130,12 +135,13 @@ public class BasicInsertAndDeleteTest {
             lcMemberMapper.deleteByLcMemberId(2020111111);
             System.out.println("delete lc_member finish");
 
-            lcListMapper.deleteByYearAndLc(2021, "93");
+            lcListMapper.deleteByYearAndLc(new BasicDTO.LCInfoPKDTO(2021, "93"));
             System.out.println("delete lc_list finish");
 
             System.out.println("delete Test success");
         } catch (Exception e) {
             System.out.println("delete Test Error");
+            e.printStackTrace();
         }
     }
 }

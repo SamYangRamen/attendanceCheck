@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freshmanGuide.attendanceCheck.mapper.FGMemberMapper">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FGMemberInfoDTO">
+        INSERT INTO fg_member
+        VALUES (#{fgMemberId}, #{generation}, #{fgMemberName}, #{position}, #{state}, #{contact})
+    </insert>
+
+    <select id="findByFgMemberId"
+            parameterType="Integer"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FGMemberInfoDTO"
+    >
+        SELECT *
+        FROM fg_member
+        WHERE fgMemberId=${fgMemberId}
+    </select>
+
+    <delete id="deleteByFgMemberId" parameterType="Integer">
+        DELETE FROM fg_member
+        WHERE fgMemberId=${fgMemberId}
+    </delete>
+</mapper>

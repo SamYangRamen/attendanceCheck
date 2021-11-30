@@ -34,3 +34,28 @@ JPA의 기능이 방대하고 거대한 것 같아서 본 프로젝트에서 사
 `@SpringBootApplication` Annotation이 붙은 클래스가 존재하는 패키지의 하위 패키지에 테스트 코드를 두어야 한다.
 
 
+
+#### 0x7e) was found in the public identifier.
+
+https://stackoverflow.com/questions/2834453/tilde-not-recognised-in-xml-public-identifier
+
+xml 인코딩 문제 때문에 발생한 에러로, `~` 문자를 `%7e` 로 바꾸면 해결된다.
+
+
+
+#### invalid bound statement (not found)
+
+[[Mybatis\]invalid bound statement (not found) 에러 | 두발로걷는개 (twofootdog.github.io)](https://twofootdog.github.io/Mybatis-Invalid-bound-statement(not-found)-에러/)
+
+```javascript
+mybatis.type-aliases-package=mybatis.mapper.mybatis-config.xml
+mybatis.mapper-locations=mybatis.mapper.**.*.xml
+```
+
+경로 중 `**`로 표현되는 부분 때문에 Mapper의 xml 경로를 찾지 못해서 발생하는 문제였다. 아래와 같이 `/`를 사용하여 경로를 나타내주었더니 문제가 해결되었다.
+
+```javascript
+mybatis.type-aliases-package=mybatis/mapper/mybatis-config.xml
+mybatis.mapper-locations=mybatis/mapper/**/*.xml
+```
+

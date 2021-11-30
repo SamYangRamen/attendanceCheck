@@ -37,6 +37,15 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class LCInfoPKDTO {
+        private Integer year;
+        private String lc;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LCMemberInfoDTO {
         private Integer lcMemberId;
         private String lcMemberName;

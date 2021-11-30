@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freshmanGuide.attendanceCheck.mapper.LCAttendanceCheckMapper">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LCAttendanceCheckInfoDTO">
+        INSERT INTO lc_attendance_check
+        VALUES (#{lcMemberId}, #{date}, #{state})
+    </insert>
+
+    <select id="findFirstByOrderByLcMemberIdDesc"
+            parameterType="Integer"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LCAttendanceCheckInfoDTO"
+    >
+        SELECT *
+        FROM lc_attendance_check
+        WHERE lcMemberId=${lcMemberId}
+        ORDER BY date DESC
+        LIMIT 1
+    </select>
+
+    <delete id="deleteByLcMemberId" parameterType="Integer">
+        DELETE FROM lc_attendance_check
+        WHERE lcMemberId=${lcMemberId}
+    </delete>
+</mapper>
