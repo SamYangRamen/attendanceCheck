@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMemberMapper">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO">
+        INSERT INTO lc_member_info
+        VALUES (#{lcMemberId}, #{lcMemberName}, #{year}, #{lc}, #{isPearLeader}, #{contact})
+    </insert>
+
+    <select id="findByLcMemberId"
+            parameterType="Integer"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO"
+    >
+        SELECT *
+        FROM lc_member_info
+        WHERE lcMemberId=${lcMemberId}
+    </select>
+
+    <delete id="deleteByLcMemberId" parameterType="Integer">
+        DELETE FROM lc_member_info
+        WHERE lcMemberId=${lcMemberId}
+    </delete>
+
+    <select id="findAll"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO"
+    >
+        SELECT *
+        FROM lc_member_info
+    </select>
+
+    <select id="findByYearAndLc"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcInfoPKDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO"
+    >
+        SELECT *
+        FROM lc_member_info
+        WHERE year=#{year} AND lc=#{lc}
+    </select>
+
+</mapper>

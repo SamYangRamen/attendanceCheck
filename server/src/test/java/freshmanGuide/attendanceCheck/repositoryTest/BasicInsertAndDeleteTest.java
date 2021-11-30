@@ -1,37 +1,34 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
-import freshmanGuide.attendanceCheck.mapper.FGMemberMapper;
-import freshmanGuide.attendanceCheck.mapper.LCAttendanceCheckMapper;
-import freshmanGuide.attendanceCheck.mapper.LCListMapper;
-import freshmanGuide.attendanceCheck.mapper.LCMemberMapper;
+import freshmanGuide.attendanceCheck.mapper.FgMemberMapper;
+import freshmanGuide.attendanceCheck.mapper.LcAttendanceCheckMapper;
+import freshmanGuide.attendanceCheck.mapper.LcMapper;
+import freshmanGuide.attendanceCheck.mapper.LcMemberMapper;
 import freshmanGuide.attendanceCheck.service.AttendanceCheckService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-import java.util.Optional;
-
 @SpringBootTest
 public class BasicInsertAndDeleteTest {
 
-    FGMemberMapper fgMemberMapper;
-    LCListMapper lcListMapper;
-    LCMemberMapper lcMemberMapper;
-    LCAttendanceCheckMapper lcAttendanceCheckMapper;
+    FgMemberMapper fgMemberMapper;
+    LcMapper lcMapper;
+    LcMemberMapper lcMemberMapper;
+    LcAttendanceCheckMapper lcAttendanceCheckMapper;
     AttendanceCheckService attendanceCheckService;
 
     @Autowired
     public BasicInsertAndDeleteTest(
-            FGMemberMapper fgMemberMapper,
-            LCListMapper lcListMapper,
-            LCMemberMapper lcMemberMapper,
-            LCAttendanceCheckMapper lcAttendanceCheckMapper,
+            FgMemberMapper fgMemberMapper,
+            LcMapper lcMapper,
+            LcMemberMapper lcMemberMapper,
+            LcAttendanceCheckMapper lcAttendanceCheckMapper,
             AttendanceCheckService attendanceCheckService
     ) {
         this.fgMemberMapper = fgMemberMapper;
-        this.lcListMapper = lcListMapper;
+        this.lcMapper = lcMapper;
         this.lcMemberMapper = lcMemberMapper;
         this.lcAttendanceCheckMapper = lcAttendanceCheckMapper;
         this.attendanceCheckService = attendanceCheckService;
@@ -40,7 +37,7 @@ public class BasicInsertAndDeleteTest {
     @Test
     public void insertFGMemberInfoAndDeleteTest() {
         try {
-            fgMemberMapper.save(new BasicDTO.FGMemberInfoDTO(
+            fgMemberMapper.save(new BasicDTO.FgMemberInfoDTO(
                     123,
                     13,
                     "testName",
@@ -50,7 +47,7 @@ public class BasicInsertAndDeleteTest {
             ));
             System.out.println("FGMember data insert success.");
 
-            BasicDTO.FGMemberInfoDTO fgMemberInfo = fgMemberMapper.findByFgMemberId(123);
+            BasicDTO.FgMemberInfoDTO fgMemberInfo = fgMemberMapper.findByFgMemberId(123);
             System.out.println(fgMemberInfo.getFgMemberName());
             System.out.println("FGMember name print success.");
 
@@ -68,7 +65,7 @@ public class BasicInsertAndDeleteTest {
 
         try {
             System.out.println("Insert lc_list Test");
-            lcListMapper.save(new BasicDTO.LCInfoDTO(
+            lcMapper.save(new BasicDTO.LcInfoDTO(
                     2021,
                     "93",
                     null,
@@ -81,7 +78,7 @@ public class BasicInsertAndDeleteTest {
         }
         try {
             System.out.println("Insert lc_member Test");
-            lcMemberMapper.save(new BasicDTO.LCMemberInfoDTO(
+            lcMemberMapper.save(new BasicDTO.LcMemberInfoDTO(
                     2021999999,
                     "전지현",
                     2021,
@@ -99,7 +96,7 @@ public class BasicInsertAndDeleteTest {
         try {
             System.out.println("Insert lc_member_attendance_check Test");
 
-            lcAttendanceCheckMapper.save(new BasicDTO.LCAttendanceCheckInfoDTO(
+            lcAttendanceCheckMapper.save(new BasicDTO.LcAttendanceCheckInfoDTO(
                     2021999999,
                     attendanceCheckService.getTimeStamp(),
                     "출석"
@@ -114,11 +111,11 @@ public class BasicInsertAndDeleteTest {
         try {
             System.out.println("find and print Test");
 
-            BasicDTO.LCMemberInfoDTO lcMemberInfo = lcMemberMapper.findByLcMemberId(2021999999);
+            BasicDTO.LcMemberInfoDTO lcMemberInfo = lcMemberMapper.findByLcMemberId(2021999999);
 
             System.out.printf("%s\n", lcMemberInfo.getLcMemberName());
 
-            BasicDTO.LCAttendanceCheckInfoDTO lcAttendanceCheckInfo = lcAttendanceCheckMapper.findFirstByOrderByLcMemberIdDesc(2021999999);
+            BasicDTO.LcAttendanceCheckInfoDTO lcAttendanceCheckInfo = lcAttendanceCheckMapper.findFirstByOrderByLcMemberIdDesc(2021999999);
             System.out.println(lcAttendanceCheckInfo.getDate().toString());
 
             System.out.println("find and print finish");
@@ -135,7 +132,7 @@ public class BasicInsertAndDeleteTest {
             lcMemberMapper.deleteByLcMemberId(2020111111);
             System.out.println("delete lc_member finish");
 
-            lcListMapper.deleteByYearAndLc(new BasicDTO.LCInfoPKDTO(2021, "93"));
+            lcMapper.deleteByYearAndLc(new BasicDTO.LcInfoPKDTO(2021, "93"));
             System.out.println("delete lc_list finish");
 
             System.out.println("delete Test success");

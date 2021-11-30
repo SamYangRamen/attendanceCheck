@@ -2,9 +2,9 @@
 <!DOCTYPE configuration PUBLIC "%7e//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <mappers>
-        <mapper resource="FGMemberMapper.xml" />
-        <mapper resource="LCAttendanceCheckMapper.xml" />
-        <mapper resource="LCListMapper.xml" />
-        <mapper resource="LCMemberMapper.xml" />
+        <mapper resource="FgMemberMapper.xml" />
+        <mapper resource="LcAttendanceCheckMapper.xml" />
+        <mapper resource="LcMapper.xml" />
+        <mapper resource="LcMemberMapper.xml" />
     </mappers>
 </configuration>

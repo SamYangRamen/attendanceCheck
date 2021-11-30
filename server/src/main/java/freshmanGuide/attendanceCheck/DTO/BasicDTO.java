@@ -13,7 +13,7 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class FGMemberInfoDTO {
+    public static class FgMemberInfoDTO {
         private Integer fgMemberId;
         private Integer generation;
         private String fgMemberName;
@@ -26,7 +26,7 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LCInfoDTO {
+    public static class LcInfoDTO {
         private Integer year;
         private String lc;
         private Integer fgMemberId1;
@@ -37,7 +37,7 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LCInfoPKDTO {
+    public static class LcInfoPKDTO {
         private Integer year;
         private String lc;
     }
@@ -46,7 +46,7 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LCMemberInfoDTO {
+    public static class LcMemberInfoDTO {
         private Integer lcMemberId;
         private String lcMemberName;
         private Integer year;
@@ -59,7 +59,7 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LCAttendanceCheckInfoDTO {
+    public static class LcAttendanceCheckInfoDTO {
         private Integer lcMemberId;
         private Date date;
         private String state;
