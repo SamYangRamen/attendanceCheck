@@ -9,7 +9,7 @@ import java.util.TimeZone;
 @Service
 public class AttendanceCheckServiceImpl implements AttendanceCheckService {
 
-    private static final String DATE_FORMAT = "yyyy-MM-DD HH:mm:ss.sss";
+    private static final String DATE_FORMAT = "yyyy-MM-DD";
 
     @Override
     public Date getTimeStamp() {

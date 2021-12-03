@@ -2,18 +2,36 @@
 <!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMemberMapper">
-    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO">
         INSERT INTO lc_member_info
-        VALUES (#{lcMemberId}, #{lcMemberName}, #{year}, #{lc}, #{isPearLeader}, #{contact})
+        VALUES
+        (
+            #{lcMemberId},
+            #{lcMemberName},
+            (SELECT lcIdx FROM lc_info WHERE year=#{year} AND lc=#{lc}),
+            #{isPeerLeader},
+            #{contact},
+            #{mail}
+        )
     </insert>
 
     <select id="findByLcMemberId"
             parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO"
     >
-        SELECT *
-        FROM lc_member_info
-        WHERE lcMemberId=${lcMemberId}
+        SELECT lcMemberId, lcMemberName, year, lc, isPeerLeader, contact, mail
+        FROM
+        (
+            SELECT *
+            FROM lc_member_info
+            WHERE lcMemberId=${lcMemberId}
+        ) AS S1
+        LEFT JOIN
+        (
+            SELECT *
+            FROM lc_info
+        ) AS S2
+        ON S1.lcIdx=S2.lcIdx
     </select>
 
     <delete id="deleteByLcMemberId" parameterType="Integer">
@@ -22,19 +40,29 @@
     </delete>
 
     <select id="findAll"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO"
     >
         SELECT *
         FROM lc_member_info
     </select>
 
     <select id="findByYearAndLc"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcInfoPKDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO.LcMemberInfoDTO"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO"
     >
-        SELECT *
-        FROM lc_member_info
-        WHERE year=#{year} AND lc=#{lc}
+        SELECT lcMemberId, lcMemberName, year, lc, isPearLeader, contact, mail
+        FROM
+        (
+            SELECT *
+            FROM lc_member_info
+        ) AS S1
+        LEFT JOIN
+        (
+            SELECT *
+            FROM lc_info
+            WHERE year=#{year} AND lc=#{lc}
+        ) AS S2
+        ON S1.lcIdx=S2.lcIdx
     </select>
 
 </mapper>

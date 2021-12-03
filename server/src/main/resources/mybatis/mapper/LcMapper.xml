@@ -4,22 +4,18 @@
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMapper">
     <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
         INSERT INTO lc_info
-        VALUES (#{year}, #{lc}, #{fgMemberId1}, #{fgMemberId2})
+        VALUES
+        (
+            (SELECT CASE WHEN COUNT(a.lcIdx)=0 THEN 0 ELSE COUNT(a.lcIdx) END FROM lc_info a),
+            #{year},
+            #{lc}
+        )
     </insert>
 
-    <select id="findByYearAndLc"
-            parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoPKDTO"
-    >
-        SELECT *
+    <select id="findAll" resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
+        SELECT year, LC
         FROM lc_info
-        WHERE year=#{year} AND lc=#{lc}
     </select>
-
-    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoPKDTO">
-        DELETE FROM lc_info
-        WHERE year=#{year} AND lc=#{lc}
-    </delete>
 
     <select id="findLcByYear"
             parameterType="Integer"
@@ -27,41 +23,11 @@
     >
         SELECT lc
         FROM lc_info
-        WHERE year=${year}
+        WHERE year=#{year}
     </select>
 
-    <select id="findFgMemberInfoList"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoPKDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
-    >
-        (
-            select i2.* from
-            (
-                select fgMemberId1
-                from lc_info
-                where year=#{year} and lc=#{lc}
-            ) as i1
-            left join
-            (
-                select *
-                from fg_member_info
-            ) as i2
-            on i1.fgMemberId1=i2.fgMemberId
-        )
-        union all
-        (
-            select i2.* from
-            (
-                select fgMemberId2
-                from lc_info
-                where year=#{year} and lc=#{lc}
-            ) as i1
-            left join
-            (
-                select *
-                from fg_member_info
-            ) as i2
-            on i1.fgMemberId2=i2.fgMemberId
-        );
-    </select>
+    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
+        DELETE FROM lc_info
+        WHERE year=#{year} AND lc=#{lc}
+    </delete>
 </mapper>

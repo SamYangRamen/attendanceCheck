@@ -10,12 +10,10 @@ public interface LcMapper {
 
     void save(BasicDTO.LcInfoDTO dto);
 
-    BasicDTO.LcInfoDTO findByYearAndLc(BasicDTO.LcInfoPKDTO dto);
-
-    void deleteByYearAndLc(BasicDTO.LcInfoPKDTO dto);
+    List<BasicDTO.LcInfoDTO> findAll();
 
     List<String> findLcByYear(Integer year);
 
-    List<BasicDTO.FgMemberInfoDTO> findFgMemberInfoList(BasicDTO.LcInfoPKDTO dto);
+    void deleteByYearAndLc(BasicDTO.LcInfoDTO dto);
 }
 

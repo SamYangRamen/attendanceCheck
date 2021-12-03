@@ -18,7 +18,7 @@ public class LcAttendanceCheckRepository {
     }
 
     public Date getCurrentTime() {
-        final String DATE_FORMAT = "yyyy-MM-DD HH:mm:ss.sss";
+        final String DATE_FORMAT = "yyyy-MM-DD";
 
         final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -33,24 +33,8 @@ public class LcAttendanceCheckRepository {
         }
     }
 
-    public void postLcAttendanceCheckInfoByTime(Integer lcMemberId, Date checkTime) {
-        Date currentTime = getCurrentTime();
-
-
-        if(currentTime == null) {
-            return;
-        }
-        else if(checkTime.compareTo(currentTime) >= 0) {
-            // 현재 시간이 지정된 출석체크 시간보다 더 과거일 경우
-            lcAttendanceCheckMapper.save(new BasicDTO.LcAttendanceCheckInfoDTO(lcMemberId, currentTime, "출석"));
-        }
-        else {
-            lcAttendanceCheckMapper.save(new BasicDTO.LcAttendanceCheckInfoDTO(lcMemberId, currentTime, "지각"));
-        }
-    }
-
-    public void postLcAttendanceCheckInfo(Integer lcMemberId) {
-        lcAttendanceCheckMapper.save(new BasicDTO.LcAttendanceCheckInfoDTO(lcMemberId, getCurrentTime(), "출석"));
+    public void postLcAttendanceCheckInfo(BasicDTO.LcAttendanceCheckInfoDTO dto) {
+        lcAttendanceCheckMapper.save(dto);
     }
 
     public BasicDTO.LcAttendanceCheckInfoDTO getMostRecentAttendanceCheckInfo(Integer lcMemberId) {

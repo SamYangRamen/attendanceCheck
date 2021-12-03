@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freshmanGuide.attendanceCheck.mapper.AccountMapper">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$AccountInfoDTO">
+        INSERT INTO account_info
+        VALUES
+        (
+            #{fgMemberId},
+            #{password},
+            #{isAdmin}
+        )
+    </insert>
+
+    <select id="findPassword"
+            parameterType="Integer"
+            resultType="String"
+    >
+        SELECT password
+        FROM account_info
+        WHERE fgMemberId=${fgMemberId}
+    </select>
+
+    <select id="findPasswordAndIsAdmin"
+            parameterType="Integer"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$AccountAdminInfoDTO"
+    >
+        SELECT password, isAdmin
+        FROM account_info
+        WHERE fgMemberId=${fgMemberId}
+    </select>
+
+    <update id="updateIsAdmin" parameterType="Integer">
+        UPDATE account_info
+        SET isAdmin=NOT (SELECT a.isAdmin FROM account_info a WHERE fgMemberId=${fgMemberId})
+        WHERE fgMemberId=${fgMemberId}
+    </update>
+
+    <delete id="deleteByFgMemberId" parameterType="Integer">
+        DELETE FROM account_info
+        WHERE fgMemberId=${fgMemberId}
+    </delete>
+</mapper>

@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.FgMemberMapper">
-    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO.FgMemberInfoDTO">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO">
         INSERT INTO fg_member_info
-        VALUES (#{fgMemberId}, #{generation}, #{fgMemberName}, #{position}, #{state}, #{contact})
+        VALUES (#{fgMemberId}, #{generation}, #{fgMemberName}, #{position}, #{state}, #{contact}, #{mail})
     </insert>
 
     <select id="findByFgMemberId"
             parameterType="Integer"
             resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
     >
-        SELECT *
+        SELECT fgMemberId, generation, fgMemberName, position, state, contact, mail
         FROM fg_member_info
         WHERE fgMemberId=${fgMemberId}
     </select>

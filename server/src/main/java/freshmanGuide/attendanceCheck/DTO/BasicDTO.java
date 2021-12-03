@@ -13,6 +13,25 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class AccountInfoDTO {
+        private Integer fgMemberId;
+        private String password;
+        private boolean isAdmin;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AccountAdminInfoDTO {
+        private String password;
+        private boolean isAdmin;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class FgMemberInfoDTO {
         private Integer fgMemberId;
         private Integer generation;
@@ -20,6 +39,7 @@ public class BasicDTO {
         private String position;
         private String state;
         private String contact;
+        private String mail;
     }
 
     @Getter
@@ -29,17 +49,16 @@ public class BasicDTO {
     public static class LcInfoDTO {
         private Integer year;
         private String lc;
-        private Integer fgMemberId1;
-        private Integer fgMemberId2;
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LcInfoPKDTO {
+    public static class LcManagerInfoDTO {
         private Integer year;
         private String lc;
+        private Integer fgMemberId;
     }
 
     @Getter
@@ -51,8 +70,9 @@ public class BasicDTO {
         private String lcMemberName;
         private Integer year;
         private String lc;
-        private String isPeerLeader;
+        private Boolean isPeerLeader;
         private String contact;
+        private String mail;
     }
 
     @Getter
@@ -61,7 +81,17 @@ public class BasicDTO {
     @AllArgsConstructor
     public static class LcAttendanceCheckInfoDTO {
         private Integer lcMemberId;
-        private Date date;
+        private String eventName;
+        private Date eventDate;
         private String state;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class EventInfoDTO {
+        private String eventName;
+        private Date eventDate;
     }
 }

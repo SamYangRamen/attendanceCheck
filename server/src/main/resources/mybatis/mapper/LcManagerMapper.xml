@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freshmanGuide.attendanceCheck.mapper.LcManagerMapper">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcManagerInfoDTO">
+        INSERT INTO lc_manager_info
+        VALUES
+        (
+            (SELECT lcIdx FROM lc_info WHERE year=#{year} AND lc=#{lc}),
+            #{fgMemberId}
+        )
+    </insert>
+
+    <select id="findFgMemberIdListByYearAndLc"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO"
+            resultType="Integer"
+    >
+        SELECT fgMemberId
+        FROM lc_manager_info
+        WHERE lcIdx=(SELECT lcIdx FROM lc_info WHERE year=#{year} AND lc=#{lc})
+    </select>
+
+    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
+        DELETE FROM lc_info
+        WHERE lcIdx=(SELECT lcIdx FROM lc_info WHERE year=#{year} AND lc=#{lc})
+    </delete>
+
+    <delete id="deleteByFgMemberId" parameterType="Integer">
+        DELETE FROM lc_info
+        WHERE fgMemberId=${fgMemberId}
+    </delete>
+</mapper>
