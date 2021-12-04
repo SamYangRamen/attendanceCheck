@@ -1,8 +1,14 @@
 # Freshman Guide 출석체크 시스템
 
+
+
 성균관대학교 내 신입생 교육 목적의 공인 단체 Freshman Guide에서 내부적으로 기존에 사용하던 출석체크 시스템이 뻗어버려서, 이를 대체하는 신규 시스템을 개발하고자 본 프로젝트를 시작하게 되었음
 
+
+
 ## 개발 과정
+
+
 
 ### 초기 환경설정
 
@@ -75,9 +81,15 @@
      }
      ```
 
+
+
 ## Trial And Error
 
+
+
 ### Errer Message
+
+
 
 #### Module 'react-router' has no exported member 'switch'
 
@@ -91,6 +103,8 @@ react 버전 6부터는 `<Routes>` 로 명칭이 변경되었다고 한다.
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
 ```
+
+
 
 ### Missing semicolon 문제
 
@@ -110,7 +124,11 @@ ESLint config file에 아래 문구를 추가하면 해결된다.
 "parser": "@typescript-eslint/parser"
 ```
 
+
+
 ## 학습 내용
+
+
 
 ### Link를 이용해 값을 전달하는 방법
 
@@ -134,3 +152,36 @@ const FooComponent: React.FC<RouteComponentProps> ({location}) => {
 	...
 }
 ```
+
+
+
+### 시큐어 코딩
+
+[NodeJS - crypto(단방향 암호화) (velog.io)](https://velog.io/@neity16/NodeJS-crypto단방향-암호화)
+
+[Node.js - 바람직한 비밀번호 암호화 (crypto) | zinirun](https://zinirun.github.io/2020/12/02/node-crypto-password/)
+
+```react
+// salt값 만드는 코드
+const salt = crypto.randomBytes(64).toString('base64');
+
+// 해싱된 패스워드 만드는 코드
+const hashedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, 'sha512').toString('hex');
+```
+
+
+
+### Radio Button
+
+[How to Use Radio Buttons in ReactJS | Pluralsight](https://www.pluralsight.com/guides/how-to-use-radio-buttons-in-reactjs)
+
+```react
+return (
+  <div onChange={this.onChangeValue}>
+    <input type="radio" value="Male" name="gender" /> Male
+    <input type="radio" value="Female" name="gender" /> Female
+    <input type="radio" value="Other" name="gender" /> Other
+  </div>
+);
+```
+
