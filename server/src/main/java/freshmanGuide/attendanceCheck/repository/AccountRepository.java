@@ -19,12 +19,24 @@ public class AccountRepository {
         accountMapper.save(dto);
     }
 
-    public String getPassword(Integer fgMemberId) {
-        return accountMapper.findPassword(fgMemberId);
+    public BasicDTO.AccountInfoDTO getAccountInfoByFgMemberId(Integer fgMemberId) {
+        return accountMapper.findByFgMemberId(fgMemberId);
     }
 
-    public BasicDTO.AccountAdminInfoDTO getPasswordAndIsAdmin(Integer fgMemberId) {
-        return accountMapper.findPasswordAndIsAdmin(fgMemberId);
+    public BasicDTO.AccountInfoDTO getAccountInfoByMail(String mail) {
+        return accountMapper.findByMail(mail);
+    }
+
+    public String getPassword(Integer fgMemberId) {
+        return accountMapper.findPasswordByFgMemberId(fgMemberId);
+    }
+
+    public BasicDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(Integer fgMemberId) {
+        return accountMapper.findAccountCheckInfoByFgMemberId(fgMemberId);
+    }
+
+    public BasicDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByMail(String mail) {
+        return accountMapper.findAccountCheckInfoByMail(mail);
     }
 
     public void putIsAdmin(Integer fgMemberId) {

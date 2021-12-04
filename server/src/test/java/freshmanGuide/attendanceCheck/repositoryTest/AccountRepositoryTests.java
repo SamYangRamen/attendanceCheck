@@ -3,7 +3,6 @@ package freshmanGuide.attendanceCheck.repositoryTest;
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.repository.AccountRepository;
 import freshmanGuide.attendanceCheck.repository.FgMemberRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,6 +43,8 @@ public class AccountRepositoryTests {
                         new BasicDTO.AccountInfoDTO(
                                 2013999999,
                                 "testPassword",
+                                "testSalt",
+                                false,
                                 false
                         )
                 );
@@ -54,14 +55,14 @@ public class AccountRepositoryTests {
                 try {
                     accountRepository.putIsAdmin(2013999999);
 
-                    assertEquals(accountRepository.getPasswordAndIsAdmin(2013999999).isAdmin(), true);
+                    assertEquals(accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(2013999999).getIsAdmin(), true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 try {
                     accountRepository.deleteAccountInfo(2013999999);
-                    assertEquals(accountRepository.getPasswordAndIsAdmin(2013999999), null);
+                    assertEquals(accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(2013999999), null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

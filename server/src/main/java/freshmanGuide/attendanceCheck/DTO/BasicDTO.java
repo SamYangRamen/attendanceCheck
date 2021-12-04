@@ -16,16 +16,30 @@ public class BasicDTO {
     public static class AccountInfoDTO {
         private Integer fgMemberId;
         private String password;
-        private boolean isAdmin;
+        private String salt;
+        private Boolean isAdmin;
+        private Boolean registerApproval;
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class AccountAdminInfoDTO {
+    public static class LoginInfoDTO {
+        private String account;
         private String password;
-        private boolean isAdmin;
+        private Boolean isAdmin;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AccountCheckInfoDTO {
+        private String password;
+        private String salt;
+        private Boolean isAdmin;
+        private Boolean registerApproval;
     }
 
     @Getter
@@ -93,5 +107,14 @@ public class BasicDTO {
     public static class EventInfoDTO {
         private String eventName;
         private Date eventDate;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AccountTypeDTO {
+        private String account;
+        private Boolean type;
     }
 }

@@ -1,46 +1,136 @@
-# Getting Started with Create React App
+# Freshman Guide 출석체크 시스템
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+성균관대학교 내 신입생 교육 목적의 공인 단체 Freshman Guide에서 내부적으로 기존에 사용하던 출석체크 시스템이 뻗어버려서, 이를 대체하는 신규 시스템을 개발하고자 본 프로젝트를 시작하게 되었음
 
-## Available Scripts
+## 개발 과정
 
-In the project directory, you can run:
+### 초기 환경설정
 
-### `npm start`
+1. 프로젝트 생성 및 세팅
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   ```bash
+   npx create-react-app [appname] --template=typescript
+   npm install react-router@5.2.1
+   npm install react-router-dom@5.3.0
+   npm i --save-dev @types/react-router
+   npm i --save-dev @types/react-router-dom
+   ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. ESLint 적용
 
-### `npm test`
+   ※ [Eslint & Prettier 설정 방법 (velog.io)](https://velog.io/@njh7799/Eslint-Prettier-설정-방법) 를 참고하였음
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   - Extension에서 ESLint 및 Prettier 설치
 
-### `npm run build`
+   - 명령어를 통해 각종 필요한 모듈 설치
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+     ```bash
+     npm install eslint --save-dev
+     npm install prettier --save-dev
+     npm install --save-dev eslint-plugin-prettier
+     npm install --save-dev eslint-config-prettier
+     npm install eslint-plugin-import eslint-config-airbnb-base --save-dev
+     ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   - ESLint Extension Settings -> `Editor: Code Actions On Save` 찾기 -> `Edit in settings.json` 클릭 -> 아래 문구 입력
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+     ```json
+     {
+       "editor.formatOnSave": true,
+       "eslint.format.enable": true,
+       "editor.formatOnType": true,
+       "stylelint.enable": true,
+       "editor.codeActionsOnSave": {
+         "source.fixAll.eslint": true
+       },
+       "editor.defaultFormatter": "esbenp.prettier-vscode"
+     }
+     ```
 
-### `npm run eject`
+   - .eslintrc.js 설정 (없으면 생성)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+     ```json
+     {
+       "extends": ["prettier", "prettier"],
+       "plugins": ["prettier"],
+       "rules": {
+         "prettier/prettier": ["error"]
+       },
+       "parser": "@typescript-eslint/parser"
+     }
+     ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   - .prettierrc.json 설정 (없으면 생성)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+     ```json
+     {
+       "singleQuote": true,
+       "semi": true,
+       "useTabs": false,
+       "tabWidth": 2,
+       "trailingComma": "es5",
+       "printWidth": 100,
+       "arrowParens": "avoid",
+       "endOfLine": "auto"
+     }
+     ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Trial And Error
 
-## Learn More
+### Errer Message
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Module 'react-router' has no exported member 'switch'
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[reactjs - Attempted import error: 'Switch' is not exported from 'react-router' - Stack Overflow](https://stackoverflow.com/questions/67687254/attempted-import-error-switch-is-not-exported-from-react-router)
+
+react 버전 6부터는 `<Routes>` 로 명칭이 변경되었다고 한다.
+
+따라서 `package.json` 에서 각 버전을 다운그레이드하여 아래와 같이 수정하였다. npmjs.com 공식 사이트에 표기되어 있는 안정된 버전이다.
+
+```json
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+```
+
+### Missing semicolon 문제
+
+#### Parsing error: Missing semicolon
+
+아래와 같은 Type Cast 문장에서 `as` 부분에 아래와 같은 에러 메시지가 발생하였다.
+
+```react
+const temp = data as { d1:number; d2:number };
+```
+
+[javascript - React Typescript Type Cast Issue - Parsing Error: Missing Semicolon - Stack Overflow](https://stackoverflow.com/questions/67412890/react-typescript-type-cast-issue-parsing-error-missing-semicolon)
+
+ESLint config file에 아래 문구를 추가하면 해결된다.
+
+```json
+"parser": "@typescript-eslint/parser"
+```
+
+## 학습 내용
+
+### Link를 이용해 값을 전달하는 방법
+
+```react
+<Link
+  to={{
+    pathname: '/login',
+    state: {
+      data1: false,
+      data2: 100,
+    },
+  }}
+>
+  <input type="button" name="loginButton" value="로그인" />
+</Link>
+```
+
+```react
+const FooComponent: React.FC<RouteComponentProps> ({location}) => {
+	const data = location.state as { data1: boolean, data2: number };
+	...
+}
+```

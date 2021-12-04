@@ -8,11 +8,21 @@ public interface AccountMapper {
 
     void save(BasicDTO.AccountInfoDTO dto);
 
-    String findPassword(Integer fgMemberId);
+    BasicDTO.AccountInfoDTO findByFgMemberId(Integer fgMemberId);
 
-    BasicDTO.AccountAdminInfoDTO findPasswordAndIsAdmin(Integer fgMemberId);
+    BasicDTO.AccountInfoDTO findByMail(String mail);
+
+    String findPasswordByFgMemberId(Integer fgMemberId);
+
+    String findPasswordByMail(String mail);
+
+    BasicDTO.AccountCheckInfoDTO findAccountCheckInfoByFgMemberId(Integer fgMemberId);
+
+    BasicDTO.AccountCheckInfoDTO findAccountCheckInfoByMail(String mail);
 
     void updateIsAdmin(Integer fgMemberId);
+
+    void updateRegisterApproval(Integer fgMemberId);
 
     void deleteByFgMemberId(Integer fgMemberId);
 }
