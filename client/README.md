@@ -106,7 +106,17 @@ react 버전 6부터는 `<Routes>` 로 명칭이 변경되었다고 한다.
 
 
 
+#### Experimental support for decorators is a feature that is subject to change in a future release.
+
+[[오류\] Experimental support for decorators is a feature that is subject to change in a future release. – ddarkBlog](https://blog.ddark.kr/Experimental-support-for-decorators-is-a-feature-that-is-subject-to-change-in-a-future-release/)
+
+tsconfig.json에서 `compilerOptions`의 `experimentalDecorators` 항목을 `true`로 변경해주면 해결된다.
+
+
+
 ### Missing semicolon 문제
+
+
 
 #### Parsing error: Missing semicolon
 

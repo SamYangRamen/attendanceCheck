@@ -6,7 +6,7 @@ import crypto from 'crypto';
 
 const LoginComponent: React.FC<RouteComponentProps> = ({ location, history }) => {
   const { valueStore, repositoryStore } = useStore();
-  const repo = repositoryStore.getConnectRepository();
+  const repo = repositoryStore.getAccountRepository();
 
   const [account, setAccount] = useState<string>('');
   const [password, setPassword] = useState<string>('');

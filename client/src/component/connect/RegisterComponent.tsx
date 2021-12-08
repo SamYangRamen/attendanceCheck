@@ -3,10 +3,12 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import useStore from '../../store/useStore';
 import crypto, { randomBytes } from 'crypto';
+import DropdownContainer from '../../container/DropdownContainer';
 
 const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps) => {
   const { repositoryStore } = useStore();
-  const repo = repositoryStore.getConnectRepository();
+  const accountRepo = repositoryStore.getAccountRepository();
+  const fgMemberRepo = repositoryStore.getFgMemberRepository();
 
   const [fgMemberId, setFgMemberId] = useState<number>(0);
   const [fgMemberIdMessage, setFgMemberIdMessage] = useState<string>('');
@@ -34,13 +36,13 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
     generationDropdownContents.push(<option value={i + 1}>{i + 1}</option>);
   }
 
-  const positionDropdownContents: JSX.Element[] = [
+  /*[
     <option value=""> </option>,
     <option value="회장">회장</option>,
     <option value="부회장">부회장</option>,
     <option value="팀장">팀장</option>,
     <option value="부원">부원</option>,
-  ];
+  ];*/
 
   const stateDropdownContents: JSX.Element[] = [
     <option value=""> </option>,
@@ -62,7 +64,7 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
     else if (e.target.name == 'mail') setMail(e.target.value);
   };
 
-  const onDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.name == 'generation') setGeneration(parseInt(e.target.value));
     else if (e.target.name == 'position') setPosition(e.target.value);
     else if (e.target.name == 'state') setState(e.target.value);
@@ -76,7 +78,7 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
           .pbkdf2Sync(password, salt, 9999, 64, 'sha512')
           .toString('hex');
 
-        repo
+        fgMemberRepo
           .postFgMemberInfo({
             fgMemberId,
             generation,
@@ -88,7 +90,7 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
           })
           .then(response => {
             if (response == true) {
-              repo
+              accountRepo
                 .postAccountInfo({
                   fgMemberId,
                   password: hashedPassword,
@@ -262,11 +264,14 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
       {passwordValidMessage}
       <br />
       기　　수{' '}
-      <select name="generation" value={generation} onChange={onDropdownChange}>
-        <option value=""> </option>
-        {generationDropdownContents}
-        {}
-      </select>
+      <DropdownContainer
+        name="generation"
+        value={generation}
+        contents={Array.from({ length: new Date().getFullYear() - 2005 }, (_, i) =>
+          i == 0 ? '' : i
+        )}
+        onChange={onSelectChange}
+      />
       {generationMessage}
       <br />
       이　　름{' '}
@@ -274,15 +279,21 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
       {nameMessage}
       <br />
       직　　위{' '}
-      <select name="position" value={position} onChange={onDropdownChange}>
-        {positionDropdownContents}
-      </select>
+      <DropdownContainer
+        name="position"
+        value={position}
+        contents={[' ', '회장', '부회장', '팀장', '부원']}
+        onChange={onSelectChange}
+      />
       {positionMessage}
       <br />
       상　　태{' '}
-      <select name="state" value={state} onChange={onDropdownChange}>
-        {stateDropdownContents}
-      </select>
+      <DropdownContainer
+        name="state"
+        value={state}
+        contents={[' ', '재학', '휴학', '유학', '졸업']}
+        onChange={onSelectChange}
+      />
       {stateMessage}
       <br />
       전화번호 <input type="text" name="contact" value={contact} onChange={onInputChange}></input>
