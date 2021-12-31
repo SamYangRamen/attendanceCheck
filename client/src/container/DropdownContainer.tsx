@@ -4,7 +4,7 @@ interface Props {
   name?: string;
   value: string | number;
   contents?: Array<string | number>;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const DropdownContainer: React.FC<Props> = ({
@@ -21,7 +21,7 @@ const DropdownContainer: React.FC<Props> = ({
   });
 
   return (
-    <select name={name} value={value} onChange={onChange}>
+    <select name={name} value={value} onChange={onChange || undefined}>
       {
         Array.from({ length: contents!.length }, (_, i) => (
           <option ref={optionRef} value={contents![i]}>

@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import LcMemberRegisterComponent from '../connect/LcMemberRegisterComponent';
+import FgMemberManageComponent from './FgMemberManageComponent';
 import FgMemberTableComponent from './FgMemberTableComponent';
+import LcManageComponent from './LcManageComponent';
+import LcTableComponent from './LcTableComponent';
+import { Route, Switch } from 'react-router';
 
 const AdminComponent: React.FC = () => {
-  const maxGeneration: number = new Date().getFullYear() - 2006;
-  const [generation, setGeneration] = useState<number>(0);
-
-  const yearList: JSX.Element[] = Array.from({ length: maxGeneration }, (_, i) => (
-    <div
-      onClick={e => {
-        if (e.currentTarget.textContent) setGeneration(parseInt(e.currentTarget.textContent));
-      }}
-    >
-      {i + 1}
-    </div>
-  ));
+  const [buttonFlag, setButtonFlag] = useState<string>('');
 
   /*
   useEffect(() => {
@@ -30,8 +25,16 @@ const AdminComponent: React.FC = () => {
 
   return (
     <div>
-      {yearList}
-      <FgMemberTableComponent generation={generation}></FgMemberTableComponent>
+      <Link to="/admin/fgMemberManage">
+        <input type="button" name="fgMemberManage" value="FG 멤버 관리" />
+      </Link>
+      <Link to="/admin/lcManage">
+        <input type="button" name="lcManage" value="LC 관리" />
+      </Link>
+      <Switch>
+        <Route path="/admin/fgMemberManage" component={FgMemberManageComponent} />
+        <Route path="/admin/lcManage" component={LcManageComponent} />
+      </Switch>
     </div>
   );
 };

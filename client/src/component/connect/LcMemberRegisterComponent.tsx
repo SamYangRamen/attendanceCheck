@@ -1,0 +1,170 @@
+import React, { useState, useEffect, SetStateAction } from 'react';
+import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
+import useStore from '../../store/useStore';
+import crypto, { randomBytes } from 'crypto';
+import DropdownContainer from '../../container/DropdownContainer';
+
+interface Props {
+  setOnOff: (value: React.SetStateAction<boolean>) => void;
+}
+
+const LcMemberRegisterComponent: React.FC<Props> = ({ setOnOff }: Props) => {
+  const { repositoryStore } = useStore();
+  const accountRepo = repositoryStore.getAccountRepository();
+  const fgMemberRepo = repositoryStore.getFgMemberRepository();
+
+  const [lcMemberId, setLcMemberId] = useState<number>(0);
+  const [lcMemberIdMessage, setLcMemberIdMessage] = useState<string>('');
+  const [lcMemberName, setLcMemberName] = useState<string>('');
+  const [lcMemberNameMessage, setLcMemberNameMessage] = useState<string>('');
+  const [year, setYear] = useState<number>(0);
+  const [yearMessage, setYearMessage] = useState<string>('');
+  const [lc, setLc] = useState<string>('');
+  const [lcMessage, setLcMessage] = useState<string>('');
+  const [isPeerLeader, setIsPeerLeader] = useState<boolean>(false);
+  const [contact, setContact] = useState<string>('');
+  const [contactMessage, setContactMessage] = useState<string>('');
+  const [mail, setMail] = useState<string>('');
+  const [mailMessage, setMailMessage] = useState<string>('');
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+
+  const generationDropdownContents: JSX.Element[] = [];
+
+  for (let i = 0; i < new Date().getFullYear() - 2006; i++) {
+    generationDropdownContents.push(<option value={i + 1}>{i + 1}</option>);
+  }
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name == 'lcMemberId') {
+      if (parseInt(e.target.value)) setLcMemberId(parseInt(e.target.value));
+      else if (e.target.value == '' || e.target.value == undefined) setLcMemberId(0);
+    } else if (e.target.name == 'lcMemberName') setLcMemberName(e.target.value);
+    else if (e.target.name == 'contact') setContact(e.target.value);
+    else if (e.target.name == 'mail') setMail(e.target.value);
+    else if (e.target.name == 'isPeerLeader') setIsPeerLeader(!isPeerLeader);
+  };
+
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.name == 'year') setYear(parseInt(e.target.value));
+    else if (e.target.name == 'lc') setLc(e.target.value);
+  };
+
+  const onClick = (e: any) => {};
+
+  useEffect(() => {
+    if (!lcMemberId || !lcMemberId.toString().match(/(19|20)[0-9]{2}31[0-9]{4}/g)) {
+      setLcMemberIdMessage(' 학번을 올바르게 입력해주세요.');
+    } else {
+      setLcMemberIdMessage('');
+    }
+  }, [lcMemberId]);
+
+  useEffect(() => {
+    if (lcMemberName?.length == 0) {
+      setLcMemberNameMessage(' 이름을 입력해주세요.');
+    } else {
+      setLcMemberNameMessage('');
+    }
+  }, [lcMemberName]);
+
+  useEffect(() => {
+    if (!year) {
+      setYearMessage(' 년도를 선택해주세요.');
+    } else {
+      setYearMessage('');
+    }
+  }, [year]);
+
+  useEffect(() => {
+    if (!lc) {
+      setLcMessage(' LC를 선택해주세요.');
+    } else {
+      setLcMessage('');
+    }
+  }, [lc]);
+
+  useEffect(() => {
+    if (!contact?.toString().match(/^\d{2,3}-\d{3,4}-\d{4}$/g)) {
+      setContactMessage(' 전화번호를 올바르게 입력해주세요. (예:010-1111-1111)');
+    } else {
+      setContactMessage('');
+    }
+  }, [contact]);
+
+  useEffect(() => {
+    if (
+      !(mail && mail.match(/^[0-9A-Za-z\-\.\_]*@[0-9A-Za-z\-\.\_]*[A-Za-z]{2,6}.[A-Za-z]{2,6}$/g))
+    ) {
+      setMailMessage(' 메일주소를 올바르게 입력해주세요.');
+    } else {
+      setMailMessage('');
+    }
+  }, [mail]);
+
+  useEffect(() => {
+    if (
+      lcMemberIdMessage == '' &&
+      lcMemberNameMessage == '' &&
+      yearMessage == '' &&
+      lcMessage == '' &&
+      contactMessage == '' &&
+      mailMessage == ''
+    ) {
+      setIsCorrect(true);
+    } else {
+      setIsCorrect(false);
+    }
+  }, [lcMemberIdMessage, lcMemberNameMessage, yearMessage, lcMessage, contactMessage, mailMessage]);
+
+  return (
+    <div>
+      학　　번{' '}
+      <input
+        type="text"
+        name="lcMemberId"
+        value={lcMemberId == 0 ? '' : lcMemberId}
+        onChange={onInputChange}
+      ></input>{' '}
+      {lcMemberIdMessage}
+      <br />
+      이　　름{' '}
+      <input type="text" name="lcMemberName" value={lcMemberName} onChange={onInputChange}></input>
+      {lcMemberNameMessage}
+      <br />
+      년　　도{' '}
+      <DropdownContainer
+        name="year"
+        value={year}
+        contents={Array.from({ length: new Date().getFullYear() - 1970 }, (_, i) =>
+          i == 0 ? '' : i + 1971
+        )}
+        onChange={onSelectChange}
+      />
+      {yearMessage}
+      <br />
+      Ｌ　　Ｃ{' '}
+      <DropdownContainer
+        name="lc"
+        value={lc}
+        contents={Array.from({ length: 94 }, (_, i) => (i == 0 ? '' : i))}
+        onChange={onSelectChange}
+      />
+      {lcMessage}
+      <br />
+      피어리더{' '}
+      <input type="checkbox" name="isPeerLeader" checked={isPeerLeader} onChange={onInputChange} />
+      <br />
+      전화번호 <input type="text" name="contact" value={contact} onChange={onInputChange}></input>
+      {contactMessage}
+      <br />
+      메일주소 <input type="text" name="mail" value={mail} onChange={onInputChange}></input>
+      {mailMessage}
+      <br />
+      <input type="button" name="register" value="확인" onClick={onClick}></input>
+      <input type="button" name="cancel" value="취소" onClick={() => setOnOff(false)}></input>
+    </div>
+  );
+};
+
+export default LcMemberRegisterComponent;

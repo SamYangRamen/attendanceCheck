@@ -3,16 +3,16 @@ import { ColumnInfo } from './TableContainer';
 
 interface Props {
   columnInfo: ColumnInfo;
-  cellIndex: { row: number; col: string };
-  clickedTableCellIndex: { row: number; col: string };
-  tableCellInput: string;
+  cellIndex?: { row: number; col: string };
+  clickedTableCellIndex?: { row: number; col: string };
+  tableCellInput?: string;
   value: number | string;
   eventHandler: {
-    onDivClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-    onInputClick: (e: React.MouseEvent<HTMLInputElement>) => void;
-    onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDivClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onInputClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+    onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSelectChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   };
 }
 
@@ -27,38 +27,41 @@ const TableCellContainer: React.FC<Props> = ({
   return (
     <td>
       <div>
-        {columnInfo.type == 'checkbox' ? (
+        {columnInfo.type == undefined ? (
+          value
+        ) : columnInfo.type == 'checkbox' ? (
           <input
-            id={`${cellIndex.row},${cellIndex.col}`}
+            id={`${cellIndex!.row},${cellIndex!.col}`}
             type="checkbox"
             value={value ? 1 : 0}
             name={columnInfo.name}
-            onClick={onInputClick}
+            onClick={onInputClick || undefined}
             checked={value == 1 ? true : false}
           />
-        ) : clickedTableCellIndex.row == cellIndex.row &&
-          clickedTableCellIndex.col == cellIndex.col ? (
+        ) : clickedTableCellIndex &&
+          clickedTableCellIndex.row == cellIndex!.row &&
+          clickedTableCellIndex.col == cellIndex!.col ? (
           columnInfo.tagName == 'input' && columnInfo.type == 'text' ? (
             <input
               type="text"
               value={tableCellInput}
-              onChange={onInputChange}
-              onKeyPress={onKeyPress}
+              onChange={onInputChange || undefined}
+              onKeyPress={onKeyPress || undefined}
               autoFocus
             />
           ) : columnInfo.tagName == 'select' ? (
             <DropdownContainer
               name={columnInfo.name}
-              value={tableCellInput}
+              value={tableCellInput!}
               contents={columnInfo.contents}
-              onChange={onSelectChange}
+              onChange={onSelectChange || undefined}
             />
           ) : (
             <></>
           )
         ) : (
-          <div id={`${cellIndex.row},${cellIndex.col}`} onClick={onDivClick}>
-            {value}
+          <div id={`${cellIndex!.row},${cellIndex!.col}`} onClick={onDivClick}>
+            {value == '' ? '-' : value}
           </div>
         )}
       </div>

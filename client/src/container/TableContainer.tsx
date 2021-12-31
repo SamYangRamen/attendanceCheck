@@ -1,12 +1,13 @@
 import { JsxEmit } from 'typescript';
 import { AccountInfo } from '../repository/AccountRepository';
 import { FgMemberInfo, FgMemberTableInfo } from '../repository/FgMemberRepository';
+import { LcInfo } from '../repository/LcRepository';
 import TableCellContainer from './TableCellContainer';
 
-type TableInfo = FgMemberInfo | FgMemberTableInfo | AccountInfo;
+type TableInfo = FgMemberInfo | FgMemberTableInfo | LcInfo | AccountInfo;
 
 export interface ColumnInfo {
-  tagName: string;
+  tagName?: string;
   type?: string;
   name?: string;
   value?: string;
@@ -16,14 +17,14 @@ export interface ColumnInfo {
 interface Props {
   tableData: Array<TableInfo>;
   columnInfoList: Array<ColumnInfo>;
-  clickedTableCellIndex: { row: number; col: string };
-  tableCellInput: string;
+  clickedTableCellIndex?: { row: number; col: string };
+  tableCellInput?: string;
   eventHandler: {
-    onDivClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-    onInputClick: (e: React.MouseEvent<HTMLInputElement>) => void;
-    onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDivClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onInputClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+    onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSelectChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   };
 }
 
@@ -46,7 +47,7 @@ const TableContainer: React.FC<Props> = ({
                 cellIndex={{ row: i, col: kv[0] }}
                 clickedTableCellIndex={clickedTableCellIndex}
                 tableCellInput={tableCellInput}
-                value={kv[1] as string}
+                value={kv[1] ? kv[1] : ('' as string)}
                 eventHandler={eventHandler}
               />
             </td>

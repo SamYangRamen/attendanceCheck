@@ -5,7 +5,9 @@ import useStore from '../../store/useStore';
 import crypto, { randomBytes } from 'crypto';
 import DropdownContainer from '../../container/DropdownContainer';
 
-const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps) => {
+const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
+  history,
+}: RouteComponentProps) => {
   const { repositoryStore } = useStore();
   const accountRepo = repositoryStore.getAccountRepository();
   const fgMemberRepo = repositoryStore.getFgMemberRepository();
@@ -310,4 +312,4 @@ const RegisterComponent: React.FC<RouteComponentProps> = ({ history }: RouteComp
   );
 };
 
-export default RegisterComponent;
+export default FgMemberRegisterComponent;

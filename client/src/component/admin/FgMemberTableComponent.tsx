@@ -12,18 +12,6 @@ interface Props {
   generation: number;
 }
 
-interface TableContents {
-  tableContents: Array<{
-    idx: number;
-    cellContent: CellContent;
-  }>;
-}
-
-interface CellContent {
-  name: string;
-  data: Array<string> | undefined;
-}
-
 const FgMemberTableComponent: React.FC<Props> = props => {
   const { repositoryStore, valueStore } = useStore();
   const fgMemberRepo = repositoryStore.getFgMemberRepository();
