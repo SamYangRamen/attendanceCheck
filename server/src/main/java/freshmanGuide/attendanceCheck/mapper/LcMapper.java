@@ -8,12 +8,14 @@ import java.util.List;
 @Mapper
 public interface LcMapper {
 
-    void save(BasicDTO.LcInfoDTO dto);
+    void save(BasicDTO.LcDTO dto);
 
     List<BasicDTO.LcInfoDTO> findAll();
 
     List<String> findLcByYear(Integer year);
 
-    void deleteByYearAndLc(BasicDTO.LcInfoDTO dto);
+    void deleteByYearAndLc(BasicDTO.LcDTO dto);
+
+    List<BasicDTO.LcInfoDTO> findAllByYear(Integer year);
 }
 

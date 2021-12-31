@@ -22,14 +22,14 @@ public class LcRepositoryTests {
     @Test
     public void test() {
         try {
-            lcRepository.postLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+            lcRepository.postLc(new BasicDTO.LcDTO(2099, "999"));
             List<String> data = lcRepository.getLcListByYear(2099);
             Assertions.assertEquals(data.get(0), "999");
-            lcRepository.deleteLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+            lcRepository.deleteLcInfo(new BasicDTO.LcDTO(2099, "999"));
             Assertions.assertEquals(lcRepository.getLcListByYear(2099).isEmpty(), true);
         } catch (Exception e) {
             e.printStackTrace();
-            lcRepository.deleteLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+            lcRepository.deleteLcInfo(new BasicDTO.LcDTO(2099, "999"));
         }
     }
 }

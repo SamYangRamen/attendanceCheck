@@ -34,6 +34,6 @@ public class LcMemberRepository {
     }
 
     public List<BasicDTO.LcMemberInfoDTO> getLcMemberInfoListByYearAndLc(Integer year, String lc) {
-        return lcMemberMapper.findByYearAndLc(new BasicDTO.LcInfoDTO(year, lc));
+        return lcMemberMapper.findByYearAndLc(new BasicDTO.LcDTO(year, lc));
     }
 }

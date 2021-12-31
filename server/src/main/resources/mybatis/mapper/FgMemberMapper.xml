@@ -16,6 +16,14 @@
         WHERE fgMemberId=${fgMemberId}
     </select>
 
+    <update id="updateByFgMemberId"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$PutFgMemberInfoDTO"
+    >
+        UPDATE fg_member_info
+        SET ${columnName}=#{value}
+        WHERE fgMemberId=#{fgMemberId}
+    </update>
+
     <delete id="deleteByFgMemberId" parameterType="Integer">
         DELETE FROM fg_member_info
         WHERE fgMemberId=${fgMemberId}
@@ -28,6 +36,25 @@
         SELECT *
         FROM fg_member_info
         WHERE generation=${generation}
+    </select>
+
+    <select id="findFgMemberInfoTableByGeneration"
+            parameterType="Integer"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberTableInfoDTO"
+    >
+        SELECT S1.fgMemberId, generation, fgMemberName, position, state, contact, mail, isAdmin, registerApproval
+        FROM
+        (
+            SELECT *
+            FROM fg_member_info
+            WHERE generation=${generation}
+        ) AS S1
+        LEFT JOIN
+        (
+            SELECT *
+            FROM account_info
+        ) AS S2
+        ON S1.fgMemberId=S2.fgMemberId
     </select>
 
     <select id="findAll"

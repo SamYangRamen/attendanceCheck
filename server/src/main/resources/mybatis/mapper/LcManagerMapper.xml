@@ -29,4 +29,15 @@
         DELETE FROM lc_info
         WHERE fgMemberId=${fgMemberId}
     </delete>
+
+    <select id="" parameterType="Integer">
+        SELECT year, lc, f1.fgMemberName, f2.fgMemberName
+        FROM
+        (
+            SELECT *
+            FROM lc_info
+            WHERE year=${year}
+        ) AS l1
+        LEFT JOIN
+    </select>
 </mapper>

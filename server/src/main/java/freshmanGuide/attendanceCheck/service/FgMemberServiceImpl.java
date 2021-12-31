@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class FgMemberServiceImpl implements FgMemberService {
@@ -33,5 +35,29 @@ public class FgMemberServiceImpl implements FgMemberService {
         BasicDTO.FgMemberInfoDTO insertedData = fgMemberRepository.getFgMemberInfo(dto.getFgMemberId());
 
         return insertedData == dto ? true : false;
+    }
+
+    @Override
+    public Boolean putFgMemberInfoService(BasicDTO.PutFgMemberInfoDTO dto) {
+        return fgMemberRepository.putFgMemberInfo(dto);
+    }
+
+    @Override
+    public List<BasicDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation) {
+        try {
+            return fgMemberRepository.getFgMemberInfoListByGeneration(generation);
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation) {
+        try {
+            return fgMemberRepository.getFgMemberTableInfoListByGeneration(generation);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

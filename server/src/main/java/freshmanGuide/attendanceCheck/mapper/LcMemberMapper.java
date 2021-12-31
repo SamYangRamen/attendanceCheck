@@ -16,5 +16,5 @@ public interface LcMemberMapper {
 
     List<BasicDTO.LcMemberInfoDTO> findAll();
 
-    List<BasicDTO.LcMemberInfoDTO> findByYearAndLc(BasicDTO.LcInfoDTO dto);
+    List<BasicDTO.LcMemberInfoDTO> findByYearAndLc(BasicDTO.LcDTO dto);
 }

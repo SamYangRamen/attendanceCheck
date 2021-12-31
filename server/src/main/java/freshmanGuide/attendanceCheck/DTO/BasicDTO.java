@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 public class BasicDTO {
 
@@ -60,9 +61,57 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class FgMemberTableInfoDTO {
+        private Integer fgMemberId;
+        private Integer generation;
+        private String fgMemberName;
+        private String position;
+        private String state;
+        private String contact;
+        private String mail;
+        private Boolean isAdmin;
+        private Boolean registerApproval;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PutFgMemberInfoDTO {
+        private Integer fgMemberId;
+        private String columnName;
+        private String value;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LcInfoDTO {
         private Integer year;
         private String lc;
+        private Integer fgMemberId1;
+        private Integer fgMemberId2;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LcDTO {
+        private Integer year;
+        private String lc;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PostLcRangeDTO {
+        private Integer year;
+        private String lcDepartment;
+        private Integer startLcNumber;
+        private Integer endLcNumber;
     }
 
     @Getter

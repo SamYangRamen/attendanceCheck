@@ -59,3 +59,13 @@ mybatis.type-aliases-package=mybatis/mapper/mybatis-config.xml
 mybatis.mapper-locations=mybatis/mapper/**/*.xml
 ```
 
+
+
+### 같은 String끼리 == 연산자로 비교했는데 False가 뜨는 문제
+
+JAVA에서는 두 String을 ==로 비교할 때, 절댓값이 아니라 각 객체의 참조 주소가 같은지를 보는 것이기 때문에 `equals()` 메서드를 통해 String을 비교해야 한다.
+
+```java
+str1.equals(str2) // 같으면 true 반환
+```
+

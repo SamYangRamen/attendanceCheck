@@ -14,7 +14,11 @@ public interface FgMemberMapper {
 
     void deleteByFgMemberId(Integer fgMemberId);
 
+    void updateByFgMemberId(BasicDTO.PutFgMemberInfoDTO dto);
+
     List<BasicDTO.FgMemberInfoDTO> findAll();
 
     List<BasicDTO.FgMemberInfoDTO> findByGeneration(Integer Generation);
+
+    List<BasicDTO.FgMemberTableInfoDTO> findFgMemberInfoTableByGeneration(Integer generation);
 }

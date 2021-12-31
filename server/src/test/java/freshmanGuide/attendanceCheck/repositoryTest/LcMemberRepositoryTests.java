@@ -26,7 +26,7 @@ public class LcMemberRepositoryTests {
     @Test
     public void test() {
         try {
-            lcRepository.postLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+            lcRepository.postLc(new BasicDTO.LcInfoDTO(2099, "999"));
             lcMemberRepository.postLcMemberInfo(new BasicDTO.LcMemberInfoDTO(
                     2020999999,
                     "전지현",

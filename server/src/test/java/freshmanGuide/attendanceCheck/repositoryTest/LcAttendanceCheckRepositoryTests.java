@@ -39,7 +39,7 @@ public class LcAttendanceCheckRepositoryTests {
             Date timeStamp = transFormat.parse(testDateString);
 
             try {
-                lcRepository.postLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+                lcRepository.postLc(new BasicDTO.LcDTO(2099, "999"));
 
                 lcMemberRepository.postLcMemberInfo(new BasicDTO.LcMemberInfoDTO(
                         2020999999,
@@ -65,7 +65,7 @@ public class LcAttendanceCheckRepositoryTests {
                 Assertions.assertEquals(data.getEventName(), "testEventName");
                 Assertions.assertEquals(data.getLcMemberId(), 2020999999);
 
-                lcRepository.deleteLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+                lcRepository.deleteLcInfo(new BasicDTO.LcDTO(2099, "999"));
                 eventRepository.deleteEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
 
                 Assertions.assertEquals(lcRepository.getLcListByYear(2099).isEmpty(), true);
@@ -74,7 +74,7 @@ public class LcAttendanceCheckRepositoryTests {
                 Assertions.assertEquals(lcAttendanceCheckRepository.getMostRecentAttendanceCheckInfo(2020999999), null);
             } catch (Exception e) {
                 e.printStackTrace();
-                lcRepository.deleteLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+                lcRepository.deleteLcInfo(new BasicDTO.LcDTO(2099, "999"));
                 lcMemberRepository.deleteLcMemberInfo(2020999999);
                 eventRepository.deleteEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
                 lcAttendanceCheckRepository.deleteAttendanceCheckInfo(2020999999);

@@ -2,18 +2,20 @@
 <!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMapper">
-    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcDTO">
         INSERT INTO lc_info
         VALUES
         (
             (SELECT CASE WHEN COUNT(a.lcIdx)=0 THEN 0 ELSE COUNT(a.lcIdx) END FROM lc_info a),
             #{year},
-            #{lc}
+            #{lc},
+            null,
+            null
         )
     </insert>
 
     <select id="findAll" resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
-        SELECT year, LC
+        SELECT year, LC, fgMemberId1, fgMemberId2
         FROM lc_info
     </select>
 
@@ -23,10 +25,20 @@
     >
         SELECT lc
         FROM lc_info
-        WHERE year=#{year}
+        WHERE year=${year}
     </select>
 
-    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
+    <select id="findAllByYear"
+            parameterType="Integer"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO"
+    >
+        SELECT year, lc, fgMemberId1, fgMemberId2
+        FROM lc_info
+        WHERE year=${year}
+        ORDER BY year, lc
+    </select>
+
+    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcDTO">
         DELETE FROM lc_info
         WHERE year=#{year} AND lc=#{lc}
     </delete>

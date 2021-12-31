@@ -98,13 +98,13 @@
         ON S1.fgMemberId=S2.fgMemberId
     </select>
 
-    <update id="updateIsAdmin" parameterType="Boolean">
+    <update id="updateIsAdmin" parameterType="Integer">
         UPDATE account_info
         SET isAdmin=NOT (SELECT a.isAdmin FROM account_info a WHERE fgMemberId=${fgMemberId})
         WHERE fgMemberId=${fgMemberId}
     </update>
 
-    <update id="updateRegisterApproval" parameterType="Boolean">
+    <update id="updateRegisterApproval" parameterType="Integer">
         UPDATE account_info
         SET registerApproval=NOT (SELECT a.registerApproval FROM account_info a WHERE fgMemberId=${fgMemberId})
         WHERE fgMemberId=${fgMemberId}
