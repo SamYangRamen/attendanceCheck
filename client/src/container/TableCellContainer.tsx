@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import useStore from '../store/useStore';
+import ValueStore from '../store/ValueStore';
 import DropdownContainer from './DropdownContainer';
 import { ColumnInfo } from './TableContainer';
 
@@ -13,6 +16,7 @@ interface Props {
     onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSelectChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   };
 }
 
@@ -22,50 +26,63 @@ const TableCellContainer: React.FC<Props> = ({
   clickedTableCellIndex,
   tableCellInput,
   value,
-  eventHandler: { onDivClick, onInputClick, onInputChange, onSelectChange, onKeyPress },
+  eventHandler: { onDivClick, onInputClick, onInputChange, onSelectChange, onKeyPress, onBlur },
 }: Props): JSX.Element => {
-  return (
-    <td>
-      <div>
-        {columnInfo.type == undefined ? (
-          value
-        ) : columnInfo.type == 'checkbox' ? (
-          <input
-            id={`${cellIndex!.row},${cellIndex!.col}`}
-            type="checkbox"
-            value={value ? 1 : 0}
-            name={columnInfo.name}
-            onClick={onInputClick || undefined}
-            checked={value == 1 ? true : false}
-          />
-        ) : clickedTableCellIndex &&
-          clickedTableCellIndex.row == cellIndex!.row &&
-          clickedTableCellIndex.col == cellIndex!.col ? (
-          columnInfo.tagName == 'input' && columnInfo.type == 'text' ? (
-            <input
-              type="text"
-              value={tableCellInput}
-              onChange={onInputChange || undefined}
-              onKeyPress={onKeyPress || undefined}
-              autoFocus
-            />
-          ) : columnInfo.tagName == 'select' ? (
-            <DropdownContainer
-              name={columnInfo.name}
-              value={tableCellInput!}
-              contents={columnInfo.contents}
-              onChange={onSelectChange || undefined}
-            />
-          ) : (
-            <></>
-          )
-        ) : (
-          <div id={`${cellIndex!.row},${cellIndex!.col}`} onClick={onDivClick}>
-            {value == '' ? '-' : value}
-          </div>
-        )}
+  const { valueStore } = useStore();
+
+  if (columnInfo.tagName == 'select') {
+    return (
+      <div id={`${cellIndex!.row},${cellIndex!.col}`} onClick={onDivClick}>
+        <DropdownContainer
+          name={columnInfo.name}
+          value={value}
+          contents={columnInfo.contents}
+          onChange={onSelectChange || undefined}
+        />
       </div>
-    </td>
+    );
+  }
+  return (
+    <div>
+      {columnInfo.type == undefined ? (
+        value
+      ) : columnInfo.type == 'checkbox' ? (
+        <input
+          id={`${cellIndex!.row},${cellIndex!.col}`}
+          type="checkbox"
+          value={value ? 1 : 0}
+          name={columnInfo.name}
+          onClick={onInputClick || undefined}
+          checked={value == 1 ? true : false}
+        />
+      ) : clickedTableCellIndex &&
+        clickedTableCellIndex.row == cellIndex!.row &&
+        clickedTableCellIndex.col == cellIndex!.col ? (
+        columnInfo.tagName == 'input' && columnInfo.type == 'text' ? (
+          <input
+            type="text"
+            value={tableCellInput}
+            onChange={onInputChange || undefined}
+            onKeyPress={onKeyPress || undefined}
+            autoFocus
+            onBlur={onBlur || undefined}
+          />
+        ) : columnInfo.tagName == 'select' && columnInfo.type == 'dropdown' ? (
+          <DropdownContainer
+            name={columnInfo.name}
+            value={tableCellInput!}
+            contents={columnInfo.contents}
+            onChange={onSelectChange || undefined}
+          />
+        ) : (
+          <></>
+        )
+      ) : (
+        <div id={`${cellIndex!.row},${cellIndex!.col}`} onClick={onDivClick}>
+          {value == '' ? '-' : value}
+        </div>
+      )}
+    </div>
   );
 };
 

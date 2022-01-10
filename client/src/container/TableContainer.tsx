@@ -1,3 +1,4 @@
+import React from 'react';
 import { JsxEmit } from 'typescript';
 import { AccountInfo } from '../repository/AccountRepository';
 import { FgMemberInfo, FgMemberTableInfo } from '../repository/FgMemberRepository';
@@ -25,6 +26,7 @@ interface Props {
     onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSelectChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   };
 }
 
