@@ -43,11 +43,12 @@ const TableCellContainer: React.FC<Props> = ({
     );
   }
   return (
-    <div>
+    <div className="tableCellContents">
       {columnInfo.type == undefined ? (
         value
       ) : columnInfo.type == 'checkbox' ? (
         <input
+          className="tableCellContents"
           id={`${cellIndex!.row},${cellIndex!.col}`}
           type="checkbox"
           value={value ? 1 : 0}
@@ -60,6 +61,7 @@ const TableCellContainer: React.FC<Props> = ({
         clickedTableCellIndex.col == cellIndex!.col ? (
         columnInfo.tagName == 'input' && columnInfo.type == 'text' ? (
           <input
+            className="tableCellContents"
             type="text"
             value={tableCellInput}
             onChange={onInputChange || undefined}
@@ -78,7 +80,11 @@ const TableCellContainer: React.FC<Props> = ({
           <></>
         )
       ) : (
-        <div id={`${cellIndex!.row},${cellIndex!.col}`} onClick={onDivClick}>
+        <div
+          className="tableCellContents"
+          id={`${cellIndex!.row},${cellIndex!.col}`}
+          onClick={onDivClick}
+        >
           {value == '' ? '-' : value}
         </div>
       )}

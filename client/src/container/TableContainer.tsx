@@ -43,7 +43,7 @@ const TableContainer: React.FC<Props> = ({
       {Array.from({ length: tableData.length }, (_, i) => (
         <tbody>
           {Object.entries(tableData[i]).map((kv, j) => (
-            <td>
+            <td className={columnInfoList[j].name}>
               <TableCellContainer
                 columnInfo={columnInfoList[j]}
                 cellIndex={{ row: i, col: kv[0] }}

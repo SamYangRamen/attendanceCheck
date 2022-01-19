@@ -75,10 +75,10 @@ const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
       <table>
         <thead>
           <tr>
-            <td>년도</td>
-            <td>LC</td>
-            <td>담당자1</td>
-            <td>담당자2</td>
+            <th>년도</th>
+            <th>LC</th>
+            <th>담당자1</th>
+            <th>담당자2</th>
           </tr>
         </thead>
         <TableContainer

@@ -5,13 +5,16 @@ import useStore from '../../store/useStore';
 import crypto, { randomBytes } from 'crypto';
 import DropdownContainer from '../../container/DropdownContainer';
 
-const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
-  history,
-}: RouteComponentProps) => {
+interface Props {
+  buttonName: string;
+}
+
+const FgMemberRegisterComponent: React.FC<Props> = ({ buttonName }: Props) => {
   const { repositoryStore } = useStore();
   const accountRepo = repositoryStore.getAccountRepository();
   const fgMemberRepo = repositoryStore.getFgMemberRepository();
 
+  const [onOffSwitch, setOnOffSwitch] = useState<boolean>(false);
   const [fgMemberId, setFgMemberId] = useState<number>(0);
   const [fgMemberIdMessage, setFgMemberIdMessage] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -54,6 +57,10 @@ const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
     <option value="졸업">졸업</option>,
   ];
 
+  const onOff = (e: React.MouseEvent<HTMLInputElement>) => {
+    setOnOffSwitch(!onOffSwitch);
+  };
+
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name == 'fgMemberId') {
       if (parseInt(e.target.value)) setFgMemberId(parseInt(e.target.value));
@@ -71,6 +78,8 @@ const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
     else if (e.target.name == 'position') setPosition(e.target.value);
     else if (e.target.name == 'state') setState(e.target.value);
   };
+
+  const onModalClick = () => {};
 
   const onClick = (e: any) => {
     if (e.target.name == 'register') {
@@ -105,23 +114,24 @@ const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
                     alert(
                       '회원가입 신청이 완료되었습니다.\n관리자의 승인이 이루어지면 메일을 통해 알려드리겠습니다.'
                     );
-                    history.push('/');
+                    setOnOffSwitch(!onOffSwitch);
                   }
                 })
                 .catch(e => {
                   alert(e);
                 });
             } else {
-              alert('이미 가입되어 있는 학번입니다.');
+              alert('이미 가입되어 있는 학번 또는 이메일입니다.');
             }
           })
           .catch(e => {
             alert(e);
           });
       } else alert('가입정보를 모두 입력해주세요.');
-    } else if (e.target.name == 'cancel') history.goBack();
+    } else if (e.target.name == 'cancel') setOnOffSwitch(!onOffSwitch);
   };
 
+  /*
   useEffect(() => {
     // 테스트용 useEffect이므로 완성 시 삭제 요망
 
@@ -137,6 +147,23 @@ const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
     setPasswordValid('777777');
     setIsCorrect(true);
   }, []);
+*/
+
+  useEffect(() => {
+    // 테스트용 useEffect이므로 완성 시 삭제 요망
+
+    setFgMemberId(0);
+    setGeneration(0);
+    setFgMemberName('');
+    setPosition('');
+    setState('');
+    setContact('');
+    setMail('');
+
+    setPassword('');
+    setPasswordValid('');
+    setIsCorrect(false);
+  }, [onOffSwitch]);
 
   useEffect(() => {
     if (!fgMemberId || !fgMemberId.toString().match(/(19|20)[0-9]{2}31[0-9]{4}/g)) {
@@ -242,72 +269,95 @@ const FgMemberRegisterComponent: React.FC<RouteComponentProps> = ({
 
   return (
     <div>
-      학　　번{' '}
-      <input
-        type="text"
-        name="fgMemberId"
-        value={fgMemberId == 0 ? '' : fgMemberId}
-        onChange={onInputChange}
-      ></input>{' '}
-      {fgMemberIdMessage}
-      <br />
-      비　　번{' '}
-      <input type="password" name="password" value={password} onChange={onInputChange}></input>
-      {passwordMessage}
-      <br />
-      비번확인{' '}
-      <input
-        type="password"
-        name="passwordValid"
-        value={passwordValid}
-        onChange={onInputChange}
-        disabled={passwordMessage ? true : false}
-      ></input>{' '}
-      {passwordValidMessage}
-      <br />
-      기　　수{' '}
-      <DropdownContainer
-        name="generation"
-        value={generation}
-        contents={Array.from({ length: new Date().getFullYear() - 2005 }, (_, i) =>
-          i == 0 ? '' : i
-        )}
-        onChange={onSelectChange}
-      />
-      {generationMessage}
-      <br />
-      이　　름{' '}
-      <input type="text" name="fgMemberName" value={fgMemberName} onChange={onInputChange}></input>
-      {nameMessage}
-      <br />
-      직　　위{' '}
-      <DropdownContainer
-        name="position"
-        value={position}
-        contents={[' ', '회장', '부회장', '팀장', '부원']}
-        onChange={onSelectChange}
-      />
-      {positionMessage}
-      <br />
-      상　　태{' '}
-      <DropdownContainer
-        name="state"
-        value={state}
-        contents={[' ', '재학', '휴학', '유학', '졸업']}
-        onChange={onSelectChange}
-      />
-      {stateMessage}
-      <br />
-      전화번호 <input type="text" name="contact" value={contact} onChange={onInputChange}></input>
-      {contactMessage}
-      <br />
-      메일주소 <input type="text" name="mail" value={mail} onChange={onInputChange}></input>
-      {mailMessage}
-      <br />
-      <input type="button" name="register" value="확인" onClick={onClick}></input>
-      <Link to="/">
-        <input type="button" name="cancel" value="취소" onClick={onClick}></input>
-      </Link>
+      <input type="button" value={buttonName} onClick={onOff}></input>
+      {!onOffSwitch ? (
+        <></>
+      ) : (
+        <>
+          <div className="modal" onClick={onOff}></div>
+          <div className="modal_body">
+            <div>
+              학　　번{' '}
+              <input
+                type="text"
+                name="fgMemberId"
+                value={fgMemberId == 0 ? '' : fgMemberId}
+                onChange={onInputChange}
+              ></input>{' '}
+              {fgMemberIdMessage}
+              <br />
+              비　　번{' '}
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={onInputChange}
+              ></input>
+              {passwordMessage}
+              <br />
+              비번확인{' '}
+              <input
+                type="password"
+                name="passwordValid"
+                value={passwordValid}
+                onChange={onInputChange}
+                disabled={passwordMessage ? true : false}
+              ></input>{' '}
+              {passwordValidMessage}
+              <br />
+              기　　수{' '}
+              <DropdownContainer
+                name="generation"
+                value={generation}
+                contents={Array.from({ length: new Date().getFullYear() - 2005 }, (_, i) =>
+                  i == 0 ? '' : i
+                )}
+                onChange={onSelectChange}
+              />
+              {generationMessage}
+              <br />
+              이　　름{' '}
+              <input
+                type="text"
+                name="fgMemberName"
+                value={fgMemberName}
+                onChange={onInputChange}
+              ></input>
+              {nameMessage}
+              <br />
+              직　　위{' '}
+              <DropdownContainer
+                name="position"
+                value={position}
+                contents={[' ', '회장', '부회장', '팀장', '부원']}
+                onChange={onSelectChange}
+              />
+              {positionMessage}
+              <br />
+              상　　태{' '}
+              <DropdownContainer
+                name="state"
+                value={state}
+                contents={[' ', '재학', '휴학', '유학', '졸업']}
+                onChange={onSelectChange}
+              />
+              {stateMessage}
+              <br />
+              전화번호{' '}
+              <input type="text" name="contact" value={contact} onChange={onInputChange}></input>
+              {contactMessage}
+              <br />
+              메일주소 <input type="text" name="mail" value={mail} onChange={onInputChange}></input>
+              {mailMessage}
+              <br />
+              <input type="button" name="register" value="확인" onClick={onClick}></input>
+              <Link to="/">
+                <input type="button" name="cancel" value="취소" onClick={onClick}></input>
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

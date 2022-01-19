@@ -1,0 +1,53 @@
+.ribbon {
+  height: 100px;
+  max-height: 100px;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: black;
+  opacity: 0.5;
+  transition: opacity 500ms;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal_body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 400px;
+  margin: -300px 0 0 -300px;
+
+  background-color: rgb(222, 236, 222);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.table {
+  display: flex;
+  justify-content: center;
+}
+
+.tableContents {
+  display: block;
+}
+
+.tableColumns {
+  display: block;
+}
+
+.tableUtils {
+  display: inline-flex;
+}

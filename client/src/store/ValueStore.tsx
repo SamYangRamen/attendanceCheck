@@ -4,7 +4,7 @@ import { observable, makeObservable } from 'mobx';
 
 export default class ValueStore {
   private connectedFgMemberId: number | null = null;
-  private isAdmin: boolean | null = null;
+  @observable private isAdmin: boolean | null = null;
   @observable private fgMemberInfoList: Array<FgMemberInfo> | null = null;
 
   public constructor() {

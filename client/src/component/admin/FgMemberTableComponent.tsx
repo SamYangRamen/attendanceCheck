@@ -10,9 +10,10 @@ import useStore from '../../store/useStore';
 
 interface Props {
   generation: number;
+  children: JSX.Element;
 }
 
-const FgMemberTableComponent: React.FC<Props> = props => {
+const FgMemberTableComponent: React.FC<Props> = ({ generation, children }: Props) => {
   const { repositoryStore, valueStore } = useStore();
   const fgMemberRepo = repositoryStore.getFgMemberRepository();
   const [fgMemberTableInfo, setFgMemberTableInfo] = useState<Array<FgMemberTableInfo>>([]);
@@ -55,7 +56,7 @@ const FgMemberTableComponent: React.FC<Props> = props => {
   };
 
   const onDivClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setTableCellInput(e.currentTarget.innerHTML);
+    setTableCellInput(e.currentTarget.innerHTML == '-' ? '' : e.currentTarget.innerHTML);
 
     const [row, col] = e.currentTarget.id.split(',');
     setClickedTableCellIdx({ row: parseInt(row), col: col });
@@ -83,15 +84,20 @@ const FgMemberTableComponent: React.FC<Props> = props => {
     }
   };
 
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setTableCellInput('');
+    setClickedTableCellIdx({ row: -1, col: '' });
+  };
+
   const makeTwoDimArray = (data: Array<any>): Array<Array<any>> => {
     return Array.from({ length: data.length }, (_, i) => Object.values(data[i]));
   };
 
   useEffect(() => {
-    fgMemberRepo.getFgMemberTableInfoListByGeneration(props.generation).then(response => {
+    fgMemberRepo.getFgMemberTableInfoListByGeneration(generation).then(response => {
       setFgMemberTableInfo(response);
     });
-  }, [props.generation]);
+  }, [generation]);
 
   /*
   useEffect(() => {
@@ -217,7 +223,7 @@ const FgMemberTableComponent: React.FC<Props> = props => {
           );
         }
         
-  }, [props.generation, fgMemberInfo, clickedTableCellIndex, tableCellInput]);
+  }, [generation, fgMemberInfo, clickedTableCellIndex, tableCellInput]);
   */
 
   let columnInfoList: Array<ColumnInfo> = [
@@ -228,6 +234,7 @@ const FgMemberTableComponent: React.FC<Props> = props => {
     },
     {
       tagName: 'select',
+      type: 'dropdown',
       name: 'generation',
       contents: Array.from({ length: new Date().getFullYear() - 2005 }, (_, i) =>
         i == 0 ? '' : i
@@ -240,11 +247,13 @@ const FgMemberTableComponent: React.FC<Props> = props => {
     },
     {
       tagName: 'select',
+      type: 'dropdown',
       name: 'position',
       contents: [' ', '회장', '부회장', '팀장', '부원'],
     },
     {
       tagName: 'select',
+      type: 'dropdown',
       name: 'state',
       contents: [' ', '재학', '휴학', '유학', '졸업'],
     },
@@ -271,30 +280,38 @@ const FgMemberTableComponent: React.FC<Props> = props => {
   ];
   return (
     <div>
-      {props.generation}
-      <table>
-        <thead>
-          <tr>
-            <td>학번</td>
-            <td>기수</td>
-            <td>이름</td>
-            <td>직위</td>
-            <td>상태</td>
-            <td>전화번호</td>
-            <td>이메일</td>
-            <td>관리자</td>
-            <td>등록</td>
-          </tr>
-        </thead>
-        <TableContainer
-          tableData={fgMemberTableInfo}
-          columnInfoList={columnInfoList}
-          clickedTableCellIndex={clickedTableCellIndex}
-          tableCellInput={tableCellInput}
-          eventHandler={{ onDivClick, onInputClick, onInputChange, onSelectChange, onKeyPress }}
-        ></TableContainer>
-      </table>
-      ;
+      <div className="tableUtils">{children}</div>
+      <div className="tableColumns">
+        <table>
+          <thead>
+            <tr>
+              <th className="fgMemberId">학번</th>
+              <th className="generation">기수</th>
+              <th className="fgMemberName">이름</th>
+              <th className="position">직위</th>
+              <th className="state">상태</th>
+              <th className="contact">전화번호</th>
+              <th className="mail">이메일</th>
+              <th className="isAdmin">관리자</th>
+              <th className="registerApproval">등록</th>
+            </tr>
+          </thead>
+          <TableContainer
+            tableData={fgMemberTableInfo}
+            columnInfoList={columnInfoList}
+            clickedTableCellIndex={clickedTableCellIndex}
+            tableCellInput={tableCellInput}
+            eventHandler={{
+              onDivClick,
+              onInputClick,
+              onInputChange,
+              onSelectChange,
+              onKeyPress,
+              onBlur,
+            }}
+          ></TableContainer>
+        </table>
+      </div>
     </div>
   );
 };

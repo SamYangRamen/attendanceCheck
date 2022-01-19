@@ -37,26 +37,29 @@ const FgMemberManageComponent: React.FC = () => {
 
   return (
     <div>
-      <DropdownContainer
-        name="generation"
-        value={generation}
-        contents={Array.from({ length: maxGeneration + 1 }, (_, i) => (i == 0 ? '' : i))}
-        onChange={onSelectChange}
-      />
-      <input name="generation" value={generation == 0 ? '' : generation} onChange={onInputChange} />
-      <FgMemberTableComponent generation={generation}></FgMemberTableComponent>
-      <input
-        type="button"
-        value="ON/OFF"
-        onClick={e => {
-          setOnOff(!onOff);
-        }}
-      />
-      {onOff ? (
-        <Link to="/admin/fgMemberManage/register" component={FgMemberRegisterComponent} />
-      ) : (
-        <></>
-      )}
+      <div className="table">
+        <div className="tableContents">
+          <div className="tableUtils">
+            <DropdownContainer
+              name="generation"
+              value={generation}
+              contents={Array.from({ length: maxGeneration + 1 }, (_, i) => (i == 0 ? '' : i))}
+              onChange={onSelectChange}
+            />
+            <input
+              name="generation"
+              value={generation == 0 ? '' : generation}
+              onChange={onInputChange}
+            />
+            <FgMemberRegisterComponent buttonName="등록"></FgMemberRegisterComponent>
+            <FgMemberRegisterComponent buttonName="등록"></FgMemberRegisterComponent>
+            <FgMemberRegisterComponent buttonName="등록"></FgMemberRegisterComponent>
+          </div>
+          <FgMemberTableComponent generation={generation}>
+            <></>
+          </FgMemberTableComponent>
+        </div>
+      </div>
     </div>
   );
 };

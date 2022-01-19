@@ -4,6 +4,7 @@ import LcMemberRepository from '../repository/LcMemberRepository';
 import LcRepository from '../repository/LcRepository';
 
 export default class RepositoryStore {
+  // private baseUrl: string = 'https://fa9a-221-167-246-86.ngrok.io';
   private baseUrl: string = 'http://localhost:4000/';
   private accountRepository: AccountRepository = new AccountRepository(this.baseUrl);
   private fgMemberRepository: FgMemberRepository = new FgMemberRepository(this.baseUrl);

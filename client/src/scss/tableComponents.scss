@@ -1,0 +1,87 @@
+div {
+  max-width: inherit;
+}
+
+th {
+  background-color: #70ad47;
+  color: white;
+  padding: 5px;
+  text-align: center;
+}
+
+td {
+  background-color: #ebf1e9;
+  border-bottom: 2px solid #bddaaf;
+  padding: 5px;
+  text-align: center;
+}
+
+.fgMemberId,
+.lcMemberId {
+  width: 100px;
+  max-width: 100px;
+
+  input[type='text'] {
+    border: 2px solid #bddaaf;
+    outline: none;
+    max-width: 100px * 0.8;
+  }
+}
+
+.generation {
+  width: 50px;
+  max-width: 50px;
+
+  input[type='text'] {
+    border: 2px solid #bddaaf;
+    outline: none;
+    max-width: 50px * 0.8;
+  }
+}
+.fgMemberName,
+.lcMemberName {
+  width: 100px;
+  max-width: 100px;
+
+  input[type='text'] {
+    border: 2px solid #bddaaf;
+    outline: none;
+    max-width: 100px * 0.8;
+  }
+}
+.position {
+  width: 75px;
+  max-width: 75px;
+}
+.state {
+  width: 60px;
+  max-width: 60px;
+}
+.contact {
+  width: 115px;
+  max-width: 115px;
+
+  input[type='text'] {
+    border: 2px solid #bddaaf;
+    outline: none;
+    max-width: 115px * 0.8;
+  }
+}
+.mail {
+  width: 210px;
+  max-width: 210px;
+
+  input[type='text'] {
+    border: 2px solid #bddaaf;
+    outline: none;
+    max-width: 210px * 0.8;
+  }
+}
+.isAdmin {
+  width: 50px;
+  max-width: 50px;
+}
+.registerApproval {
+  width: 50px;
+  max-width: 50px;
+}
