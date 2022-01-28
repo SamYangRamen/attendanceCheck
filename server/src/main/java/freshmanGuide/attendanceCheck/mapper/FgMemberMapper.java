@@ -12,8 +12,6 @@ public interface FgMemberMapper {
 
     BasicDTO.FgMemberInfoDTO findByFgMemberId(Integer fgMemberId);
 
-    void deleteByFgMemberId(Integer fgMemberId);
-
     void updateByFgMemberId(BasicDTO.PutFgMemberInfoDTO dto);
 
     List<BasicDTO.FgMemberInfoDTO> findAll();
@@ -21,4 +19,10 @@ public interface FgMemberMapper {
     List<BasicDTO.FgMemberInfoDTO> findByGeneration(Integer Generation);
 
     List<BasicDTO.FgMemberTableInfoDTO> findFgMemberInfoTableByGeneration(Integer generation);
+
+    List<BasicDTO.FgMemberSearchInfoDTO> findByGenerationAndPositionAndFgMemberName(BasicDTO.FgMemberSearchInfoDTO dto);
+
+    List<BasicDTO.FgMemberTableInfoDTO> findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState(BasicDTO.FgMemberInfoDTO dto);
+
+    void deleteByFgMemberId(Integer fgMemberId);
 }

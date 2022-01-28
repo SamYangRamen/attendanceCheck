@@ -1,63 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import LcMemberRegisterComponent from '../connect/LcMemberRegisterComponent';
-import FgMemberManageComponent from './FgMemberManageComponent';
-import FgMemberTableComponent from './FgMemberTableComponent';
-import LcManageComponent from './LcManageComponent';
-import LcTableComponent from './LcTableComponent';
-import { Route, Switch, useHistory } from 'react-router';
-import '../../scss/base.scss';
-import '../../scss/tableComponents.scss';
-import useStore from '../../store/useStore';
+import Select from 'react-select';
+import { ActionMeta } from 'react-select';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { MenuInfo } from 'rc-menu/lib/interface';
+import FgGenerationSelectComponent from './FgGenerationSelectComponent';
+import YearForLcSelectComponent from './YearForLcSelectComponent';
+
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
+
+const maxGeneration = new Date().getFullYear() - 2006;
+const generationUnit = 5;
+
 const AdminComponent: React.FC = () => {
-  const [buttonFlag, setButtonFlag] = useState<string>('');
-  const { valueStore } = useStore();
+  const [nav, setNav] = useState<string>('');
 
-  const history = useHistory();
-  /*
-  useEffect(() => {
-    for (let i = 0; i < new Date().getFullYear() - 2006; i++) {
-      yearList.push(<div onClick={onClick}>{i + 1}</div>);
-    }
-  }, []);
-
-
-  const onClsick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.currentTarget.textContent) setGeneration(parseInt(e.currentTarget.textContent));
-  };
-*/
-
-  useEffect(() => {
-    if (window.localStorage.getItem('isAdmin')! != 'true') {
-      history.push('/');
-    }
-  }, []);
-
-  const onClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    window.localStorage.setItem('fgMemberId', '');
-    window.localStorage.setItem('isAdmin', 'false');
-
-    alert('로그아웃 되었습니다.');
-    history.push('/');
+  const onClick = (e: MenuInfo) => {
+    setNav(nav == e.key ? '' : e.key);
   };
 
   return (
-    <div>
-      <div className="ribbon">
-        <Link to="/admin/fgMemberManage">
-          <input type="button" name="fgMemberManage" value="FG 멤버 관리" />
-        </Link>
-        <Link to="/admin/lcManage">
-          <input type="button" name="lcManage" value="LC 관리" />
-        </Link>
-        <input type="button" name="logout" value="로그아웃" onClick={onClick}></input>
-      </div>
-
-      <Switch>
-        <Route path="/admin/fgMemberManage" component={FgMemberManageComponent} />
-        <Route path="/admin/lcManage" component={LcManageComponent} />
-      </Switch>
-    </div>
+    <Layout>
+      <Header>
+        <div className="logo" />
+        <Menu theme="dark" mode="horizontal">
+          <Menu.Item key="FgMemberManagement" onClick={onClick}>
+            FG 멤버 관리
+          </Menu.Item>
+          <Menu.Item key="LcManagement" onClick={onClick}>
+            LC 관리
+          </Menu.Item>
+          <Menu.Item key="LcMemberManagement" onClick={onClick}>
+            LC 멤버 관리
+          </Menu.Item>
+        </Menu>
+      </Header>
+      {nav == 'FgMemberManagement' ? (
+        <FgGenerationSelectComponent></FgGenerationSelectComponent>
+      ) : (
+        <></>
+      )}
+      {nav == 'LcManagement' ? <YearForLcSelectComponent></YearForLcSelectComponent> : <></>}
+    </Layout>
   );
 };
 

@@ -24,6 +24,12 @@ export interface LoginInfoDTO {
   isAdminLogin: boolean;
 }
 
+export interface PutAccountInfo {
+  fgMemberId: number;
+  columnName: string;
+  value: string;
+}
+
 export default class AccountRepository {
   public constructor(baseUrl: string) {
     axios.defaults.baseURL = baseUrl;
@@ -50,5 +56,11 @@ export default class AccountRepository {
       .catch(() => {
         return null;
       });
+  }
+
+  public putAccountInfo(putAccountInfo: PutAccountInfo): Promise<boolean> {
+    return axios.put(`put/account-info`, putAccountInfo).then(response => {
+      return response.data;
+    });
   }
 }

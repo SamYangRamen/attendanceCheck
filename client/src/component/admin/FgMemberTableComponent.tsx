@@ -1,319 +1,258 @@
-import { autorun, keys, values } from 'mobx';
-import React, { useEffect, useState, useMemo } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { errorMonitor } from 'stream';
-import TableCellContainer from '../../container/TableCellContainer';
-import TableContainer, { ColumnInfo } from '../../container/TableContainer';
-import { FgMemberInfo } from '../../repository/AccountRepository';
-import { FgMemberInfoMap, FgMemberTableInfo } from '../../repository/FgMemberRepository';
+import { Button, Form, Input, Select } from 'antd';
+import { ColumnType } from 'antd/lib/table';
+import React, { useContext, useEffect, useState } from 'react';
+import { FgMemberTableInfo } from '../../repository/FgMemberRepository';
 import useStore from '../../store/useStore';
+import { EditableContext } from '../table/EditableFormRow';
+import EditableTable, { columnType, DataType } from '../table/EditableTable';
+import FgMemberAddComponent from './FgMemberAddComponent';
+
+const { Option } = Select;
 
 interface Props {
   generation: number;
-  children: JSX.Element;
 }
 
-const FgMemberTableComponent: React.FC<Props> = ({ generation, children }: Props) => {
-  const { repositoryStore, valueStore } = useStore();
+const columns: columnType[] = [
+  {
+    title: '학번',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'fgMemberId',
+    sorter: (a, b) => a.fgMemberId.toString().localeCompare(b.fgMemberId.toString()),
+    editable: 'input',
+    width: '15%',
+  },
+  {
+    title: '기수',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'generation',
+    sorter: (a, b) => a.generation.toString().localeCompare(b.generation.toString()),
+    editable: 'inputNumber',
+    width: '7%',
+    min: 1,
+    max: new Date().getFullYear() - 2006,
+  },
+  {
+    title: '이름',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'fgMemberName',
+    sorter: (a, b) => a.fgMemberName.toString().localeCompare(b.fgMemberName.toString()),
+    editable: 'input',
+    width: '15%',
+  },
+  {
+    title: '직책',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'position',
+    editable: 'select',
+    dropdownContents: ['회장', '부회장', '팀장', '부원'],
+    width: '7%',
+  },
+  {
+    title: '상태',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'state',
+    editable: 'select',
+    dropdownContents: ['재학', '휴학', '유학', '졸업'],
+    width: '7%',
+  },
+  {
+    title: '연락처',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'contact',
+    editable: 'input',
+    width: '15%',
+  },
+  {
+    title: '이메일',
+    tableIndex: 'fg_member_info',
+    dataIndex: 'mail',
+    editable: 'input',
+    width: '20%',
+  },
+  {
+    title: '관리자',
+    tableIndex: 'account_info',
+    dataIndex: 'isAdmin',
+    editable: 'checkbox',
+    width: '7%',
+  },
+  {
+    title: '등록',
+    tableIndex: 'account_info',
+    dataIndex: 'registerApproval',
+    editable: 'checkbox',
+    width: '7%',
+  },
+];
+
+const FgMemberTableCompnent: React.FC<Props> = ({ generation }: Props) => {
+  const { repositoryStore } = useStore();
   const fgMemberRepo = repositoryStore.getFgMemberRepository();
-  const [fgMemberTableInfo, setFgMemberTableInfo] = useState<Array<FgMemberTableInfo>>([]);
-  const [tableContents, setTableContents] = useState<JSX.Element[]>([]);
-  const [clickedTableCellIndex, setClickedTableCellIdx] = useState<{ row: number; col: string }>({
-    row: -1,
-    col: '',
-  });
-  const [tableCellInput, setTableCellInput] = useState<string>('');
+  const [fgMemberTableInfo, setFgMemberTableInfo] = useState<DataType[]>([]);
 
-  const updateTable = (value: string, row: number, col: string) => {
-    const fgMemberId = fgMemberTableInfo[row].fgMemberId;
+  const [fgMemberIdSearch, setFgMemberIdSearch] = useState<number>(0);
+  const [generationSearch, setGenerationSearch] = useState<number>(0);
+  const [fgMemberNameSearch, setFgMemberNameSearch] = useState<string>('');
+  const [positionSearch, setPositionSearch] = useState<string>('');
+  const [stateSearch, setStateSearch] = useState<string>('');
 
-    fgMemberRepo
-      .putFgMemberInfo({
-        fgMemberId,
-        columnName: col,
-        value,
-      })
-      .then(response => {
-        if (response) {
-          setFgMemberTableInfo(
-            col == 'generation'
-              ? fgMemberTableInfo.filter(item => item.fgMemberId !== fgMemberId)
-              : col == 'isAdmin'
-              ? fgMemberTableInfo.map(item =>
-                  item.fgMemberId === fgMemberId ? { ...item, [col]: !item.isAdmin } : item
-                )
-              : fgMemberTableInfo.map(item =>
-                  item.fgMemberId === fgMemberId ? { ...item, [col]: value } : item
-                )
-          );
-        } else {
-          alert('수정할 수 없는 데이터입니다.');
-        }
+  const [openGenerationSearch, setOpenGenerationSearch] = useState<boolean>(false);
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<React.Key>>([]);
+
+  useEffect(() => {
+    setOpenGenerationSearch(generation <= 0 ? true : false);
+
+    if (generation != -1) {
+      fgMemberRepo.getFgMemberTableInfoListByGeneration(generation).then(response => {
+        setFgMemberTableInfo(response);
       });
+    }
+  }, [generation]);
 
-    setClickedTableCellIdx({ row: -1, col: '' });
-    setTableCellInput('');
+  const onSearchClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    fgMemberRepo
+      .getFgMemberInfoListBySearch(
+        fgMemberIdSearch,
+        generationSearch,
+        fgMemberNameSearch.trim(),
+        positionSearch.trim(),
+        stateSearch.trim()
+      )
+      .then(response => {
+        setFgMemberTableInfo(response);
+      });
   };
 
-  const onDivClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setTableCellInput(e.currentTarget.innerHTML == '-' ? '' : e.currentTarget.innerHTML);
+  const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const fgMemberIdList: number[] = selectedRowKeys as number[];
 
-    const [row, col] = e.currentTarget.id.split(',');
-    setClickedTableCellIdx({ row: parseInt(row), col: col });
-  };
+    if (!fgMemberIdList.length) {
+      alert('삭제할 FG 멤버 정보가 없습니다.');
+    } else {
+      fgMemberRepo
+        .deletefgMemberInfoByfgMemberIdList(fgMemberIdList)
+        .then(response => {
+          setSelectedRowKeys([]);
+          if (response) {
+            alert('FG 멤버 정보가 성공적으로 삭제되었습니다.');
+          } else {
+            alert('오류가 발생하였습니다.');
+          }
+        })
+        .catch(e => {
+          alert('오류가 발생하였습니다.');
+        });
 
-  const onInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    const [row, col] = e.currentTarget.id.split(',');
-    //setClickedTableCellIdx({ row: parseInt(row), col: col });
-    // updateTable(e.currentTarget.checked ? '1' : '0');
-    updateTable(e.currentTarget.checked ? '1' : '0', parseInt(row), col);
-  };
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTableCellInput(e.target.value);
-  };
-
-  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTableCellInput(e.target.value);
-    updateTable(e.target.value, clickedTableCellIndex.row, clickedTableCellIndex.col);
-  };
-
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key == 'Enter') {
-      updateTable(e.currentTarget.value, clickedTableCellIndex.row, clickedTableCellIndex.col);
+      setFgMemberTableInfo(
+        (fgMemberTableInfo as FgMemberTableInfo[]).filter(
+          data => !fgMemberIdList.includes(data.key as number)
+        )
+      );
     }
   };
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setTableCellInput('');
-    setClickedTableCellIdx({ row: -1, col: '' });
-  };
-
-  const makeTwoDimArray = (data: Array<any>): Array<Array<any>> => {
-    return Array.from({ length: data.length }, (_, i) => Object.values(data[i]));
-  };
-
-  useEffect(() => {
-    fgMemberRepo.getFgMemberTableInfoListByGeneration(generation).then(response => {
-      setFgMemberTableInfo(response);
-    });
-  }, [generation]);
-
-  /*
-  useEffect(() => {
-    const data: Array<any> = Array.from({ length: fgMemberInfo.length }, (_, i) => (
-      <tbody>
-        {Object.values(fgMemberInfo[i]).map((value, j) => (
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: j }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={value}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-        ))}
-      </tbody>
-    ));
-
-    setTableContents(data);
-  }, [fgMemberInfo, clickedTableCellIndex, tableCellInput]);
-  /*
-      Array.from({ length: fgMemberInfo.length }, (_, i) => (
-        <tbody>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 0 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].fgMemberId}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 1 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].generation}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 2 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].fgMemberName}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 3 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].position}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 4 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].state}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 5 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].contact}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-          <td>
-            <TableCellContainer
-              cellIndex={{ row: i, col: 6 }}
-              clickedTableCellIndex={clickedTableCellIndex}
-              tableCellInput={tableCellInput}
-              value={fgMemberInfo[i].mail}
-              onClick={onClick}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-        </tbody>
-      ))
-      */
-
-  // valueStore.setFgMemberInfoList(response);
-
-  /*
-        tableContents = [];
-        for (let i = 0; i < response.length; i++) {
-          tableContents.push(
-            <tbody>
-              <td>{response[i].fgMemberId}</td>
-              <td>{response[i].generation}</td>
-              <td>{response[i].fgMemberName}</td>
-              <td>{response[i].position}</td>
-              <td>{response[i].state}</td>
-              <td>{response[i].contact}</td>
-              <td>{response[i].mail}</td>
-            </tbody>
-          );
-        }
-        
-  }, [generation, fgMemberInfo, clickedTableCellIndex, tableCellInput]);
-  */
-
-  let columnInfoList: Array<ColumnInfo> = [
-    {
-      tagName: 'input',
-      type: 'text',
-      name: 'fgMemberId',
-    },
-    {
-      tagName: 'select',
-      type: 'dropdown',
-      name: 'generation',
-      contents: Array.from({ length: new Date().getFullYear() - 2005 }, (_, i) =>
-        i == 0 ? '' : i
-      ),
-    },
-    {
-      tagName: 'input',
-      type: 'text',
-      name: 'fgMemberName',
-    },
-    {
-      tagName: 'select',
-      type: 'dropdown',
-      name: 'position',
-      contents: [' ', '회장', '부회장', '팀장', '부원'],
-    },
-    {
-      tagName: 'select',
-      type: 'dropdown',
-      name: 'state',
-      contents: [' ', '재학', '휴학', '유학', '졸업'],
-    },
-    {
-      tagName: 'input',
-      type: 'text',
-      name: 'contact',
-    },
-    {
-      tagName: 'input',
-      type: 'text',
-      name: 'mail',
-    },
-    {
-      tagName: 'input',
-      type: 'checkbox',
-      name: 'isAdmin',
-    },
-    {
-      tagName: 'input',
-      type: 'checkbox',
-      name: 'registerApproval',
-    },
-  ];
   return (
     <div>
-      <div className="tableUtils">{children}</div>
-      <div className="tableColumns">
-        <table>
-          <thead>
-            <tr>
-              <th className="fgMemberId">학번</th>
-              <th className="generation">기수</th>
-              <th className="fgMemberName">이름</th>
-              <th className="position">직위</th>
-              <th className="state">상태</th>
-              <th className="contact">전화번호</th>
-              <th className="mail">이메일</th>
-              <th className="isAdmin">관리자</th>
-              <th className="registerApproval">등록</th>
-            </tr>
-          </thead>
-          <TableContainer
-            tableData={fgMemberTableInfo}
-            columnInfoList={columnInfoList}
-            clickedTableCellIndex={clickedTableCellIndex}
-            tableCellInput={tableCellInput}
-            eventHandler={{
-              onDivClick,
-              onInputClick,
-              onInputChange,
-              onSelectChange,
-              onKeyPress,
-              onBlur,
-            }}
-          ></TableContainer>
-        </table>
-      </div>
+      <Form layout="inline" style={{ width: '100%', justifyContent: 'space-between' }}>
+        <Form.Item style={{ margin: 0 }}>
+          <Form layout="inline" initialValues={{ layout: 'inline' }}>
+            {openGenerationSearch ? (
+              <Form.Item label="기수">
+                <Input
+                  value={generationSearch ? generationSearch : ''}
+                  style={{ width: 130 }}
+                  onChange={e => {
+                    setGenerationSearch(parseInt(e.target.value) || 0);
+                  }}
+                  allowClear
+                ></Input>
+              </Form.Item>
+            ) : (
+              <></>
+            )}
+            <Form.Item label="학번">
+              <Input
+                value={fgMemberIdSearch ? fgMemberIdSearch : ''}
+                style={{ width: 130 }}
+                onChange={e => {
+                  setFgMemberIdSearch(parseInt(e.target.value) || 0);
+                }}
+                allowClear
+              ></Input>
+            </Form.Item>
+            <Form.Item label="이름">
+              <Input
+                value={fgMemberNameSearch}
+                style={{ width: 130 }}
+                onChange={e => {
+                  setFgMemberNameSearch(e.target.value);
+                }}
+                allowClear
+              ></Input>
+            </Form.Item>
+            <Form.Item label="직책">
+              <Select
+                style={{ width: 130 }}
+                showSearch
+                optionFilterProp="children"
+                onChange={value => {
+                  setPositionSearch(value);
+                }}
+              >
+                {['', '회장', '부회장', '팀장', '부원'].map<JSX.Element>(value => (
+                  <Option value={value}>{value}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item label="상태">
+              <Select
+                style={{ width: 130 }}
+                showSearch
+                optionFilterProp="children"
+                onChange={value => {
+                  setStateSearch(value);
+                }}
+              >
+                {['', '재학', '휴학', '유학', '졸업'].map<JSX.Element>(value => (
+                  <Option value={value}>{value}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" onClick={onSearchClick}>
+                {fgMemberIdSearch ||
+                generationSearch > 0 ||
+                fgMemberNameSearch ||
+                positionSearch ||
+                stateSearch
+                  ? '검색'
+                  : '전체 검색'}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Form.Item>
+        <Form.Item style={{ margin: 0 }}>
+          <Form layout="inline" initialValues={{ layout: 'inline' }}>
+            <Form.Item name={'deleteFgMember'}>
+              <Button type="primary" onClick={onDeleteClick} disabled={!selectedRowKeys.length}>
+                삭제
+              </Button>
+            </Form.Item>
+          </Form>
+        </Form.Item>
+      </Form>
+      <br />
+      <EditableTable
+        columns={columns}
+        dataSource={fgMemberTableInfo}
+        setDataSource={setFgMemberTableInfo}
+        selectedRowKeys={selectedRowKeys}
+        setSelectedRowKeys={setSelectedRowKeys}
+      ></EditableTable>
     </div>
   );
 };
 
-export default React.memo(FgMemberTableComponent);
+export default FgMemberTableCompnent;

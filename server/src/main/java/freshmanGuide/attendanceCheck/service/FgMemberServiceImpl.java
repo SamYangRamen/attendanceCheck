@@ -60,4 +60,34 @@ public class FgMemberServiceImpl implements FgMemberService {
             return null;
         }
     }
+
+    @Override
+    public List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(BasicDTO.FgMemberSearchInfoDTO dto) {
+        try {
+            return fgMemberRepository.getFgMemberSearchInfoListBySearch(dto);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(BasicDTO.FgMemberInfoDTO dto) {
+        try {
+            return fgMemberRepository.getFgMemberInfoListBySearch(dto);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean deleteFgMemberInfoByFgMemberIdListService(List<Integer> fgMemberIdList) {
+        try {
+            for(Integer fgMemberId : fgMemberIdList) {
+                fgMemberRepository.deleteFgMemberInfoByFgMemberId(fgMemberId);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

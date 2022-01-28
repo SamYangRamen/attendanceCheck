@@ -6,16 +6,18 @@
         INSERT INTO lc_info
         VALUES
         (
-            (SELECT CASE WHEN COUNT(a.lcIdx)=0 THEN 0 ELSE COUNT(a.lcIdx) END FROM lc_info a),
-            #{year},
-            #{lc},
-            null,
-            null
+        (SELECT CASE WHEN COUNT(a.lcIdx)=0 THEN 0 ELSE COUNT(a.lcIdx) END FROM lc_info a),
+        #{year},
+        #{lc},
+        null,
+        null,
+        null,
+        null
         )
     </insert>
 
     <select id="findAll" resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
-        SELECT year, LC, fgMemberId1, fgMemberId2
+        SELECT year, LC, fgMemberId1, fgMemberId2, fgMemberId3, fgMemberId4
         FROM lc_info
     </select>
 
@@ -32,7 +34,7 @@
             parameterType="Integer"
             resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO"
     >
-        SELECT year, lc, fgMemberId1, fgMemberId2
+        SELECT year, lc, fgMemberId1, fgMemberId2, fgMemberId3, fgMemberId4
         FROM lc_info
         WHERE year=${year}
         ORDER BY year, lc
@@ -41,5 +43,54 @@
     <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcDTO">
         DELETE FROM lc_info
         WHERE year=#{year} AND lc=#{lc}
+    </delete>
+
+    <select id="findByYearAndLcAndFgMemberNames"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcSearchInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoWithFgMemberNameDTO">
+        SELECT lcIdx as `key`, year, lc,
+            (SELECT fgMemberName FROM fg_member_info WHERE fgMemberId=fgMemberId1) as fgMemberName1,
+            (SELECT fgMemberName FROM fg_member_info WHERE fgMemberId=fgMemberId2) as fgMemberName2,
+            (SELECT fgMemberName FROM fg_member_info WHERE fgMemberId=fgMemberId3) as fgMemberName3,
+            (SELECT fgMemberName FROM fg_member_info WHERE fgMemberId=fgMemberId4) as fgMemberName4
+        FROM lc_info
+        WHERE True
+        <if test='year!=null and year!=0'>
+            AND year LIKE '%${year}%'
+        </if>
+        <if test='lc!=null and !lc.equals("")'>
+            AND lc LIKE '%${lc}%'
+        </if>
+        <if test='fgMemberName1!=null and !fgMemberName1.equals("")'>
+            AND (
+                (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId1) LIKE '%${fgMemberName1}%'
+                OR (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId2) LIKE '%${fgMemberName1}%'
+                OR (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId3) LIKE '%${fgMemberName1}%'
+                OR (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId4) LIKE '%${fgMemberName1}%'
+            )
+        </if>
+        <if test='fgMemberName2!=null and !fgMemberName2.equals("")'>
+            AND (
+                (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId1) LIKE '%${fgMemberName2}%'
+                OR (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId2) LIKE '%${fgMemberName2}%'
+                OR (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId3) LIKE '%${fgMemberName2}%'
+                OR (SELECT fgMemberName from fg_member_info where fgMemberId=fgMemberId4) LIKE '%${fgMemberName2}%'
+            )
+        </if>
+    </select>
+
+    <update id="updateFgMemberNameByFgMemberId"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$PutLcInfoDTO"
+    >
+        UPDATE lc_info
+        SET ${columnName}=#{fgMemberId}
+        WHERE lcIdx=#{lcIdx}
+    </update>
+
+    <delete id="deleteByLcIdx"
+            parameterType="Integer"
+    >
+        DELETE FROM lc_info
+        WHERE lcIdx=${lcIdx}
     </delete>
 </mapper>

@@ -77,4 +77,9 @@ public class AccountServiceImpl implements AccountService {
 
         return false;
     }
+
+    @Override
+    public Boolean putAccountInfoService(BasicDTO.PutAccountInfoDTO dto) {
+        return accountRepository.putAccountInfo(dto);
+    }
 }

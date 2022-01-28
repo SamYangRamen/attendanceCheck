@@ -32,4 +32,16 @@ public class LcRepository {
     public void deleteLcInfo(BasicDTO.LcDTO dto) {
         lcMapper.deleteByYearAndLc(dto);
     }
+
+    public List <BasicDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearch(BasicDTO.LcSearchInfoDTO dto) {
+        return lcMapper.findByYearAndLcAndFgMemberNames(dto);
+    }
+
+    public void updateFgMemberNameByFgMemberId(BasicDTO.PutLcInfoDTO dto) {
+        lcMapper.updateFgMemberNameByFgMemberId(dto);
+    }
+
+    public void deleteLcInfoByLcIdx(Integer lcIdx) {
+        lcMapper.deleteByLcIdx(lcIdx);
+    }
 }

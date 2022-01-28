@@ -17,5 +17,11 @@ public interface LcMapper {
     void deleteByYearAndLc(BasicDTO.LcDTO dto);
 
     List<BasicDTO.LcInfoDTO> findAllByYear(Integer year);
+
+    List <BasicDTO.LcInfoWithFgMemberNameDTO> findByYearAndLcAndFgMemberNames(BasicDTO.LcSearchInfoDTO dto);
+
+    void updateFgMemberNameByFgMemberId(BasicDTO.PutLcInfoDTO dto);
+
+    void deleteByLcIdx(Integer lcIdx);
 }
 

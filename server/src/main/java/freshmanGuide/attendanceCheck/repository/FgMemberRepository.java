@@ -36,20 +36,9 @@ public class FgMemberRepository {
 
     public Boolean putFgMemberInfo(BasicDTO.PutFgMemberInfoDTO dto) {
         try {
-            System.out.println(dto.getColumnName().length());
-            System.out.println(dto.getColumnName() + "AAAA");
-            System.out.println("isAdmin" + "AAAA");
-
-            if(dto.getColumnName() == "isAdmin")
-                System.out.println("ABABABABABABABABABABABABABABAB");
-            else
-                System.out.println("cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd");
-
             if (dto.getColumnName().equals("isAdmin")) {
-                System.out.println(dto.getColumnName() + "-------------------------------------AAAAAAAAAAA-----------------------------------------");
                 accountMapper.updateIsAdmin(dto.getFgMemberId());
             } else if (dto.getColumnName().equals("registerApproval")) {
-                System.out.println(dto.getColumnName() + "-------------------------------------AAAAAAAAAAA-----------------------------------------");
                 accountMapper.updateRegisterApproval(dto.getFgMemberId());
             } else {
                 fgMemberMapper.updateByFgMemberId(dto);
@@ -70,5 +59,17 @@ public class FgMemberRepository {
 
     public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGeneration(Integer generation) {
         return fgMemberMapper.findFgMemberInfoTableByGeneration(generation);
+    }
+
+    public List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearch(BasicDTO.FgMemberSearchInfoDTO dto) {
+        return fgMemberMapper.findByGenerationAndPositionAndFgMemberName(dto);
+    }
+
+    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(BasicDTO.FgMemberInfoDTO dto) {
+        return fgMemberMapper.findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState(dto);
+    }
+
+    public void deleteFgMemberInfoByFgMemberId(Integer fgMemberId) {
+        fgMemberMapper.deleteByFgMemberId(fgMemberId);
     }
 }

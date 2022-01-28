@@ -48,4 +48,22 @@ public class FgMemberController {
     public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGeneration(@RequestParam Integer generation) {
         return fgMemberService.getFgMemberTableInfoListByGenerationService(generation);
     }
+
+    @GetMapping("get/fg-member-search-info-list-by-search")
+    @ResponseBody
+    public List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearch(@RequestParam Integer generation, @RequestParam String position, @RequestParam String fgMemberName) {
+        return fgMemberService.getFgMemberSearchInfoListBySearchService(new BasicDTO.FgMemberSearchInfoDTO(null, generation, null, fgMemberName, position));
+    }
+
+    @GetMapping("get/fg-member-info-list-by-search")
+    @ResponseBody
+    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(@RequestParam Integer fgMemberId, @RequestParam Integer generation, @RequestParam String fgMemberName, @RequestParam String position, @RequestParam String state) {
+        return fgMemberService.getFgMemberInfoListBySearchService(new BasicDTO.FgMemberInfoDTO(fgMemberId, generation, fgMemberName, position, state, null, null));
+    }
+
+    @PostMapping("delete/fg-member-info-by-fg-member-id-list")
+    @ResponseBody
+    public Boolean deleteLcInfoByLcIdxList(@RequestBody List<Integer> fgMemberIdList) {
+        return fgMemberService.deleteFgMemberInfoByFgMemberIdListService(fgMemberIdList);
+    }
 }

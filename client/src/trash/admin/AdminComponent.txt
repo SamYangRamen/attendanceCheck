@@ -1,0 +1,66 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import LcMemberRegisterComponent from '../../component/connect/LcMemberRegisterComponent';
+import FgMemberManageComponent from '../../trash/admin/FgMemberManageComponent';
+import LcManageComponent from '../../component/admin/LcManageComponent';
+import { Route, Switch, useHistory } from 'react-router';
+import '../../scss/base.scss';
+import '../../scss/tableComponents.scss';
+import useStore from '../../store/useStore';
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+const { Header, Content, Footer } = Layout;
+
+const AdminComponent: React.FC = () => {
+  const [buttonFlag, setButtonFlag] = useState<string>('');
+  const { valueStore } = useStore();
+
+  const history = useHistory();
+  /*
+  useEffect(() => {
+    for (let i = 0; i < new Date().getFullYear() - 2006; i++) {
+      yearList.push(<div onClick={onClick}>{i + 1}</div>);
+    }
+  }, []);
+
+
+  const onClsick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.currentTarget.textContent) setGeneration(parseInt(e.currentTarget.textContent));
+  };
+*/
+
+  useEffect(() => {
+    if (window.localStorage.getItem('isAdmin')! != 'true') {
+      history.push('/');
+    }
+  }, []);
+
+  const onClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    window.localStorage.setItem('fgMemberId', '');
+    window.localStorage.setItem('isAdmin', 'false');
+
+    alert('로그아웃 되었습니다.');
+    history.push('/');
+  };
+
+  return (
+    <div>
+      <div className="ribbon">
+        <Link to="/admin/fgMemberManage">
+          <input type="button" name="fgMemberManage" value="FG 멤버 관리" />
+        </Link>
+        <Link to="/admin/lcManage">
+          <input type="button" name="lcManage" value="LC 관리" />
+        </Link>
+        <input type="button" name="logout" value="로그아웃" onClick={onClick}></input>
+      </div>
+
+      <Switch>
+        <Route path="/admin/fgMemberManage" component={FgMemberManageComponent} />
+        <Route path="/admin/lcManage" component={LcManageComponent} />
+      </Switch>
+    </div>
+  );
+};
+
+export default AdminComponent;

@@ -14,6 +14,14 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class DTO<T> {
+        T dto;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class AccountInfoDTO {
         private Integer fgMemberId;
         private String password;
@@ -62,6 +70,7 @@ public class BasicDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class FgMemberTableInfoDTO {
+        private Integer key;
         private Integer fgMemberId;
         private Integer generation;
         private String fgMemberName;
@@ -87,11 +96,50 @@ public class BasicDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class FgMemberSearchInfoDTO {
+        private Integer key;
+        private Integer generation;
+        private Integer fgMemberId;
+        private String fgMemberName;
+        private String position;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LcInfoDTO {
         private Integer year;
         private String lc;
         private Integer fgMemberId1;
         private Integer fgMemberId2;
+        private Integer fgMemberId3;
+        private Integer fgMemberId4;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LcInfoWithFgMemberNameDTO {
+        private Integer key;
+        private Integer year;
+        private String lc;
+        private String fgMemberName1;
+        private String fgMemberName2;
+        private String fgMemberName3;
+        private String fgMemberName4;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LcSearchInfoDTO {
+        private Integer year;
+        private String lc;
+        private String fgMemberName1;
+        private String fgMemberName2;
     }
 
     @Getter
@@ -122,6 +170,24 @@ public class BasicDTO {
         private Integer year;
         private String lc;
         private Integer fgMemberId;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PutLcInfoDTO {
+        private Integer lcIdx;
+        private String columnName;
+        private Integer fgMemberId;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DeleteLcInfoDTO {
+        private List<Integer> data;
     }
 
     @Getter
@@ -165,5 +231,15 @@ public class BasicDTO {
     public static class AccountTypeDTO {
         private String account;
         private Boolean type;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PutAccountInfoDTO {
+        private Integer fgMemberId;
+        private String columnName;
+        private String value;
     }
 }

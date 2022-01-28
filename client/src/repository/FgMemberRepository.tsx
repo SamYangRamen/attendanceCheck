@@ -15,6 +15,7 @@ export interface FgMemberInfo {
 }
 
 export interface FgMemberTableInfo {
+  key: React.Key;
   fgMemberId: number;
   generation: number;
   fgMemberName: string;
@@ -34,6 +35,14 @@ export interface PutFgMemberInfo {
 
 export interface FgMemberInfoMap {
   [id: string]: FgMemberInfo;
+}
+
+export interface FgMemberSearchInfo {
+  key: React.Key;
+  generation: number;
+  fgMemberId: number;
+  fgMemberName: string;
+  position: string;
 }
 
 export default class FgMemberRepository {
@@ -72,6 +81,44 @@ export default class FgMemberRepository {
   ): Promise<Array<FgMemberTableInfo>> {
     return axios
       .get(`get/fg-member-info-list-by-generation/table?generation=${generation}`)
+      .then(response => {
+        return response.data;
+      });
+  }
+
+  public getFgMemberSearchInfoListBySearch(
+    generation: number,
+    position: string,
+    fgMemberName: string
+  ): Promise<Array<FgMemberSearchInfo>> {
+    return axios
+      .get(
+        `get/fg-member-search-info-list-by-search?generation=${generation}&position=${position}&fgMemberName=${fgMemberName}`
+      )
+      .then(response => {
+        return response.data;
+      });
+  }
+
+  public getFgMemberInfoListBySearch(
+    fgMemberId: number,
+    generation: number,
+    fgMemberName: string,
+    position: string,
+    state: string
+  ): Promise<Array<FgMemberTableInfo>> {
+    return axios
+      .get(
+        `get/fg-member-info-list-by-search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
+      )
+      .then(response => {
+        return response.data;
+      });
+  }
+
+  public deletefgMemberInfoByfgMemberIdList(fgMemberIdList: number[]): Promise<boolean> {
+    return axios
+      .post(`delete/fg-member-info-by-fg-member-id-list`, fgMemberIdList)
       .then(response => {
         return response.data;
       });

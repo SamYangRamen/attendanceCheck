@@ -32,43 +32,39 @@ const LoginComponent: React.FC = () => {
     else if (e.target.name == 'password') setPassword(e.target.value);
   };
 
-  const onClick = (e: any) => {
-    if (e.target.name == 'login') {
-      repo
-        .getAccountInfo(account)
-        .then(response => {
-          if (!response.registerApproval) {
-            alert('등록되지 않은 계정입니다.');
-            return;
-          }
-
-          const hashedPassword = crypto
-            .pbkdf2Sync(password, response.salt, 9999, 64, 'sha512')
-            .toString('hex');
-
-          if (hashedPassword != response.password) {
-            alert('아이디 또는 패스워드가 일치하지 않습니다.');
-            return;
-          }
-
-          if (permission && !response.isAdmin) {
-            alert('관리자로 등록되지 않은 계정이거나 없는 계정입니다.');
-            return;
-          }
-
-          valueStore.setFgMemberId(response.fgMemberId);
-          valueStore.setIsAdmin(response.isAdmin);
-
-          window.localStorage.setItem('fgmemberId', response.fgMemberId.toString());
-          window.localStorage.setItem('isAdmin', response.isAdmin.toString());
-          history.push(permission ? '/admin' : '/user');
-        })
-        .catch(e => {
+  const onClick = () => {
+    repo
+      .getAccountInfo(account)
+      .then(response => {
+        if (!response.registerApproval) {
           alert('등록되지 않은 계정입니다.');
-        });
-    } else if (e.target.name == 'cancel') {
-      setOnOffSwitch(false);
-    }
+          return;
+        }
+
+        const hashedPassword = crypto
+          .pbkdf2Sync(password, response.salt, 9999, 64, 'sha512')
+          .toString('hex');
+
+        if (hashedPassword != response.password) {
+          alert('아이디 또는 패스워드가 일치하지 않습니다.');
+          return;
+        }
+
+        if (permission && !response.isAdmin) {
+          alert('관리자로 등록되지 않은 계정이거나 없는 계정입니다.');
+          return;
+        }
+
+        valueStore.setFgMemberId(response.fgMemberId);
+        valueStore.setIsAdmin(response.isAdmin);
+
+        window.localStorage.setItem('fgmemberId', response.fgMemberId.toString());
+        window.localStorage.setItem('isAdmin', response.isAdmin.toString());
+        history.push(permission ? '/admin' : '/user');
+      })
+      .catch(e => {
+        alert('등록되지 않은 계정입니다.');
+      });
   };
 
   return (

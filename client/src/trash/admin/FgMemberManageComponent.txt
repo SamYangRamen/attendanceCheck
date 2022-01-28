@@ -1,0 +1,34 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import DropdownContainer from '../../container/DropdownContainer';
+import FgMemberRegisterComponent from '../../component/connect/FgMemberRegisterComponent';
+import LcMemberRegisterComponent from '../../component/connect/LcMemberRegisterComponent';
+import FgMemberTableComponent from '../../component/admin/FgMemberTableComponent';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import LcManagerSearchComponent from '../../component/admin/LcManagerSearchComponent';
+
+const { Header, Content, Footer } = Layout;
+
+interface Props {
+  generation: number;
+}
+
+const FgMemberManageComponent: React.FC<Props> = ({ generation }: Props) => {
+  return (
+    <div>
+      {/*<LcManagerSearchComponent id="11" onSearch={() => {}}></LcManagerSearchComponent>*/}
+      <div className="table">
+        <div className="tableContents">
+          <div className="tableUtils">
+            <FgMemberRegisterComponent buttonName="등록"></FgMemberRegisterComponent>
+            <FgMemberRegisterComponent buttonName="등록"></FgMemberRegisterComponent>
+            <FgMemberRegisterComponent buttonName="등록"></FgMemberRegisterComponent>
+          </div>
+          <FgMemberTableComponent generation={generation}></FgMemberTableComponent>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FgMemberManageComponent;

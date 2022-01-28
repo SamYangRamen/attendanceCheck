@@ -46,4 +46,21 @@ public class AccountRepository {
     public void deleteAccountInfo(Integer fgMemberId) {
         accountMapper.deleteByFgMemberId(fgMemberId);
     }
+
+    public Boolean putAccountInfo(BasicDTO.PutAccountInfoDTO dto) {
+        try {
+            if (dto.getColumnName().equals("isAdmin")) {
+                accountMapper.updateIsAdmin(dto.getFgMemberId());
+            } else if (dto.getColumnName().equals("registerApproval")) {
+                accountMapper.updateRegisterApproval(dto.getFgMemberId());
+            }
+            else {
+                return false;
+            }
+        } catch(Exception e) {
+            return false;
+        }
+
+        return true;
+    }
 }

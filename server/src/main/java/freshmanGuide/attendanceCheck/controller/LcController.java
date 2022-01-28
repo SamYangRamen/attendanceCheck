@@ -36,4 +36,21 @@ public class LcController {
     public List<BasicDTO.LcInfoDTO> getLcInfoListByYear(@RequestParam Integer year) {
         return lcService.getLcListInfoByYearService(year);
     }
+
+    @GetMapping("get/lc-info-list-by-search")
+    @ResponseBody
+    public List<BasicDTO.LcInfoWithFgMemberNameDTO> getLcInfoListBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String fgMemberName1, @RequestParam String fgMemberName2) {
+        return lcService.getLcListInfoBySearchService(year, lc, fgMemberName1, fgMemberName2);
+    }
+
+    @PutMapping("put/lc-info")
+    public Boolean putLcInfo(@RequestBody BasicDTO.PutLcInfoDTO dto) {
+        return lcService.putLcInfoService(dto);
+    }
+
+    @PostMapping("delete/lc-info-by-lc-idx-list")
+    @ResponseBody
+    public Boolean deleteLcInfoByLcIdxList(@RequestBody List<Integer> lcIdxList) {
+        return lcService.deleteLcInfoByLcIdxListService(lcIdxList);
+    }
 }

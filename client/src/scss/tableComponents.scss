@@ -1,21 +1,101 @@
-div {
-  max-width: inherit;
-}
+/*
+table {
+  width: 100%;
 
-th {
-  background-color: #70ad47;
-  color: white;
-  padding: 5px;
-  text-align: center;
-}
+  div {
+    max-width: inherit;
+  }
 
-td {
-  background-color: #ebf1e9;
-  border-bottom: 2px solid #bddaaf;
-  padding: 5px;
-  text-align: center;
-}
+  th {
+    background-color: #2a98ff;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    height: 30px;
+    font-size: 110%;
+  }
 
+  td {
+    background-color: #e7f5fc;
+    border-bottom: 2px solid #7ec1ff;
+    padding: 5px;
+    text-align: center;
+    height: 50px;
+    font-size: 110%;
+  }
+
+  .fgMemberId,
+  .lcMemberId {
+    width: 10%;
+
+    input[type='text'] {
+      border: 2px solid #7ec1ff;
+      outline: none;
+      max-width: 120px;
+    }
+  }
+  .generation {
+    width: 10%;
+  }
+  .fgMemberName,
+  .lcMemberName {
+    width: 10%;
+
+    input[type='text'] {
+      border: 2px solid #7ec1ff;
+      outline: none;
+      max-width: 100px;
+    }
+  }
+  .position {
+    width: 10%;
+  }
+  .state {
+    width: 10%;
+  }
+  .contact {
+    width: 15%;
+
+    input[type='text'] {
+      border: 2px solid #7ec1ff;
+      outline: none;
+      max-width: 150px;
+    }
+  }
+  .mail {
+    width: 20%;
+
+    input[type='text'] {
+      border: 2px solid #7ec1ff;
+      outline: none;
+      max-width: 400px;
+    }
+  }
+  .isAdmin {
+    width: 10%;
+  }
+  .registerApproval {
+    width: 10%;
+  }
+  .year {
+    width: 10%;
+  }
+  .lc {
+    width: 10%;
+  }
+  .fgManagerName {
+    width: 20%;
+
+    input[type='text'] {
+      border: 2px solid #7ec1ff;
+      outline: none;
+      max-width: 100px;
+    }
+  }
+}
+*/
+
+/*
 .fgMemberId,
 .lcMemberId {
   width: 100px;
@@ -27,7 +107,6 @@ td {
     max-width: 100px * 0.8;
   }
 }
-
 .generation {
   width: 50px;
   max-width: 50px;
@@ -78,10 +157,11 @@ td {
   }
 }
 .isAdmin {
-  width: 50px;
-  max-width: 50px;
+  width: 60px;
+  max-width: 60px;
 }
 .registerApproval {
   width: 50px;
   max-width: 50px;
 }
+*/

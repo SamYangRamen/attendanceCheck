@@ -63,7 +63,7 @@ const TableCellContainer: React.FC<Props> = ({
           <input
             className="tableCellContents"
             type="text"
-            value={tableCellInput}
+            value={tableCellInput == '-' ? '' : tableCellInput}
             onChange={onInputChange || undefined}
             onKeyPress={onKeyPress || undefined}
             autoFocus
@@ -76,6 +76,8 @@ const TableCellContainer: React.FC<Props> = ({
             contents={columnInfo.contents}
             onChange={onSelectChange || undefined}
           />
+        ) : columnInfo.tagName == 'select' && columnInfo.type == 'search' ? (
+          <div></div>
         ) : (
           <></>
         )

@@ -15,4 +15,10 @@ public interface FgMemberService {
     List<BasicDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation);
 
     List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation);
+
+    List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(BasicDTO.FgMemberSearchInfoDTO dto);
+
+    List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(BasicDTO.FgMemberInfoDTO dto);
+
+    Boolean deleteFgMemberInfoByFgMemberIdListService(List<Integer> fgMemberIdList);
 }

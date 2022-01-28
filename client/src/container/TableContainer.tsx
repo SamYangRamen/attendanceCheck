@@ -4,6 +4,7 @@ import { AccountInfo } from '../repository/AccountRepository';
 import { FgMemberInfo, FgMemberTableInfo } from '../repository/FgMemberRepository';
 import { LcInfo } from '../repository/LcRepository';
 import TableCellContainer from './TableCellContainer';
+import { Table, Radio, Divider } from 'antd';
 
 type TableInfo = FgMemberInfo | FgMemberTableInfo | LcInfo | AccountInfo;
 
@@ -40,6 +41,24 @@ const TableContainer: React.FC<Props> = ({
   // const keys = Object.entries(tableData[i]).map(value) {
   return (
     <>
+      {/*
+      {Array.from({ length: tableData.length }, (_, i) => (
+        <tbody>
+          {Object.entries(tableData[i]).map((kv, j) => (
+            <td className={columnInfoList[j].name}>
+              <TableCellContainer
+                columnInfo={columnInfoList[j]}
+                cellIndex={{ row: i, col: kv[0] }}
+                clickedTableCellIndex={clickedTableCellIndex}
+                tableCellInput={tableCellInput}
+                value={kv[1] ? kv[1] : ('' as string)}
+                eventHandler={eventHandler}
+              />
+            </td>
+          ))}
+        </tbody>
+      ))}
+          */}
       {Array.from({ length: tableData.length }, (_, i) => (
         <tbody>
           {Object.entries(tableData[i]).map((kv, j) => (

@@ -32,4 +32,10 @@ public class AccountController {
     public Boolean getIsLoginInfoCorrect(BasicDTO.LoginInfoDTO dto) {
         return accountService.getIsLoginInfoCorrectService(dto);
     }
+
+    @PutMapping("put/account-info")
+    @ResponseBody
+    public Boolean putAccountInfo(@RequestBody BasicDTO.PutAccountInfoDTO dto) {
+        return accountService.putAccountInfoService(dto);
+    }
 }

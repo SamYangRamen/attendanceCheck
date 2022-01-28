@@ -16,6 +16,24 @@ export interface LcInfo {
   lc: string;
   fgMemberId1: number;
   fgMemberId2: number;
+  fgMemberId3: number;
+  fgMemberId4: number;
+}
+
+export interface LcInfoWithFgMemberName {
+  key: React.Key;
+  year: number;
+  lc: string;
+  fgMemberName1: string;
+  fgMemberName2: string;
+  fgMemberName3: string;
+  fgMemberName4: string;
+}
+
+export interface PutLcInfo {
+  lcIdx: number;
+  columnName: string;
+  fgMemberId: number;
 }
 
 export default class LcRepository {
@@ -41,8 +59,35 @@ export default class LcRepository {
     });
   }
 
+  public getLcInfoListWithFgMemberNameBySearch(
+    year?: number,
+    lc?: string | null,
+    fgMemberName1?: string | null,
+    fgMemberName2?: string | null
+  ): Promise<Array<LcInfoWithFgMemberName>> {
+    return axios
+      .get(
+        `get/lc-info-list-by-search?year=${year}&lc=${lc}&fgMemberName1=${fgMemberName1}&fgMemberName2=${fgMemberName2}`
+      )
+      .then(response => {
+        return response.data;
+      });
+  }
+
   public getLcListByYear(year: number): Promise<Array<string>> {
     return axios.get(`get/lc-list-by-year?year=${year}`).then(response => {
+      return response.data;
+    });
+  }
+
+  public putLcInfo(putLcInfo: PutLcInfo): Promise<boolean> {
+    return axios.put(`put/lc-info`, putLcInfo).then(response => {
+      return response.data;
+    });
+  }
+
+  public deleteLcInfoByLcIdxList(lcIdxList: number[]): Promise<boolean> {
+    return axios.post(`delete/lc-info-by-lc-idx-list`, lcIdxList).then(response => {
       return response.data;
     });
   }

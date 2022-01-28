@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.service;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AccountService {
 
@@ -9,4 +10,6 @@ public interface AccountService {
     BasicDTO.AccountInfoDTO getAccountInfoService(String account);
 
     Boolean getIsLoginInfoCorrectService(BasicDTO.LoginInfoDTO dto);
+
+    Boolean putAccountInfoService(BasicDTO.PutAccountInfoDTO dto);
 }

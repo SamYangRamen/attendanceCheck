@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import TableContainer, { ColumnInfo } from '../../container/TableContainer';
-import { LcInfo } from '../../repository/LcRepository';
+import { LcInfo, LcInfoWithFgMemberName } from '../../repository/LcRepository';
 import useStore from '../../store/useStore';
+
+import { Table, Input, Button, Form, Select } from 'antd';
+import EditableTable, { columnType, DataType } from '../table/EditableTable';
+import LcAddComponent from './LcAddComponent';
 
 interface Props {
   year: number;
@@ -10,86 +14,192 @@ interface Props {
 const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
   const { repositoryStore } = useStore();
   const lcRepo = repositoryStore.getLcRepository();
-  const [lcTableInfo, setLcTableInfo] = useState<Array<LcInfo>>([]);
-  const [clickedTableCellIndex, setClickedTableCellIdx] = useState<{ row: number; col: string }>({
-    row: -1,
-    col: '',
-  });
-  const [tableCellInput, setTableCellInput] = useState<string>('');
 
-  const updateTable = (value: string, row: number, col: string) => {
-    setClickedTableCellIdx({ row: -1, col: '' });
-    setTableCellInput('');
-  };
-
-  const onDivClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setTableCellInput(e.currentTarget.innerHTML);
-
-    const [row, col] = e.currentTarget.id.split(',');
-    setClickedTableCellIdx({ row: parseInt(row), col: col });
-  };
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTableCellInput(e.target.value);
-  };
-
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key == 'Enter') {
-      updateTable(e.currentTarget.value, clickedTableCellIndex.row, clickedTableCellIndex.col);
-    }
-  };
-
-  useEffect(() => {
-    lcRepo
-      .getLcInfoListByYear(year)
-      .then(response => {
-        setLcTableInfo(response);
-      })
-      .catch(e => {
-        alert('Error');
-      });
-  }, [year]);
-
-  let columnInfoList: Array<ColumnInfo> = [
+  const columns: columnType[] = [
     {
-      name: 'year',
+      title: '년도',
+      tableIndex: 'lc_info',
+      dataIndex: 'year',
+      sorter: (a, b) => a.year.toString().localeCompare(b.year.toString()),
     },
     {
-      name: 'lc',
+      title: 'LC',
+      tableIndex: 'lc_info',
+      dataIndex: 'lc',
+      sorter: (a, b) => a.lc.toString().localeCompare(b.lc.toString()),
     },
     {
-      tagName: 'input',
-      type: 'text',
-      name: 'fgMemberName1',
+      title: '담당자1',
+      tableIndex: 'lc_info',
+      dataIndex: 'fgMemberName1',
+      editable: 'lcModal',
     },
     {
-      tagName: 'input',
-      type: 'text',
-      name: 'fgMemberName2',
+      title: '담당자2',
+      tableIndex: 'lc_info',
+      dataIndex: 'fgMemberName2',
+      editable: 'lcModal',
+    },
+    {
+      title: '담당자3',
+      tableIndex: 'lc_info',
+      dataIndex: 'fgMemberName3',
+      editable: 'lcModal',
+    },
+    {
+      title: '담당자4',
+      tableIndex: 'lc_info',
+      dataIndex: 'fgMemberName4',
+      editable: 'lcModal',
     },
   ];
 
+  const [yearSearch, setYearSearch] = useState<number>(0);
+  const [lcSearch, setLcSearch] = useState<string>('');
+  const [fgMemberName1Search, setFgMemberName1Search] = useState<string>('');
+  const [fgMemberName2Search, setFgMemberName2Search] = useState<string>('');
+  const [lcTableInfo, setLcTableInfo] = useState<DataType[]>([]);
+
+  const [openYearSearch, setOpenYearSearch] = useState<boolean>(false);
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<React.Key>>([]);
+
+  useEffect(() => {
+    setOpenYearSearch(year <= 0 ? true : false);
+
+    if (year != -1)
+      lcRepo.getLcInfoListWithFgMemberNameBySearch(year, '', '', '').then(response => {
+        setLcTableInfo(
+          /*
+          response.map<LcInfoWithFgMemberName>((value, index) => {
+            return Object.assign({ key: index }, value);
+          })
+          */
+          response
+        );
+      });
+  }, [year]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name == 'yearSearch') {
+      setYearSearch(parseInt(e.target.value));
+    } else if (e.target.name == 'lcSearch') {
+      setLcSearch(e.target.value);
+    } else if (e.target.name == 'fg1Search') {
+      setFgMemberName1Search(e.target.value);
+    } else if (e.target.name == 'fg2Search') {
+      setFgMemberName2Search(e.target.value);
+    }
+  };
+
+  const onSearchClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    lcRepo
+      .getLcInfoListWithFgMemberNameBySearch(
+        yearSearch == -1 ? 0 : yearSearch,
+        lcSearch.trim(),
+        fgMemberName1Search.trim(),
+        fgMemberName2Search.trim()
+      )
+      .then(response => {
+        setLcTableInfo(
+          response
+          /*
+          response.map<LcInfoWithFgMemberName>((value, index) => {
+            return Object.assign({ key: index }, value);
+          })
+          */
+        );
+      });
+  };
+
+  const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const lcIdxList: number[] = selectedRowKeys as number[];
+
+    console.log(lcIdxList);
+    if (!lcIdxList.length) {
+      alert('삭제할 LC 정보가 없습니다.');
+    } else {
+      lcRepo
+        .deleteLcInfoByLcIdxList(lcIdxList)
+        .then(response => {
+          if (response) {
+            setSelectedRowKeys([]);
+            alert('LC 정보가 성공적으로 삭제되었습니다.');
+          } else {
+            alert('오류가 발생하였습니다.');
+          }
+        })
+        .catch(e => {
+          alert('오류가 발생하였습니다.');
+        });
+
+      setLcTableInfo(
+        (lcTableInfo as LcInfoWithFgMemberName[]).filter(
+          data => !lcIdxList.includes(data.key as number)
+        )
+      );
+    }
+  };
+
   return (
     <div>
-      {year}
-      <table>
-        <thead>
-          <tr>
-            <th>년도</th>
-            <th>LC</th>
-            <th>담당자1</th>
-            <th>담당자2</th>
-          </tr>
-        </thead>
-        <TableContainer
-          tableData={lcTableInfo}
-          columnInfoList={columnInfoList}
-          clickedTableCellIndex={clickedTableCellIndex}
-          tableCellInput={tableCellInput}
-          eventHandler={{ onDivClick, onInputChange, onKeyPress }}
-        ></TableContainer>
-      </table>
-      ;
+      <Form layout="inline" style={{ width: '100%', justifyContent: 'space-between' }}>
+        <Form.Item style={{ margin: 0 }}>
+          <Form layout="inline" initialValues={{ layout: 'inline' }}>
+            {openYearSearch ? (
+              <Form.Item label="년도">
+                <Input
+                  value={yearSearch ? yearSearch : ''}
+                  name="yearSearch"
+                  style={{ width: 130 }}
+                  onChange={onChange}
+                  allowClear
+                ></Input>
+              </Form.Item>
+            ) : (
+              <></>
+            )}
+            <Form.Item label="LC">
+              <Input name="lcSearch" style={{ width: 130 }} onChange={onChange} allowClear></Input>
+            </Form.Item>
+            <Form.Item label="FG명 1">
+              <Input name="fg1Search" style={{ width: 130 }} onChange={onChange} allowClear></Input>
+            </Form.Item>
+            <Form.Item label="FG명 2">
+              <Input name="fg2Search" style={{ width: 130 }} onChange={onChange} allowClear></Input>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" onClick={onSearchClick}>
+                {yearSearch > 0 || lcSearch || fgMemberName1Search || fgMemberName2Search
+                  ? '검색'
+                  : '전체 검색'}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Form.Item>
+        <Form.Item style={{ margin: 0 }}>
+          <Form layout="inline" initialValues={{ layout: 'inline' }}>
+            <Form.Item name={'insertLc'}>
+              <LcAddComponent>
+                <Button type="primary">추가</Button>
+              </LcAddComponent>
+            </Form.Item>
+            <Form.Item name={'deleteLc'}>
+              <Button type="primary" onClick={onDeleteClick} disabled={!selectedRowKeys.length}>
+                삭제
+              </Button>
+            </Form.Item>
+          </Form>
+        </Form.Item>
+      </Form>
+      <br />
+      <EditableTable
+        columns={columns}
+        dataSource={lcTableInfo}
+        setDataSource={setLcTableInfo}
+        selectedRowKeys={selectedRowKeys}
+        setSelectedRowKeys={setSelectedRowKeys}
+      ></EditableTable>
     </div>
   );
 };

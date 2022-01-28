@@ -42,17 +42,20 @@
             parameterType="Integer"
             resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberTableInfoDTO"
     >
-        SELECT S1.fgMemberId, generation, fgMemberName, position, state, contact, mail, isAdmin, registerApproval
+        SELECT S1.fgMemberId AS `key`, S1.fgMemberId AS fgMemberId, generation, fgMemberName, position, state, contact, mail, isAdmin, registerApproval
         FROM
         (
-            SELECT *
-            FROM fg_member_info
-            WHERE generation=${generation}
+        SELECT *
+        FROM fg_member_info
+        WHERE generation > 0
+        <if test="generation != null and generation != 0">
+            AND generation=${generation}
+        </if>
         ) AS S1
         LEFT JOIN
         (
-            SELECT *
-            FROM account_info
+        SELECT *
+        FROM account_info
         ) AS S2
         ON S1.fgMemberId=S2.fgMemberId
     </select>
@@ -62,5 +65,59 @@
     >
         SELECT *
         FROM fg_member_info
+    </select>
+
+    <select id="findByGenerationAndPositionAndFgMemberName"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberSearchInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberSearchInfoDTO">
+
+        SELECT fgMemberId AS `key`, generation, fgMemberId, fgMemberName, position
+        FROM fg_member_info
+        WHERE generation > 0
+        <if test="generation != null and generation != 0">
+            AND generation=${generation}
+        </if>
+        <if test="position != null and position != ''">
+            AND position='${position}'
+        </if>
+        <if test="fgMemberName != null and fgMemberName != ''">
+            AND fgMemberName LIKE '%${fgMemberName}%'
+        </if>
+    </select>
+
+    <select id="findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState"
+            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberTableInfoDTO"
+    >
+        SELECT S1.fgMemberId AS `key`, S1.fgMemberId AS fgMemberId, S1.generation, S1.fgMemberName, S1.position, S1.state, S1.contact, S1.mail, S2.isAdmin, S2.registerApproval
+        FROM
+        (
+            (
+                SELECT *
+                FROM fg_member_info
+                WHERE generation > 0
+                <if test='fgMemberId!=null and fgMemberId!=0'>
+                    AND fgMemberId LIKE '%${fgMemberId}%'
+                </if>
+                <if test='generation!=null and generation!=0'>
+                    AND generation LIKE '%${generation}%'
+                </if>
+                <if test='fgMemberName!=null and !fgMemberName.equals("")'>
+                    AND fgMemberName LIKE '%${fgMemberName}%'
+                </if>
+                <if test='position!=null and !position.equals("")'>
+                    AND position LIKE '%${position}%'
+                </if>
+                <if test='state!=null and !state.equals("")'>
+                    AND state LIKE '%${state}%'
+                </if>
+            ) AS S1
+            LEFT JOIN
+            (
+                SELECT *
+                FROM account_info
+            ) AS S2
+            ON S1.fgMemberId=S2.fgMemberId
+        )
     </select>
 </mapper>
