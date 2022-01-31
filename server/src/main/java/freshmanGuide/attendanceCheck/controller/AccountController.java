@@ -1,5 +1,6 @@
 package freshmanGuide.attendanceCheck.controller;
 
+import freshmanGuide.attendanceCheck.DTO.AccountDTO;
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +18,25 @@ public class AccountController {
 
     @PostMapping("post/account-info")
     @ResponseBody
-    public Boolean postAccountInfo(@RequestBody BasicDTO.AccountInfoDTO dto) {
+    public Boolean postAccountInfo(@RequestBody AccountDTO.AccountInfoDTO dto) {
         return accountService.postAccountInfoService(dto);
     }
 
     @GetMapping("get/account-info")
     @ResponseBody
-    public BasicDTO.AccountInfoDTO getAccountInfo(@RequestParam("account") String account) {
+    public AccountDTO.AccountInfoDTO getAccountInfo(@RequestParam("account") String account) {
         return accountService.getAccountInfoService(account);
     }
 
     @GetMapping("get/is-login-info-correct")
     @ResponseBody
-    public Boolean getIsLoginInfoCorrect(BasicDTO.LoginInfoDTO dto) {
+    public Boolean getIsLoginInfoCorrect(AccountDTO.LoginInfoDTO dto) {
         return accountService.getIsLoginInfoCorrectService(dto);
     }
 
     @PutMapping("put/account-info")
     @ResponseBody
-    public Boolean putAccountInfo(@RequestBody BasicDTO.PutAccountInfoDTO dto) {
+    public Boolean putAccountInfo(@RequestBody AccountDTO.PutAccountInfoDTO dto) {
         return accountService.putAccountInfoService(dto);
     }
 }

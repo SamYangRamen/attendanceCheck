@@ -1,6 +1,8 @@
 package freshmanGuide.attendanceCheck.repository;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.EventDTO;
+import freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO;
 import freshmanGuide.attendanceCheck.mapper.EventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,15 +21,15 @@ public class EventRepository {
         this.eventMapper = eventMapper;
     }
 
-    public void postEventInfo(BasicDTO.EventInfoDTO dto) {
+    public void postEventInfo(EventDTO.EventInfoDTO dto) {
         eventMapper.save(dto);
     }
 
-    public List<BasicDTO.EventInfoDTO> getEventInfoList() {
+    public List<EventDTO.EventInfoDTO> getEventInfoList() {
         return eventMapper.findAll();
     }
 
-    public void deleteEventInfo(BasicDTO.EventInfoDTO dto) {
+    public void deleteEventInfo(EventDTO.EventInfoDTO dto) {
         eventMapper.deleteByEventNameAndEventDate(dto);
     }
 

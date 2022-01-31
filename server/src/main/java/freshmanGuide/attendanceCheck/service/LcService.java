@@ -1,21 +1,22 @@
 package freshmanGuide.attendanceCheck.service;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 public interface LcService {
 
-    Boolean postLcRangeService(BasicDTO.PostLcRangeDTO dto);
+    Boolean postLcRangeService(LcDTO.PostLcRangeDTO dto);
 
-    List<BasicDTO.LcInfoDTO> getLcListInfoByYearService(Integer year);
+    List<LcDTO.LcInfoDTO> getLcListInfoByYearService(Integer year);
 
     List<String> getLcListByYearService(Integer year);
 
-    List<BasicDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearchService(Integer year, String lc, String fgMemberName1, String fgMemberName2);
+    List<LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearchService(Integer year, String lc, String fgMemberName1, String fgMemberName2);
 
-    Boolean putLcInfoService(BasicDTO.PutLcInfoDTO dto);
+    Boolean putLcInfoService(LcDTO.PutLcInfoDTO dto);
 
     Boolean deleteLcInfoByLcIdxListService(List<Integer> lcIdxList);
 }

@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.mapper;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -8,21 +9,21 @@ import java.util.List;
 @Mapper
 public interface FgMemberMapper {
 
-    void save(BasicDTO.FgMemberInfoDTO dto);
+    void save(FgMemberDTO.FgMemberInfoDTO dto);
 
-    BasicDTO.FgMemberInfoDTO findByFgMemberId(Integer fgMemberId);
+    FgMemberDTO.FgMemberInfoDTO findByFgMemberId(Integer fgMemberId);
 
-    void updateByFgMemberId(BasicDTO.PutFgMemberInfoDTO dto);
+    void updateByFgMemberId(FgMemberDTO.PutFgMemberInfoDTO dto);
 
-    List<BasicDTO.FgMemberInfoDTO> findAll();
+    List<FgMemberDTO.FgMemberInfoDTO> findAll();
 
-    List<BasicDTO.FgMemberInfoDTO> findByGeneration(Integer Generation);
+    List<FgMemberDTO.FgMemberInfoDTO> findByGeneration(Integer Generation);
 
-    List<BasicDTO.FgMemberTableInfoDTO> findFgMemberInfoTableByGeneration(Integer generation);
+    List<FgMemberDTO.FgMemberTableInfoDTO> findFgMemberInfoTableByGeneration(Integer generation);
 
-    List<BasicDTO.FgMemberSearchInfoDTO> findByGenerationAndPositionAndFgMemberName(BasicDTO.FgMemberSearchInfoDTO dto);
+    List<FgMemberDTO.FgMemberSearchInfoDTO> findByGenerationAndPositionAndFgMemberName(FgMemberDTO.FgMemberSearchInfoDTO dto);
 
-    List<BasicDTO.FgMemberTableInfoDTO> findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState(BasicDTO.FgMemberInfoDTO dto);
+    List<FgMemberDTO.FgMemberTableInfoDTO> findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState(FgMemberDTO.FgMemberInfoDTO dto);
 
     void deleteByFgMemberId(Integer fgMemberId);
 }

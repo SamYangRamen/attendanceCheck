@@ -1,4 +1,6 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
+import org.junit.jupiter.api.Assertions;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.repository.FgMemberRepository;
@@ -23,7 +25,7 @@ public class FgMemberRepositoryTests {
     public void test() {
         try {
             fgMemberRepository.postFgMemberInfo(
-                    new BasicDTO.FgMemberInfoDTO(
+                    new FgMemberDTO.FgMemberInfoDTO(
                             2013999999,
                             999,
                             "김성보",
@@ -35,7 +37,7 @@ public class FgMemberRepositoryTests {
             );
 
             try {
-                BasicDTO.FgMemberInfoDTO data = fgMemberRepository.getFgMemberInfo(2013999999);
+                FgMemberDTO.FgMemberInfoDTO data = fgMemberRepository.getFgMemberInfo(2013999999);
                 Assertions.assertEquals(data.getContact(), "010-1111-1111");
                 Assertions.assertEquals(data.getMail(), "seongbo_kim@test.com");
             } catch (Exception e) {
@@ -43,7 +45,7 @@ public class FgMemberRepositoryTests {
             }
 
             try {
-                List<BasicDTO.FgMemberInfoDTO> data = fgMemberRepository.getFgMemberInfoListByGeneration(999);
+                List<FgMemberDTO.FgMemberInfoDTO> data = fgMemberRepository.getFgMemberInfoListByGeneration(999);
                 Assertions.assertEquals(data.get(0).getContact(), "010-1111-1111");
                 Assertions.assertEquals(data.get(0).getMail(), "seongbo_kim@test.com");
             } catch (Exception e) {

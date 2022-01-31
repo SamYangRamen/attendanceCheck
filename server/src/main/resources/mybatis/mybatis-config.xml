@@ -6,7 +6,6 @@
         <mapper resource="EventMapper.xml" />
         <mapper resource="FgMemberMapper.xml" />
         <mapper resource="LcAttendanceCheckMapper.xml" />
-        <mapper resource="LcManagerMapper.xml" />
         <mapper resource="LcMapper.xml" />
         <mapper resource="LcMemberMapper.xml" />
     </mappers>

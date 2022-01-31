@@ -1,5 +1,6 @@
 package freshmanGuide.attendanceCheck.repository;
 
+import freshmanGuide.attendanceCheck.DTO.AccountDTO;
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,15 @@ public class AccountRepository {
         this.accountMapper = accountMapper;
     }
 
-    public void postAccountInfo(BasicDTO.AccountInfoDTO dto) {
+    public void postAccountInfo(AccountDTO.AccountInfoDTO dto) {
         accountMapper.save(dto);
     }
 
-    public BasicDTO.AccountInfoDTO getAccountInfoByFgMemberId(Integer fgMemberId) {
+    public AccountDTO.AccountInfoDTO getAccountInfoByFgMemberId(Integer fgMemberId) {
         return accountMapper.findByFgMemberId(fgMemberId);
     }
 
-    public BasicDTO.AccountInfoDTO getAccountInfoByMail(String mail) {
+    public AccountDTO.AccountInfoDTO getAccountInfoByMail(String mail) {
         return accountMapper.findByMail(mail);
     }
 
@@ -31,11 +32,11 @@ public class AccountRepository {
         return accountMapper.findPasswordByFgMemberId(fgMemberId);
     }
 
-    public BasicDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(Integer fgMemberId) {
+    public AccountDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(Integer fgMemberId) {
         return accountMapper.findAccountCheckInfoByFgMemberId(fgMemberId);
     }
 
-    public BasicDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByMail(String mail) {
+    public AccountDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByMail(String mail) {
         return accountMapper.findAccountCheckInfoByMail(mail);
     }
 
@@ -47,7 +48,7 @@ public class AccountRepository {
         accountMapper.deleteByFgMemberId(fgMemberId);
     }
 
-    public Boolean putAccountInfo(BasicDTO.PutAccountInfoDTO dto) {
+    public Boolean putAccountInfo(AccountDTO.PutAccountInfoDTO dto) {
         try {
             if (dto.getColumnName().equals("isAdmin")) {
                 accountMapper.updateIsAdmin(dto.getFgMemberId());

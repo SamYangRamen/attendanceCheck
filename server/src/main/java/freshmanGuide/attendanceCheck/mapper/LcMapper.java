@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.mapper;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -8,19 +9,19 @@ import java.util.List;
 @Mapper
 public interface LcMapper {
 
-    void save(BasicDTO.LcDTO dto);
+    void save(LcDTO.LcFKDTO dto);
 
-    List<BasicDTO.LcInfoDTO> findAll();
+    List<LcDTO.LcInfoDTO> findAll();
 
     List<String> findLcByYear(Integer year);
 
-    void deleteByYearAndLc(BasicDTO.LcDTO dto);
+    void deleteByYearAndLc(LcDTO.LcFKDTO dto);
 
-    List<BasicDTO.LcInfoDTO> findAllByYear(Integer year);
+    List<LcDTO.LcInfoDTO> findAllByYear(Integer year);
 
-    List <BasicDTO.LcInfoWithFgMemberNameDTO> findByYearAndLcAndFgMemberNames(BasicDTO.LcSearchInfoDTO dto);
+    List <LcDTO.LcInfoWithFgMemberNameDTO> findByYearAndLcAndFgMemberNames(LcDTO.LcSearchInfoDTO dto);
 
-    void updateFgMemberNameByFgMemberId(BasicDTO.PutLcInfoDTO dto);
+    void updateFgMemberNameByFgMemberId(LcDTO.PutLcInfoDTO dto);
 
     void deleteByLcIdx(Integer lcIdx);
 }

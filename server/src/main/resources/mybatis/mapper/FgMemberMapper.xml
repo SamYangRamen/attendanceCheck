@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.FgMemberMapper">
-    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberInfoDTO">
         INSERT INTO fg_member_info
         VALUES (#{fgMemberId}, #{generation}, #{fgMemberName}, #{position}, #{state}, #{contact}, #{mail})
     </insert>
 
     <select id="findByFgMemberId"
             parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberInfoDTO"
     >
         SELECT fgMemberId, generation, fgMemberName, position, state, contact, mail
         FROM fg_member_info
@@ -17,7 +17,7 @@
     </select>
 
     <update id="updateByFgMemberId"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$PutFgMemberInfoDTO"
+            parameterType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$PutFgMemberInfoDTO"
     >
         UPDATE fg_member_info
         SET ${columnName}=#{value}
@@ -31,7 +31,7 @@
 
     <select id="findByGeneration"
             parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberInfoDTO"
     >
         SELECT *
         FROM fg_member_info
@@ -40,7 +40,7 @@
 
     <select id="findFgMemberInfoTableByGeneration"
             parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberTableInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberTableInfoDTO"
     >
         SELECT S1.fgMemberId AS `key`, S1.fgMemberId AS fgMemberId, generation, fgMemberName, position, state, contact, mail, isAdmin, registerApproval
         FROM
@@ -61,15 +61,15 @@
     </select>
 
     <select id="findAll"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberInfoDTO"
     >
         SELECT *
         FROM fg_member_info
     </select>
 
     <select id="findByGenerationAndPositionAndFgMemberName"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberSearchInfoDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberSearchInfoDTO">
+            parameterType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberSearchInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberSearchInfoDTO">
 
         SELECT fgMemberId AS `key`, generation, fgMemberId, fgMemberName, position
         FROM fg_member_info
@@ -86,8 +86,8 @@
     </select>
 
     <select id="findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberInfoDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$FgMemberTableInfoDTO"
+            parameterType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberTableInfoDTO"
     >
         SELECT S1.fgMemberId AS `key`, S1.fgMemberId AS fgMemberId, S1.generation, S1.fgMemberName, S1.position, S1.state, S1.contact, S1.mail, S2.isAdmin, S2.registerApproval
         FROM

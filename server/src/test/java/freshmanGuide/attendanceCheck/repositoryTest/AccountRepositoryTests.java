@@ -1,12 +1,13 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
-import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.AccountDTO;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
 import freshmanGuide.attendanceCheck.repository.AccountRepository;
 import freshmanGuide.attendanceCheck.repository.FgMemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 @SpringBootTest
 public class AccountRepositoryTests {
@@ -27,7 +28,7 @@ public class AccountRepositoryTests {
     public void test() {
         try {
             fgMemberRepository.postFgMemberInfo(
-                    new BasicDTO.FgMemberInfoDTO(
+                    new FgMemberDTO.FgMemberInfoDTO(
                             2013999999,
                             999,
                             "김성보",
@@ -40,7 +41,7 @@ public class AccountRepositoryTests {
 
             try {
                 accountRepository.postAccountInfo(
-                        new BasicDTO.AccountInfoDTO(
+                        new AccountDTO.AccountInfoDTO(
                                 2013999999,
                                 "testPassword",
                                 "testSalt",
@@ -50,19 +51,19 @@ public class AccountRepositoryTests {
                 );
 
 
-                assertEquals(accountRepository.getPassword(2013999999), "testPassword");
+                Assertions.assertEquals(accountRepository.getPassword(2013999999), "testPassword");
 
                 try {
                     accountRepository.putIsAdmin(2013999999);
 
-                    assertEquals(accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(2013999999).getIsAdmin(), true);
+                    Assertions.assertEquals(accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(2013999999).getIsAdmin(), true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 try {
                     accountRepository.deleteAccountInfo(2013999999);
-                    assertEquals(accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(2013999999), null);
+                    Assertions.assertEquals(accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(2013999999), null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -72,7 +73,7 @@ public class AccountRepositoryTests {
             }
 
             fgMemberRepository.deleteFgMemberInfo(2013999999);
-            assertEquals(fgMemberRepository.getFgMemberInfo(2013999999), null);
+            Assertions.assertEquals(fgMemberRepository.getFgMemberInfo(2013999999), null);
         } catch (Exception e) {
             e.printStackTrace();
             accountRepository.deleteAccountInfo(2013999999);

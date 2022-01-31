@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.repository;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO;
 import freshmanGuide.attendanceCheck.mapper.LcAttendanceCheckMapper;
 import org.springframework.stereotype.Repository;
 
@@ -33,11 +34,11 @@ public class LcAttendanceCheckRepository {
         }
     }
 
-    public void postLcAttendanceCheckInfo(BasicDTO.LcAttendanceCheckInfoDTO dto) {
+    public void postLcAttendanceCheckInfo(LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
         lcAttendanceCheckMapper.save(dto);
     }
 
-    public BasicDTO.LcAttendanceCheckInfoDTO getMostRecentAttendanceCheckInfo(Integer lcMemberId) {
+    public LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO getMostRecentAttendanceCheckInfo(Integer lcMemberId) {
         return lcAttendanceCheckMapper.findFirstByOrderByLcMemberIdDesc(lcMemberId);
     }
 

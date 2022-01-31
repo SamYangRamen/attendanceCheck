@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMapper">
-    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcDTO">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcFKDTO">
         INSERT INTO lc_info
         VALUES
         (
@@ -16,7 +16,7 @@
         )
     </insert>
 
-    <select id="findAll" resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO">
+    <select id="findAll" resultType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcInfoDTO">
         SELECT year, LC, fgMemberId1, fgMemberId2, fgMemberId3, fgMemberId4
         FROM lc_info
     </select>
@@ -32,7 +32,7 @@
 
     <select id="findAllByYear"
             parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcInfoDTO"
     >
         SELECT year, lc, fgMemberId1, fgMemberId2, fgMemberId3, fgMemberId4
         FROM lc_info
@@ -40,14 +40,14 @@
         ORDER BY year, lc
     </select>
 
-    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcDTO">
+    <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcFKDTO">
         DELETE FROM lc_info
         WHERE year=#{year} AND lc=#{lc}
     </delete>
 
     <select id="findByYearAndLcAndFgMemberNames"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcSearchInfoDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoWithFgMemberNameDTO">
+            parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcSearchInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcInfoWithFgMemberNameDTO">
         SELECT lcIdx as `key`, year, lc,
             (SELECT fgMemberName FROM fg_member_info WHERE fgMemberId=fgMemberId1) as fgMemberName1,
             (SELECT fgMemberName FROM fg_member_info WHERE fgMemberId=fgMemberId2) as fgMemberName2,
@@ -80,7 +80,7 @@
     </select>
 
     <update id="updateFgMemberNameByFgMemberId"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$PutLcInfoDTO"
+            parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$PutLcInfoDTO"
     >
         UPDATE lc_info
         SET ${columnName}=#{fgMemberId}

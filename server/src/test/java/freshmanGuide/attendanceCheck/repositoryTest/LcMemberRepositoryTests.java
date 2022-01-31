@@ -1,6 +1,8 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.LcDTO;
+import freshmanGuide.attendanceCheck.DTO.LcMemberDTO;
 import freshmanGuide.attendanceCheck.repository.LcMemberRepository;
 import freshmanGuide.attendanceCheck.repository.LcRepository;
 import org.junit.jupiter.api.Assertions;
@@ -26,8 +28,8 @@ public class LcMemberRepositoryTests {
     @Test
     public void test() {
         try {
-            lcRepository.postLc(new BasicDTO.LcInfoDTO(2099, "999"));
-            lcMemberRepository.postLcMemberInfo(new BasicDTO.LcMemberInfoDTO(
+            lcRepository.postLc(new LcDTO.LcFKDTO(2099, "999"));
+            lcMemberRepository.postLcMemberInfo(new LcMemberDTO.LcMemberInfoDTO(
                     2020999999,
                     "전지현",
                     2099,
@@ -36,15 +38,15 @@ public class LcMemberRepositoryTests {
                     "010-2222-2222",
                     "bbb@naver.com"
             ));
-            BasicDTO.LcMemberInfoDTO data = lcMemberRepository.getLcMemberInfo(2020999999);
+            LcMemberDTO.LcMemberInfoDTO data = lcMemberRepository.getLcMemberInfo(2020999999);
             Assertions.assertEquals(data.getContact(), "010-2222-2222");
 
-            lcRepository.deleteLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+            lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
             Assertions.assertEquals(lcMemberRepository.getLcMemberInfo(2020999999), null);
         } catch (Exception e) {
             e.printStackTrace();
             lcMemberRepository.deleteLcMemberInfo(2020999999);
-            lcRepository.deleteLcInfo(new BasicDTO.LcInfoDTO(2099, "999"));
+            lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
         }
     }
 }

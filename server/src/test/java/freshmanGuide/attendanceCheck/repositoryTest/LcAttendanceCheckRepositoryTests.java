@@ -1,6 +1,6 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
-import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.*;
 import freshmanGuide.attendanceCheck.repository.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,9 +39,9 @@ public class LcAttendanceCheckRepositoryTests {
             Date timeStamp = transFormat.parse(testDateString);
 
             try {
-                lcRepository.postLc(new BasicDTO.LcDTO(2099, "999"));
+                lcRepository.postLc(new LcDTO.LcFKDTO(2099, "999"));
 
-                lcMemberRepository.postLcMemberInfo(new BasicDTO.LcMemberInfoDTO(
+                lcMemberRepository.postLcMemberInfo(new LcMemberDTO.LcMemberInfoDTO(
                         2020999999,
                         "전지현",
                         2099,
@@ -51,22 +51,22 @@ public class LcAttendanceCheckRepositoryTests {
                         "bbb@naver.com"
                 ));
 
-                eventRepository.postEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.postEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
 
-                lcAttendanceCheckRepository.postLcAttendanceCheckInfo(new BasicDTO.LcAttendanceCheckInfoDTO(
+                lcAttendanceCheckRepository.postLcAttendanceCheckInfo(new LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO(
                         2020999999,
                         "testEventName",
                         timeStamp,
                         "출석"
                 ));
 
-                BasicDTO.LcAttendanceCheckInfoDTO data = lcAttendanceCheckRepository.getMostRecentAttendanceCheckInfo(2020999999);
+                LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO data = lcAttendanceCheckRepository.getMostRecentAttendanceCheckInfo(2020999999);
 
                 Assertions.assertEquals(data.getEventName(), "testEventName");
                 Assertions.assertEquals(data.getLcMemberId(), 2020999999);
 
-                lcRepository.deleteLcInfo(new BasicDTO.LcDTO(2099, "999"));
-                eventRepository.deleteEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
+                lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
+                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
 
                 Assertions.assertEquals(lcRepository.getLcListByYear(2099).isEmpty(), true);
                 Assertions.assertEquals(lcMemberRepository.getLcMemberInfo(2020999999), null);
@@ -74,9 +74,9 @@ public class LcAttendanceCheckRepositoryTests {
                 Assertions.assertEquals(lcAttendanceCheckRepository.getMostRecentAttendanceCheckInfo(2020999999), null);
             } catch (Exception e) {
                 e.printStackTrace();
-                lcRepository.deleteLcInfo(new BasicDTO.LcDTO(2099, "999"));
+                lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
                 lcMemberRepository.deleteLcMemberInfo(2020999999);
-                eventRepository.deleteEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
                 lcAttendanceCheckRepository.deleteAttendanceCheckInfo(2020999999);
             }
         } catch (Exception e) {

@@ -1,6 +1,8 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.EventDTO;
+import freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO;
 import freshmanGuide.attendanceCheck.repository.EventRepository;
 import freshmanGuide.attendanceCheck.service.AttendanceCheckService;
 import org.junit.jupiter.api.Assertions;
@@ -36,10 +38,10 @@ public class EventRepositoryTests {
             Date timeStamp = transFormat.parse(testDateString);
 
             try {
-                eventRepository.postEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.postEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
 
                 try {
-                    List<BasicDTO.EventInfoDTO> data = eventRepository.getEventInfoList();
+                    List<EventDTO.EventInfoDTO> data = eventRepository.getEventInfoList();
                     Assertions.assertEquals(data.get(0).getEventName(), "testEventName");
                     Assertions.assertEquals(data.get(0).getEventDate(), timeStamp);
                 } catch (Exception e) {
@@ -47,14 +49,14 @@ public class EventRepositoryTests {
                 }
 
                 try {
-                    eventRepository.deleteEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
+                    eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
                     Assertions.assertEquals(eventRepository.getEventNameListByEventDate(timeStamp).isEmpty(), true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                eventRepository.deleteEventInfo(new BasicDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
             }
         } catch (Exception e) {
             e.printStackTrace();

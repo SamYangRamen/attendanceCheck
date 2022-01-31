@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "%7e//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMemberMapper">
-    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO">
+    <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO">
         INSERT INTO lc_member_info
         VALUES
         (
@@ -17,7 +17,7 @@
 
     <select id="findByLcMemberId"
             parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO"
     >
         SELECT lcMemberId, lcMemberName, year, lc, isPeerLeader, contact, mail
         FROM
@@ -40,15 +40,15 @@
     </delete>
 
     <select id="findAll"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO"
     >
         SELECT *
         FROM lc_member_info
     </select>
 
     <select id="findByYearAndLc"
-            parameterType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcInfoDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.BasicDTO$LcMemberInfoDTO"
+            parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcFKDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO"
     >
         SELECT lcMemberId, lcMemberName, year, lc, isPearLeader, contact, mail
         FROM
@@ -63,6 +63,43 @@
             WHERE year=#{year} AND lc=#{lc}
         ) AS S2
         ON S1.lcIdx=S2.lcIdx
+    </select>
+
+    <select id="findByYearAndLcAndDepartmentAndGenderAndLcMemberName"
+            parameterType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberTableInfoDTO"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberTableInfoDTO"
+    >
+        SELECT S2.lcMemberId AS `key`, S1.year, S1.lc, S2.department, S2.gender, S2.lcMemberName
+        FROM
+        (
+            (
+                SELECT *
+                FROM lc_info
+                WHERE TRUE
+                <if test='year!=null and year!=0'>
+                    AND year LIKE '%${year}%'
+                </if>
+                <if test='lc!=null and !lc.equals("")'>
+                    AND lc LIKE '%${lc}%'
+                </if>
+            ) AS S1
+            LEFT JOIN
+            (
+                SELECT *
+                FROM lc_member_info
+                WHERE True
+                <if test='department!=null and !department.equals("")'>
+                    AND department LIKE '%${department}%'
+                </if>
+                <if test='gender!=null and !gender.equals("")'>
+                    AND gender LIKE '%${gender}%'
+                </if>
+                <if test='lcMemberName!=null and !lcMemberName.equals("")'>
+                    AND lcMemberName LIKE '%${lcMemberName}%'
+                </if>
+            ) AS S2
+            ON S1.lcIdx=S2.lcIdx
+        )
     </select>
 
 </mapper>

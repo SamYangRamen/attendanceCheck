@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.controller;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import freshmanGuide.attendanceCheck.service.LcService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class LcController {
 
     @PostMapping("post/lc-info")
     @ResponseBody
-    public Boolean postLcRange(@RequestBody BasicDTO.PostLcRangeDTO dto) {
+    public Boolean postLcRange(@RequestBody LcDTO.PostLcRangeDTO dto) {
         return lcService.postLcRangeService(dto);
     }
 
@@ -33,18 +34,18 @@ public class LcController {
 
     @GetMapping("get/lc-info-list-by-year")
     @ResponseBody
-    public List<BasicDTO.LcInfoDTO> getLcInfoListByYear(@RequestParam Integer year) {
+    public List<LcDTO.LcInfoDTO> getLcInfoListByYear(@RequestParam Integer year) {
         return lcService.getLcListInfoByYearService(year);
     }
 
     @GetMapping("get/lc-info-list-by-search")
     @ResponseBody
-    public List<BasicDTO.LcInfoWithFgMemberNameDTO> getLcInfoListBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String fgMemberName1, @RequestParam String fgMemberName2) {
+    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcInfoListBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String fgMemberName1, @RequestParam String fgMemberName2) {
         return lcService.getLcListInfoBySearchService(year, lc, fgMemberName1, fgMemberName2);
     }
 
     @PutMapping("put/lc-info")
-    public Boolean putLcInfo(@RequestBody BasicDTO.PutLcInfoDTO dto) {
+    public Boolean putLcInfo(@RequestBody LcDTO.PutLcInfoDTO dto) {
         return lcService.putLcInfoService(dto);
     }
 

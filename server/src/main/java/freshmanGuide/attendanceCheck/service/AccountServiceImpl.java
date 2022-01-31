@@ -1,5 +1,6 @@
 package freshmanGuide.attendanceCheck.service;
 
+import freshmanGuide.attendanceCheck.DTO.AccountDTO;
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Boolean postAccountInfoService(BasicDTO.AccountInfoDTO dto) {
+    public Boolean postAccountInfoService(AccountDTO.AccountInfoDTO dto) {
         try {
             accountRepository.postAccountInfo(dto);
             return true;
@@ -28,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public BasicDTO.AccountInfoDTO getAccountInfoService(String account) {
+    public AccountDTO.AccountInfoDTO getAccountInfoService(String account) {
         try {
             Integer fgMemberId = Integer.parseInt(account);
             return accountRepository.getAccountInfoByFgMemberId(fgMemberId);
@@ -46,9 +47,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Boolean getIsLoginInfoCorrectService(BasicDTO.LoginInfoDTO dto) {
+    public Boolean getIsLoginInfoCorrectService(AccountDTO.LoginInfoDTO dto) {
         if(Pattern.matches(dto.getAccount(), "^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+.[a-zA-Z]{2,6}$")) {
-            BasicDTO.AccountCheckInfoDTO data = accountRepository.getPasswordAndIsAdminAndRegisterApprovalByMail(dto.getAccount());
+            AccountDTO.AccountCheckInfoDTO data = accountRepository.getPasswordAndIsAdminAndRegisterApprovalByMail(dto.getAccount());
 
             if(data == null)
                 return false;
@@ -62,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         if(Pattern.matches(dto.getAccount(), "^[0-9]{10}$")) {
-            BasicDTO.AccountCheckInfoDTO data = accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(Integer.parseInt(dto.getAccount()));
+            AccountDTO.AccountCheckInfoDTO data = accountRepository.getPasswordAndIsAdminAndRegisterApprovalByFgMemberId(Integer.parseInt(dto.getAccount()));
 
             if(data == null)
                 return false;
@@ -79,7 +80,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Boolean putAccountInfoService(BasicDTO.PutAccountInfoDTO dto) {
+    public Boolean putAccountInfoService(AccountDTO.PutAccountInfoDTO dto) {
         return accountRepository.putAccountInfo(dto);
     }
 }

@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.repository;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import freshmanGuide.attendanceCheck.mapper.LcMapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +16,11 @@ public class LcRepository {
         this.lcMapper = lcMapper;
     }
 
-    public void postLc(BasicDTO.LcDTO dto) {
+    public void postLc(LcDTO.LcFKDTO dto) {
         lcMapper.save(dto);
     }
 
-    public List<BasicDTO.LcInfoDTO> getLcInfoList() {
+    public List<LcDTO.LcInfoDTO> getLcInfoList() {
         return lcMapper.findAll();
     }
 
@@ -27,17 +28,17 @@ public class LcRepository {
         return lcMapper.findLcByYear(year);
     }
 
-    public List<BasicDTO.LcInfoDTO> getLcInfoListByYear(Integer year) { return lcMapper.findAllByYear(year); }
+    public List<LcDTO.LcInfoDTO> getLcInfoListByYear(Integer year) { return lcMapper.findAllByYear(year); }
 
-    public void deleteLcInfo(BasicDTO.LcDTO dto) {
+    public void deleteLcInfo(LcDTO.LcFKDTO dto) {
         lcMapper.deleteByYearAndLc(dto);
     }
 
-    public List <BasicDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearch(BasicDTO.LcSearchInfoDTO dto) {
+    public List <LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearch(LcDTO.LcSearchInfoDTO dto) {
         return lcMapper.findByYearAndLcAndFgMemberNames(dto);
     }
 
-    public void updateFgMemberNameByFgMemberId(BasicDTO.PutLcInfoDTO dto) {
+    public void updateFgMemberNameByFgMemberId(LcDTO.PutLcInfoDTO dto) {
         lcMapper.updateFgMemberNameByFgMemberId(dto);
     }
 

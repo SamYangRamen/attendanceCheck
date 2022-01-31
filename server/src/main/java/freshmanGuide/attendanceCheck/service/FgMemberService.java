@@ -1,24 +1,25 @@
 package freshmanGuide.attendanceCheck.service;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
 
 import java.util.List;
 
 public interface FgMemberService {
 
-    Boolean postFgMemberInfoService(BasicDTO.FgMemberInfoDTO dto);
+    Boolean postFgMemberInfoService(FgMemberDTO.FgMemberInfoDTO dto);
 
-    Boolean getIsFgMemberInfoCorrectService(BasicDTO.FgMemberInfoDTO dto);
+    Boolean getIsFgMemberInfoCorrectService(FgMemberDTO.FgMemberInfoDTO dto);
 
-    Boolean putFgMemberInfoService(BasicDTO.PutFgMemberInfoDTO dto);
+    Boolean putFgMemberInfoService(FgMemberDTO.PutFgMemberInfoDTO dto);
 
-    List<BasicDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation);
+    List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation);
 
-    List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation);
+    List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation);
 
-    List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(BasicDTO.FgMemberSearchInfoDTO dto);
+    List<FgMemberDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(FgMemberDTO.FgMemberSearchInfoDTO dto);
 
-    List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(BasicDTO.FgMemberInfoDTO dto);
+    List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(FgMemberDTO.FgMemberInfoDTO dto);
 
     Boolean deleteFgMemberInfoByFgMemberIdListService(List<Integer> fgMemberIdList);
 }

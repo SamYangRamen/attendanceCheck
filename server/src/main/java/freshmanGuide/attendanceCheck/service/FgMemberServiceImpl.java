@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.service;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
 import freshmanGuide.attendanceCheck.repository.FgMemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public Boolean postFgMemberInfoService(BasicDTO.FgMemberInfoDTO dto) {
+    public Boolean postFgMemberInfoService(FgMemberDTO.FgMemberInfoDTO dto) {
         try {
             fgMemberRepository.postFgMemberInfo(dto);
             return true;
@@ -31,19 +32,19 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public Boolean getIsFgMemberInfoCorrectService(BasicDTO.FgMemberInfoDTO dto) {
-        BasicDTO.FgMemberInfoDTO insertedData = fgMemberRepository.getFgMemberInfo(dto.getFgMemberId());
+    public Boolean getIsFgMemberInfoCorrectService(FgMemberDTO.FgMemberInfoDTO dto) {
+        FgMemberDTO.FgMemberInfoDTO insertedData = fgMemberRepository.getFgMemberInfo(dto.getFgMemberId());
 
         return insertedData == dto ? true : false;
     }
 
     @Override
-    public Boolean putFgMemberInfoService(BasicDTO.PutFgMemberInfoDTO dto) {
+    public Boolean putFgMemberInfoService(FgMemberDTO.PutFgMemberInfoDTO dto) {
         return fgMemberRepository.putFgMemberInfo(dto);
     }
 
     @Override
-    public List<BasicDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation) {
+    public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation) {
         try {
             return fgMemberRepository.getFgMemberInfoListByGeneration(generation);
         } catch (Exception e) {
@@ -53,7 +54,7 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation) {
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation) {
         try {
             return fgMemberRepository.getFgMemberTableInfoListByGeneration(generation);
         } catch (Exception e) {
@@ -62,7 +63,7 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(BasicDTO.FgMemberSearchInfoDTO dto) {
+    public List<FgMemberDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(FgMemberDTO.FgMemberSearchInfoDTO dto) {
         try {
             return fgMemberRepository.getFgMemberSearchInfoListBySearch(dto);
         } catch (Exception e) {
@@ -71,7 +72,7 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(BasicDTO.FgMemberInfoDTO dto) {
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(FgMemberDTO.FgMemberInfoDTO dto) {
         try {
             return fgMemberRepository.getFgMemberInfoListBySearch(dto);
         } catch (Exception e) {

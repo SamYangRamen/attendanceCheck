@@ -6,15 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
-public class BasicDTO {
-
+public class EventDTO {
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class DTO<T> {
-        T dto;
+    public static class EventInfoDTO {
+        private String eventName;
+        private Date eventDate;
     }
 }

@@ -6,15 +6,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
-public class BasicDTO {
-
+public class LcAttendanceCheckDTO {
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class DTO<T> {
-        T dto;
+    public static class LcAttendanceCheckInfoDTO {
+        private Integer lcMemberId;
+        private String eventName;
+        private Date eventDate;
+        private String state;
     }
 }

@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.repository;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
 import freshmanGuide.attendanceCheck.mapper.AccountMapper;
 import freshmanGuide.attendanceCheck.mapper.FgMemberMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,11 @@ public class FgMemberRepository {
         this.accountMapper = accountMapper;
     }
 
-    public void postFgMemberInfo(BasicDTO.FgMemberInfoDTO dto) {
+    public void postFgMemberInfo(FgMemberDTO.FgMemberInfoDTO dto) {
         fgMemberMapper.save(dto);
     }
 
-    public BasicDTO.FgMemberInfoDTO getFgMemberInfo(Integer fgMemberId) {
+    public FgMemberDTO.FgMemberInfoDTO getFgMemberInfo(Integer fgMemberId) {
         return fgMemberMapper.findByFgMemberId(fgMemberId);
     }
 
@@ -34,7 +35,7 @@ public class FgMemberRepository {
         fgMemberMapper.deleteByFgMemberId(fgMemberId);
     }
 
-    public Boolean putFgMemberInfo(BasicDTO.PutFgMemberInfoDTO dto) {
+    public Boolean putFgMemberInfo(FgMemberDTO.PutFgMemberInfoDTO dto) {
         try {
             if (dto.getColumnName().equals("isAdmin")) {
                 accountMapper.updateIsAdmin(dto.getFgMemberId());
@@ -49,23 +50,23 @@ public class FgMemberRepository {
         }
     }
 
-    public List<BasicDTO.FgMemberInfoDTO> getFgMemberInfoList() {
+    public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoList() {
         return fgMemberMapper.findAll();
     }
 
-    public List<BasicDTO.FgMemberInfoDTO> getFgMemberInfoListByGeneration(Integer generation) {
+    public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGeneration(Integer generation) {
         return fgMemberMapper.findByGeneration(generation);
     }
 
-    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGeneration(Integer generation) {
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGeneration(Integer generation) {
         return fgMemberMapper.findFgMemberInfoTableByGeneration(generation);
     }
 
-    public List<BasicDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearch(BasicDTO.FgMemberSearchInfoDTO dto) {
+    public List<FgMemberDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearch(FgMemberDTO.FgMemberSearchInfoDTO dto) {
         return fgMemberMapper.findByGenerationAndPositionAndFgMemberName(dto);
     }
 
-    public List<BasicDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(BasicDTO.FgMemberInfoDTO dto) {
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(FgMemberDTO.FgMemberInfoDTO dto) {
         return fgMemberMapper.findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState(dto);
     }
 
