@@ -27,7 +27,7 @@ public class LcMemberRepository {
         return lcMemberMapper.findByLcMemberId(lcMemberId);
     }
 
-    public void deleteLcMemberInfo(Integer lcMemberId) {
+    public void deleteLcMemberInfoByLcMemberId(Integer lcMemberId) {
         lcMemberMapper.deleteByLcMemberId(lcMemberId);
     }
 
@@ -37,5 +37,9 @@ public class LcMemberRepository {
 
     public List<LcMemberDTO.LcMemberInfoDTO> getLcMemberInfoListByYearAndLc(Integer year, String lc) {
         return lcMemberMapper.findByYearAndLc(new LcDTO.LcFKDTO(year, lc));
+    }
+
+    public List<LcMemberDTO.LcMemberTableInfoDTO> getLcMemberTableInfoListBySearch(LcMemberDTO.LcMemberTableInfoDTO dto) {
+        return lcMemberMapper.findByYearAndLcAndDepartmentAndGenderAndLcMemberName(dto);
     }
 }

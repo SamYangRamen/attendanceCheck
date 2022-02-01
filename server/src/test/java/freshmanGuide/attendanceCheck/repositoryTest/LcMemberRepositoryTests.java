@@ -1,6 +1,5 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
-import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import freshmanGuide.attendanceCheck.DTO.LcMemberDTO;
 import freshmanGuide.attendanceCheck.repository.LcMemberRepository;
@@ -30,13 +29,12 @@ public class LcMemberRepositoryTests {
         try {
             lcRepository.postLc(new LcDTO.LcFKDTO(2099, "999"));
             lcMemberRepository.postLcMemberInfo(new LcMemberDTO.LcMemberInfoDTO(
-                    2020999999,
-                    "전지현",
                     2099,
                     "999",
-                    true,
-                    "010-2222-2222",
-                    "bbb@naver.com"
+                    "화학공학과",
+                    "여",
+                    "전지현",
+                    "010-2222-2222"
             ));
             LcMemberDTO.LcMemberInfoDTO data = lcMemberRepository.getLcMemberInfo(2020999999);
             Assertions.assertEquals(data.getContact(), "010-2222-2222");
@@ -45,7 +43,7 @@ public class LcMemberRepositoryTests {
             Assertions.assertEquals(lcMemberRepository.getLcMemberInfo(2020999999), null);
         } catch (Exception e) {
             e.printStackTrace();
-            lcMemberRepository.deleteLcMemberInfo(2020999999);
+            lcMemberRepository.deleteLcMemberInfoByLcMemberId(2020999999);
             lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
         }
     }

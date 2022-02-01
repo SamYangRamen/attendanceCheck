@@ -15,6 +15,7 @@ import TestComponent from './admin/AdminComponent';
 import { Layout, Menu } from 'antd';
 import FgMemberTableCompnent from './admin/FgMemberTableComponent';
 import FgMemberAddComponent from './admin/FgMemberAddComponent';
+import EventCalenderComponent from './admin/EventCalenderComponent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -29,7 +30,7 @@ const RootComponent: React.FC = () => {
     <div>
       <StoreProvider value={store}>
         <Switch>
-          <Route path="/test" component={FgMemberAddComponent} />
+          <Route path="/test" component={EventCalenderComponent} />
           <Route path="/login" component={LoginComponent} />
           <Route path="/register" component={FgMemberRegisterComponent} />
           <Route path="/logout" component={LogoutComponent} />

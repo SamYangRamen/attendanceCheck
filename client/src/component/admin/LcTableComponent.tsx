@@ -20,12 +20,14 @@ const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
       title: '년도',
       tableIndex: 'lc_info',
       dataIndex: 'year',
+      width: '8%',
       sorter: (a, b) => a.year.toString().localeCompare(b.year.toString()),
     },
     {
       title: 'LC',
       tableIndex: 'lc_info',
       dataIndex: 'lc',
+      width: '9%',
       sorter: (a, b) => a.lc.toString().localeCompare(b.lc.toString()),
     },
     {
@@ -33,24 +35,28 @@ const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
       tableIndex: 'lc_info',
       dataIndex: 'fgMemberName1',
       editable: 'lcModal',
+      width: '20%',
     },
     {
       title: '담당자2',
       tableIndex: 'lc_info',
       dataIndex: 'fgMemberName2',
       editable: 'lcModal',
+      width: '20%',
     },
     {
       title: '담당자3',
       tableIndex: 'lc_info',
       dataIndex: 'fgMemberName3',
       editable: 'lcModal',
+      width: '20%',
     },
     {
       title: '담당자4',
       tableIndex: 'lc_info',
       dataIndex: 'fgMemberName4',
       editable: 'lcModal',
+      width: '20%',
     },
   ];
 

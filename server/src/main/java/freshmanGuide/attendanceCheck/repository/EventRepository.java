@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -35,5 +36,18 @@ public class EventRepository {
 
     public List<String> getEventNameListByEventDate(Date eventDate) {
         return eventMapper.findEventNameByEventDate(java.sql.Date.valueOf((new SimpleDateFormat("yyyy-MM-dd")).format(eventDate)));
+    }
+
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonth(Integer year, Integer month) {
+        HashMap dataList = new HashMap();
+
+        dataList.put("year", year);
+        dataList.put("month", month);
+
+        return eventMapper.findByYearAndMonth(dataList);
+    }
+
+    public void deleteEventInfoByEventIdx(Integer eventIdx) {
+        eventMapper.deleteByEventIdx(eventIdx);
     }
 }

@@ -6,13 +6,13 @@
         INSERT INTO lc_info
         VALUES
         (
-        (SELECT CASE WHEN COUNT(a.lcIdx)=0 THEN 0 ELSE COUNT(a.lcIdx) END FROM lc_info a),
-        #{year},
-        #{lc},
-        null,
-        null,
-        null,
-        null
+            (SELECT CASE WHEN COUNT(a.lcIdx)=0 THEN 1 ELSE MAX(a.lcIdx)+1 END FROM lc_info a),
+            #{year},
+            #{lc},
+            null,
+            null,
+            null,
+            null
         )
     </insert>
 

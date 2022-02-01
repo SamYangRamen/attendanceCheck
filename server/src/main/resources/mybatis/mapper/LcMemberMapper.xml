@@ -3,15 +3,14 @@
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.LcMemberMapper">
     <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO">
-        INSERT INTO lc_member_info
+        INSERT INTO lc_member_info (lcIdx, department, gender, lcMemberName, contact)
         VALUES
         (
-            #{lcMemberId},
-            #{lcMemberName},
-            (SELECT lcIdx FROM lc_info WHERE year=#{year} AND lc=#{lc}),
-            #{isPeerLeader},
-            #{contact},
-            #{mail}
+            (SELECT lcIdx FROM lc_info WHERE year=${year} AND lc='${lc}'),
+            '${department}',
+            '${gender}',
+            '${lcMemberName}',
+            '${contact}'
         )
     </insert>
 
@@ -69,21 +68,9 @@
             parameterType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberTableInfoDTO"
             resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberTableInfoDTO"
     >
-        SELECT S2.lcMemberId AS `key`, S1.year, S1.lc, S2.department, S2.gender, S2.lcMemberName
+        SELECT S1.lcMemberId AS `key`, S2.year, S2.lc, S1.department, S1.gender, S1.lcMemberName, S1.contact
         FROM
         (
-            (
-                SELECT *
-                FROM lc_info
-                WHERE TRUE
-                <if test='year!=null and year!=0'>
-                    AND year LIKE '%${year}%'
-                </if>
-                <if test='lc!=null and !lc.equals("")'>
-                    AND lc LIKE '%${lc}%'
-                </if>
-            ) AS S1
-            LEFT JOIN
             (
                 SELECT *
                 FROM lc_member_info
@@ -96,6 +83,18 @@
                 </if>
                 <if test='lcMemberName!=null and !lcMemberName.equals("")'>
                     AND lcMemberName LIKE '%${lcMemberName}%'
+                </if>
+            ) AS S1
+            LEFT JOIN
+            (
+                SELECT *
+                FROM lc_info
+                WHERE TRUE
+                <if test='year!=null and year!=0'>
+                    AND year LIKE '%${year}%'
+                </if>
+                <if test='lc!=null and !lc.equals("")'>
+                    AND lc LIKE '%${lc}%'
                 </if>
             ) AS S2
             ON S1.lcIdx=S2.lcIdx

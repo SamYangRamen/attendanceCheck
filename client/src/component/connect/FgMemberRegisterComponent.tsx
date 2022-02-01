@@ -5,6 +5,7 @@ import useStore from '../../store/useStore';
 import crypto, { randomBytes } from 'crypto';
 import DropdownContainer from '../../container/DropdownContainer';
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd';
+import contactAutoWriter from '../../util/contactAutoWriter';
 
 const { Option } = Select;
 
@@ -46,55 +47,6 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
     setContact('');
     setMail('');
     setIsModalVisible(false);
-  };
-
-  const contactAutoWriter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const afterContact = e.target.value;
-
-    if (contact.length < afterContact.length) {
-      if (
-        afterContact.match(/^02$/g) ||
-        afterContact.match(/^\d{3}$/g) ||
-        afterContact.match(/^\d{2,3}-\d{3}$/g)
-      ) {
-        setContact(afterContact + '-');
-      } else if (afterContact.match(/^\d{2,3}-\d{3}-\d{5}$/g)) {
-        const contactSplitList: string[] = afterContact.split('-');
-        const resultContact: string =
-          contactSplitList[0] +
-          '-' +
-          contactSplitList[1] +
-          contactSplitList[2][0] +
-          '-' +
-          contactSplitList[2].substring(1, contactSplitList[2].length);
-        setContact(resultContact);
-      } else if (
-        '0' <= afterContact[afterContact.length - 1] &&
-        afterContact[afterContact.length - 1] <= '9' &&
-        !afterContact.match(/^\d{2,3}-\d{4}-\d{5}$/g)
-      ) {
-        setContact(e.target.value);
-      }
-    } else if (contact.length > afterContact.length) {
-      if (
-        afterContact.toString().match(/^\d{2,3}$/g) ||
-        afterContact.toString().match(/^\d{2,3}-\d{3}$/g)
-      ) {
-        setContact(afterContact.substring(0, afterContact.length - 1));
-      } else if (afterContact.match(/^\d{2,3}-\d{4}-\d{3}$/g)) {
-        const contactSplitList: string[] = afterContact.split('-');
-        const resultContact: string =
-          contactSplitList[0] +
-          '-' +
-          contactSplitList[1].substring(0, contactSplitList[1].length - 1) +
-          '-' +
-          contactSplitList[1][contactSplitList[1].length - 1] +
-          contactSplitList[2];
-        setContact(resultContact);
-      } else {
-        setContact(e.target.value);
-      }
-    }
   };
 
   const onFinish = () => {
@@ -145,7 +97,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
     <div>
       {<div onClick={openModal}>{children ? children : ''}</div>}
       <Modal
-        width={'800px'}
+        width={'500px'}
         visible={isModalVisible}
         onOk={closeModal}
         onCancel={closeModal}
@@ -162,9 +114,47 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
         <br />
         <Form
           id="fgMemberRegister"
-          labelCol={{ style: { width: '6.5vw' } }}
+          labelCol={{ style: { width: '6vw' } }}
           form={form}
           onFinish={onFinish}
+          fields={[
+            {
+              name: 'fgmemberId',
+              value: fgMemberId,
+            },
+            {
+              name: 'password',
+              value: password,
+            },
+            {
+              name: 'passwordValid',
+              value: passwordValid,
+            },
+            {
+              name: 'generation',
+              value: generation,
+            },
+            {
+              name: 'fgmemberName',
+              value: fgMemberName,
+            },
+            {
+              name: 'position',
+              value: position,
+            },
+            {
+              name: 'state',
+              value: state,
+            },
+            {
+              name: 'contact',
+              value: contact,
+            },
+            {
+              name: 'mail',
+              value: mail,
+            },
+          ]}
         >
           <Form.Item
             label="학번"
@@ -175,7 +165,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             ]}
           >
             <Input
-              value={fgMemberId}
+              style={{ width: 260 }}
               onChange={e => setFgMemberId(parseInt(e.target.value) || 0)}
             ></Input>
           </Form.Item>
@@ -188,7 +178,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             ]}
           >
             <Input.Password
-              value={password}
+              style={{ width: 260 }}
               onChange={e => setPassword(e.target.value)}
             ></Input.Password>
           </Form.Item>
@@ -198,7 +188,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             rules={[{ pattern: new RegExp(password), message: '비밀번호가 일치하지 않습니다.' }]}
           >
             <Input.Password
-              value={passwordValid}
+              style={{ width: 260 }}
               onChange={e => setPasswordValid(e.target.value)}
               disabled={password.length < 6}
             ></Input.Password>
@@ -209,7 +199,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             rules={[{ required: true, message: '기수를 입력해주세요.' }]}
           >
             <InputNumber
-              value={generation}
+              style={{ width: 130 }}
               min={1}
               max={new Date().getFullYear() - 2006}
               onChange={value => setGeneration(value)}
@@ -220,7 +210,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             name="fgMemberName"
             rules={[{ required: true, message: '이름을 입력해주세요.' }]}
           >
-            <Input value={fgMemberName} onChange={e => setFgMemberName(e.target.value)}></Input>
+            <Input style={{ width: 130 }} onChange={e => setFgMemberName(e.target.value)}></Input>
           </Form.Item>
           <Form.Item
             label="직책"
@@ -233,6 +223,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             ]}
           >
             <Select
+              style={{ width: 130 }}
               showSearch
               optionFilterProp="children"
               onChange={value => {
@@ -255,6 +246,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
             ]}
           >
             <Select
+              style={{ width: 130 }}
               showSearch
               optionFilterProp="children"
               onChange={value => {
@@ -274,7 +266,10 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
               { pattern: /^\d{2,3}-\d{3,4}-\d{4}$/g, message: '전화번호를 올바르게 입력해주세요.' },
             ]}
           >
-            <Input value={contact} onChange={e => contactAutoWriter(e)}></Input>
+            <Input
+              style={{ width: 260 }}
+              onChange={e => setContact(contactAutoWriter(contact, e.target.value))}
+            ></Input>
           </Form.Item>
           <Form.Item
             label="이메일"
@@ -284,7 +279,7 @@ const FgMemberRegisterComponent: React.FC<Props> = ({ children }: Props) => {
               { type: 'email', message: '이메일 주소를 올바르게 입력해주세요.' },
             ]}
           >
-            <Input value={mail} onChange={e => setMail(e.target.value)}></Input>
+            <Input style={{ width: 260 }} onChange={e => setMail(e.target.value)}></Input>
           </Form.Item>
         </Form>
       </Modal>

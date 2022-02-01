@@ -14,6 +14,7 @@ interface Props {
 }
 
 const LcManagerSearchComponent: React.FC<Props> = ({ children, save }: Props) => {
+  const [form] = Form.useForm();
   const { repositoryStore } = useStore();
   const fgMemberRepo = repositoryStore.getFgMemberRepository();
 
@@ -88,12 +89,17 @@ const LcManagerSearchComponent: React.FC<Props> = ({ children, save }: Props) =>
     setSelectedSearchInfo(e);
   };
 
-  const onOk = async (e: React.MouseEvent<HTMLElement>) => {
-    save({
-      fgMemberId: selectedSearchInfo?.fgMemberId as number,
-      fgMemberName: selectedSearchInfo?.fgMemberName as string,
-    });
-
+  const onFinish = async (e: React.MouseEvent<HTMLElement>) => {
+    if (!!selectedSearchInfo)
+      save({
+        fgMemberId: selectedSearchInfo?.fgMemberId as number,
+        fgMemberName: selectedSearchInfo?.fgMemberName as string,
+      });
+    else
+      save({
+        fgMemberId: null as null,
+        fgMemberName: '' as string,
+      });
     closeModal();
   };
 
@@ -104,8 +110,39 @@ const LcManagerSearchComponent: React.FC<Props> = ({ children, save }: Props) =>
   return (
     <div>
       {<div onClick={openModal}>{children ? children : ''}</div>}
-      <Modal width={'800px'} visible={isModalVisible} onOk={onOk} onCancel={closeModal}>
-        <Form layout="inline" initialValues={{ layout: 'inline' }}>
+      <Modal
+        width={'800px'}
+        visible={isModalVisible}
+        onCancel={closeModal}
+        footer={[
+          <Button
+            form="lcManagerModify"
+            type="primary"
+            htmlType="submit"
+            disabled={!selectedSearchInfo}
+          >
+            완료
+          </Button>,
+          <Button
+            form="lcManagerModify"
+            type="primary"
+            htmlType="submit"
+            disabled={!!selectedSearchInfo}
+          >
+            삭제
+          </Button>,
+          <Button type="primary" onClick={closeModal}>
+            취소
+          </Button>,
+        ]}
+      >
+        <Form
+          id="lcManagerModify"
+          form={form}
+          onFinish={onFinish}
+          layout="inline"
+          initialValues={{ layout: 'inline' }}
+        >
           <Form.Item label="기수" rules={[{ required: true }]}>
             <Select
               showSearch

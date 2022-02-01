@@ -12,13 +12,12 @@ public class LcMemberDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class LcMemberInfoDTO {
-        private Integer lcMemberId;
-        private String lcMemberName;
         private Integer year;
         private String lc;
-        private Boolean isPeerLeader;
+        private String department;
+        private String gender;
+        private String lcMemberName;
         private String contact;
-        private String mail;
     }
 
     @Getter
@@ -31,6 +30,7 @@ public class LcMemberDTO {
         private String lc;
         private String department;
         private String gender;
+        private String lcMemberName;
         private String contact;
     }
 }

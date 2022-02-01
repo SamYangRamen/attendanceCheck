@@ -5,19 +5,28 @@ export interface DTO<T> {
 }
 
 export interface LcMemberInfo {
-  lcMemberId: number;
-  lcMemberName: string;
   year: number;
   lc: string;
-  isPeerLeader: boolean;
+  department: string;
+  gender: string;
+  lcMemberName: string;
   contact: string;
-  mail: string;
 }
 
 export interface PutLcMemberInfo {
   lcMemberId: number;
   columnName: string;
   value: string;
+}
+
+export interface LcMemberTableInfo {
+  key: React.Key;
+  year: number;
+  lc: string;
+  department: string;
+  gender: string;
+  lcMemberName: string;
+  contact: string;
 }
 
 export default class LcMemberRepository {
@@ -47,5 +56,29 @@ export default class LcMemberRepository {
     return axios.get(`get/lc-member-info-list-by-year?year=${year}`).then(response => {
       return response.data;
     });
+  }
+
+  public getLcMemberTableInfoListBySearch(
+    year: number,
+    lc: string,
+    department: string,
+    gender: string,
+    lcMemberName: string
+  ): Promise<Array<LcMemberTableInfo>> {
+    return axios
+      .get(
+        `get/lc-member-table-info-list-by-search?year=${year}&lc=${lc}&department=${department}&gender=${gender}&lcMemberName=${lcMemberName}`
+      )
+      .then(response => {
+        return response.data;
+      });
+  }
+
+  public deleteLcMemberInfoByLcMemberIdList(lcMemberIdList: number[]): Promise<boolean> {
+    return axios
+      .post(`delete/lc-member-info-by-lc-member-id-list`, lcMemberIdList)
+      .then(response => {
+        return response.data;
+      });
   }
 }

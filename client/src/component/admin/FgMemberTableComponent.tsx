@@ -38,7 +38,7 @@ const columns: columnType[] = [
     dataIndex: 'fgMemberName',
     sorter: (a, b) => a.fgMemberName.toString().localeCompare(b.fgMemberName.toString()),
     editable: 'input',
-    width: '15%',
+    width: '12%',
   },
   {
     title: '직책',

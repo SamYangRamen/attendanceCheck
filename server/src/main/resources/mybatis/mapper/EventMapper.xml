@@ -3,11 +3,11 @@
 
 <mapper namespace="freshmanGuide.attendanceCheck.mapper.EventMapper">
     <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.EventDTO$EventInfoDTO">
-        INSERT INTO event_info
+        INSERT INTO event_info (eventName, eventType, eventDate)
         VALUES
         (
-            (SELECT CASE WHEN COUNT(a.eventIdx)=0 THEN 0 ELSE COUNT(a.eventIdx) END FROM event_info a),
             #{eventName},
+            #{eventType},
             #{eventDate}
         )
     </insert>
@@ -29,4 +29,17 @@
         FROM event_info
         WHERE DATE(eventDate)=${eventDate}
     </select>
+
+    <select id="findByYearAndMonth" parameterType="java.util.HashMap" resultType="freshmanGuide.attendanceCheck.DTO.EventDTO$EventTableInfoDTO">
+        SELECT eventIdx as `key`, eventName, eventType, eventDate
+        FROM event_info
+        WHERE (YEAR(eventDate)=${year} AND MONTH(eventDate)=${month})
+            OR (YEAR(eventDate)=(SELECT YEAR(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL 1 month))) AND MONTH(eventDate)=(SELECT MONTH(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL 1 month))))
+            OR (YEAR(eventDate)=(SELECT YEAR(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL -1 month))) AND MONTH(eventDate)=(SELECT MONTH(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL -1 month))))
+    </select>
+
+    <delete id="deleteByEventIdx" parameterType="Integer">
+        DELETE FROM event_info
+        WHERE eventIdx=#{eventIdx}
+    </delete>
 </mapper>

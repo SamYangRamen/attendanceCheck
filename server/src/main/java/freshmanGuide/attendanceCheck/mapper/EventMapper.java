@@ -6,6 +6,7 @@ import freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -17,4 +18,8 @@ public interface EventMapper {
     void deleteByEventNameAndEventDate(EventDTO.EventInfoDTO dto);
 
     List<String> findEventNameByEventDate(Date eventDate);
+
+    List<EventDTO.EventTableInfoDTO> findByYearAndMonth(HashMap dataList);
+
+    void deleteByEventIdx(Integer eventIdx);
 }

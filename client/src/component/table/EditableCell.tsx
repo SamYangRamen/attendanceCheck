@@ -6,10 +6,11 @@ import { FgMemberSearchInfo, FgMemberTableInfo } from '../../repository/FgMember
 import useStore from '../../store/useStore';
 import { LcInfoWithFgMemberName } from '../../repository/LcRepository';
 import LcManagerSearchComponent from '../admin/LcManagerSearchComponent';
+import { LcMemberTableInfo } from '../../repository/LcMemberRepository';
 
 const { Option } = Select;
 
-type Item = FgMemberTableInfo | LcInfoWithFgMemberName | FgMemberSearchInfo;
+type Item = FgMemberTableInfo | LcInfoWithFgMemberName | FgMemberSearchInfo | LcMemberTableInfo;
 
 interface EditableCellProps {
   title: React.ReactNode;
@@ -96,7 +97,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         lcRepo.putLcInfo({
           lcIdx: record.key as number,
           columnName: 'fgMemberId' + (dataIndex as string)[(dataIndex as string).length - 1],
-          fgMemberId: changedData.fgMemberId as number,
+          fgMemberId: changedData.fgMemberId as number | null,
         });
         break;
     }

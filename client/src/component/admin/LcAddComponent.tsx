@@ -1,5 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useState } from 'react';
+import useStore from '../../store/useStore';
 
 const { Option } = Select;
 
@@ -8,15 +9,16 @@ interface Props {
 }
 
 const LcAddComponent: React.FC<Props> = ({ children }: Props) => {
+  const [form] = Form.useForm();
+  const { repositoryStore } = useStore();
+  const lcRepo = repositoryStore.getLcRepository();
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  const [year, setYear] = useState<number>(0);
-  const [, setYearMessage] = useState<string>('');
-  const [lcDepartment, setLcDepartment] = useState<string>('');
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [lcDepartment, setLcDepartment] = useState<string>('LC');
   const [startLcNumber, setStartLcNumber] = useState<number>(1);
   const [endLcNumber, setEndLcNumber] = useState<number>(1);
-  const [lcMessage, setLcMessage] = useState<string>('');
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
   const maxYear = new Date().getFullYear();
 
@@ -28,25 +30,66 @@ const LcAddComponent: React.FC<Props> = ({ children }: Props) => {
     setIsModalVisible(false);
   };
 
+  const onFinish = () => {
+    lcRepo
+      .postLcRange({
+        year,
+        lcDepartment,
+        startLcNumber,
+        endLcNumber,
+      })
+      .then(response => {
+        if (response == true) {
+          alert('LC가 성공적으로 추가되었습니다.');
+        }
+      })
+      .catch(e => {
+        alert('오류가 발생했습니다.');
+      });
+  };
+
   return (
     <div>
       {<div onClick={openModal}>{children ? children : ''}</div>}
-      <Modal width={'800px'} visible={isModalVisible} onOk={closeModal} onCancel={closeModal}>
-        <Form layout="inline" initialValues={{ layout: 'inline' }}>
+      <Modal
+        width={'800px'}
+        visible={isModalVisible}
+        onOk={closeModal}
+        onCancel={closeModal}
+        footer={[
+          <Button form="lcAdd" type="primary" htmlType="submit">
+            완료
+          </Button>,
+          <Button type="primary" onClick={closeModal}>
+            취소
+          </Button>,
+        ]}
+      >
+        <br />
+        <Form
+          id="lcAdd"
+          form={form}
+          layout="inline"
+          initialValues={{ layout: 'inline' }}
+          onFinish={onFinish}
+        >
           <Form.Item label="년도" rules={[{ required: true }]}>
             <Select
               showSearch
+              defaultValue={year.toString()}
               style={{ minWidth: 130 }}
               optionFilterProp="children"
-              onChange={() => {}}
+              onChange={value => {
+                setYear(parseInt(value));
+              }}
               allowClear
             >
               {Array.from(
                 {
-                  length: maxYear - 1970,
+                  length: maxYear - 2000,
                 },
                 (_, j) => (
-                  <Option value={1971 + j}>{1971 + j}년</Option>
+                  <Option value={maxYear - j}>{maxYear - j}년</Option>
                 )
               )}
             </Select>
@@ -55,7 +98,9 @@ const LcAddComponent: React.FC<Props> = ({ children }: Props) => {
             <Input
               value={lcDepartment}
               style={{ width: 130 }}
-              onChange={() => {}}
+              onChange={e => {
+                setLcDepartment(e.target.value);
+              }}
               allowClear
             ></Input>
           </Form.Item>
@@ -63,24 +108,21 @@ const LcAddComponent: React.FC<Props> = ({ children }: Props) => {
             <InputNumber
               value={startLcNumber}
               style={{ width: 130 }}
-              onChange={() => {}}
+              onChange={number => {
+                setStartLcNumber(number);
+              }}
+              min={1}
             ></InputNumber>
             ~
             <InputNumber
               value={endLcNumber}
               style={{ width: 130 }}
-              onChange={() => {}}
+              onChange={number => {
+                setEndLcNumber(number);
+              }}
+              min={startLcNumber}
             ></InputNumber>
           </Form.Item>
-          <Form.Item rules={[{ required: true }]}>
-            <Button type="primary" onClick={() => {}}>
-              검색
-            </Button>
-          </Form.Item>
-        </Form>
-        <br />
-        <Form>
-          <Form.Item rules={[{ required: true }]}></Form.Item>
         </Form>
       </Modal>
     </div>

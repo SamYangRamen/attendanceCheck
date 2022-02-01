@@ -7,6 +7,8 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/
 import { MenuInfo } from 'rc-menu/lib/interface';
 import FgGenerationSelectComponent from './FgGenerationSelectComponent';
 import YearForLcSelectComponent from './YearForLcSelectComponent';
+import YearForLcMemberSelectComponent from './YearForLcMemberSelectComponent';
+import EventCalenderComponent from './EventCalenderComponent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -35,6 +37,9 @@ const AdminComponent: React.FC = () => {
           <Menu.Item key="LcMemberManagement" onClick={onClick}>
             LC 멤버 관리
           </Menu.Item>
+          <Menu.Item key="EventManagement" onClick={onClick}>
+            행사 관리
+          </Menu.Item>
         </Menu>
       </Header>
       {nav == 'FgMemberManagement' ? (
@@ -43,6 +48,12 @@ const AdminComponent: React.FC = () => {
         <></>
       )}
       {nav == 'LcManagement' ? <YearForLcSelectComponent></YearForLcSelectComponent> : <></>}
+      {nav == 'LcMemberManagement' ? (
+        <YearForLcMemberSelectComponent></YearForLcMemberSelectComponent>
+      ) : (
+        <></>
+      )}
+      {nav == 'EventManagement' ? <EventCalenderComponent></EventCalenderComponent> : <></>}
     </Layout>
   );
 };

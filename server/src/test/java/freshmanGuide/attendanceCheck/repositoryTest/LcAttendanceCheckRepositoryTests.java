@@ -42,16 +42,15 @@ public class LcAttendanceCheckRepositoryTests {
                 lcRepository.postLc(new LcDTO.LcFKDTO(2099, "999"));
 
                 lcMemberRepository.postLcMemberInfo(new LcMemberDTO.LcMemberInfoDTO(
-                        2020999999,
-                        "전지현",
                         2099,
                         "999",
-                        true,
-                        "010-2222-2222",
-                        "bbb@naver.com"
+                        "화학공학과",
+                        "여",
+                        "전지현",
+                        "010-2222-2222"
                 ));
 
-                eventRepository.postEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.postEventInfo(new EventDTO.EventInfoDTO("testEventName", "fg", timeStamp));
 
                 lcAttendanceCheckRepository.postLcAttendanceCheckInfo(new LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO(
                         2020999999,
@@ -66,7 +65,7 @@ public class LcAttendanceCheckRepositoryTests {
                 Assertions.assertEquals(data.getLcMemberId(), 2020999999);
 
                 lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
-                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", "fg", timeStamp));
 
                 Assertions.assertEquals(lcRepository.getLcListByYear(2099).isEmpty(), true);
                 Assertions.assertEquals(lcMemberRepository.getLcMemberInfo(2020999999), null);
@@ -75,8 +74,8 @@ public class LcAttendanceCheckRepositoryTests {
             } catch (Exception e) {
                 e.printStackTrace();
                 lcRepository.deleteLcInfo(new LcDTO.LcFKDTO(2099, "999"));
-                lcMemberRepository.deleteLcMemberInfo(2020999999);
-                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
+                lcMemberRepository.deleteLcMemberInfoByLcMemberId(2020999999);
+                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", "fg", timeStamp));
                 lcAttendanceCheckRepository.deleteAttendanceCheckInfo(2020999999);
             }
         } catch (Exception e) {

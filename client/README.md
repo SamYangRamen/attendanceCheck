@@ -136,6 +136,64 @@ ESLint config file에 아래 문구를 추가하면 해결된다.
 
 
 
+### Form tag 안에 소속되어 있는 antd Input tag의 안에 있는 value 값을 state로 설정해도 렌더링이 안 되는 문제
+
+전화번호 입력 시, `-` 를 자동으로 입력하거나 제거하는 기능을 만들고자 하여, 아래와 같이 코드를 작성하였음
+
+```react
+const [contact, setContact] = useState<string>('');
+
+const changeContact = () => {
+    if(/*'-'를 붙이거나 떼어야 하는 상황이 오면*/) {
+       		/* statements */
+       		setContact(changedContact);
+       }
+}
+
+return (
+	...
+    <Form ...>
+        <Form.Item>
+            <Input value={state} onChange={e => setState(e.target.value)} />
+        </Form.Item>
+    </Form>
+)
+```
+
+그런데 만약 사용자가 `010`까지 입력한다면, `Input` tag 안의 값이 `010-` 으로 렌더링되어야 하는데 이 작업이 이루어지지 않았음.
+
+즉, `contact` 라는 state 안의 값은 `010-` 으로 잘 저장이 되었지만 이게 렌더링은 되지 않고 사용자의 눈에는 `010`만 보이는 상황이었음
+
+https://stackoverflow.com/questions/70224700/value-prop-does-not-show-data-in-input-in-ant-design
+
+위 링크의 조언에 따라 `Form` tag 안의 `fields`를 아래와 같이 채워줬더니, 의도한 대로 정상 동작하였음
+
+```react
+<Form
+    fields={[
+        name: 'contact',
+        value: {contact},
+    ]}
+    ...
+    >
+	<Form.Item name='contact'>
+        <Input onChange={e => setState(e.target.value)} />
+    </Form.Item>
+</Form>
+```
+
+
+
+### moment 월 계산하기
+
+```react
+moment('2022-09-22').month()
+```
+
+`moment.month()` 메서드는 1월을 0으로 ~ 12월을 11로 보기 때문에 위 코드는 9월 - 1인 8을 출력한다.
+
+
+
 ## 학습 내용
 
 
@@ -143,24 +201,11 @@ ESLint config file에 아래 문구를 추가하면 해결된다.
 ### Link를 이용해 값을 전달하는 방법
 
 ```react
-<Link
-  to={{
-    pathname: '/login',
-    state: {
-      data1: false,
-      data2: 100,
-    },
-  }}
->
-  <input type="button" name="loginButton" value="로그인" />
-</Link>
+<Link  to={{    pathname: '/login',    state: {      data1: false,      data2: 100,    },  }}>  <input type="button" name="loginButton" value="로그인" /></Link>
 ```
 
 ```react
-const FooComponent: React.FC<RouteComponentProps> ({location}) => {
-	const data = location.state as { data1: boolean, data2: number };
-	...
-}
+const FooComponent: React.FC<RouteComponentProps> ({location}) => {	const data = location.state as { data1: boolean, data2: number };	...}
 ```
 
 
@@ -172,11 +217,7 @@ const FooComponent: React.FC<RouteComponentProps> ({location}) => {
 [Node.js - 바람직한 비밀번호 암호화 (crypto) | zinirun](https://zinirun.github.io/2020/12/02/node-crypto-password/)
 
 ```react
-// salt값 만드는 코드
-const salt = crypto.randomBytes(64).toString('base64');
-
-// 해싱된 패스워드 만드는 코드
-const hashedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, 'sha512').toString('hex');
+// salt값 만드는 코드const salt = crypto.randomBytes(64).toString('base64');// 해싱된 패스워드 만드는 코드const hashedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, 'sha512').toString('hex');
 ```
 
 
@@ -186,12 +227,6 @@ const hashedPassword = crypto.pbkdf2Sync(password, salt, 9999, 64, 'sha512').toS
 [How to Use Radio Buttons in ReactJS | Pluralsight](https://www.pluralsight.com/guides/how-to-use-radio-buttons-in-reactjs)
 
 ```react
-return (
-  <div onChange={this.onChangeValue}>
-    <input type="radio" value="Male" name="gender" /> Male
-    <input type="radio" value="Female" name="gender" /> Female
-    <input type="radio" value="Other" name="gender" /> Other
-  </div>
-);
+return (  <div onChange={this.onChangeValue}>    <input type="radio" value="Male" name="gender" /> Male    <input type="radio" value="Female" name="gender" /> Female    <input type="radio" value="Other" name="gender" /> Other  </div>);
 ```
 

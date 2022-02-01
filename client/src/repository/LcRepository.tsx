@@ -33,7 +33,7 @@ export interface LcInfoWithFgMemberName {
 export interface PutLcInfo {
   lcIdx: number;
   columnName: string;
-  fgMemberId: number;
+  fgMemberId: number | null;
 }
 
 export default class LcRepository {

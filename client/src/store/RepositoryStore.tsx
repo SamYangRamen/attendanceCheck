@@ -1,4 +1,5 @@
 import AccountRepository from '../repository/AccountRepository';
+import EventRepository from '../repository/EventReposptory';
 import FgMemberRepository from '../repository/FgMemberRepository';
 import LcMemberRepository from '../repository/LcMemberRepository';
 import LcRepository from '../repository/LcRepository';
@@ -10,6 +11,7 @@ export default class RepositoryStore {
   private fgMemberRepository: FgMemberRepository = new FgMemberRepository(this.baseUrl);
   private lcMemberRepository: LcMemberRepository = new LcMemberRepository(this.baseUrl);
   private lcRepository: LcRepository = new LcRepository(this.baseUrl);
+  private eventRepository: EventRepository = new EventRepository(this.baseUrl);
 
   public getAccountRepository(): AccountRepository {
     return this.accountRepository;
@@ -25,5 +27,9 @@ export default class RepositoryStore {
 
   public getLcRepository(): LcRepository {
     return this.lcRepository;
+  }
+
+  public getEventRepository(): EventRepository {
+    return this.eventRepository;
   }
 }

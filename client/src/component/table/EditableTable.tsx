@@ -6,10 +6,15 @@ import EditableCell from './EditableCell';
 import { FgMemberSearchInfo, FgMemberTableInfo } from '../../repository/FgMemberRepository';
 import useStore from '../../store/useStore';
 import { LcInfoWithFgMemberName } from '../../repository/LcRepository';
+import { LcMemberTableInfo } from '../../repository/LcMemberRepository';
 
 // type EditableTableProps = Parameters<typeof Table>[0];
 
-export type DataType = FgMemberTableInfo | LcInfoWithFgMemberName | FgMemberSearchInfo;
+export type DataType =
+  | FgMemberTableInfo
+  | LcInfoWithFgMemberName
+  | FgMemberSearchInfo
+  | LcMemberTableInfo;
 
 interface Props {
   columns: columnType[];

@@ -36,9 +36,9 @@ public class EventRepositoryTests {
             String testDateString = "2999-12-31";
             SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date timeStamp = transFormat.parse(testDateString);
-
+            
             try {
-                eventRepository.postEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.postEventInfo(new EventDTO.EventInfoDTO("testEventName", "fg", timeStamp));
 
                 try {
                     List<EventDTO.EventInfoDTO> data = eventRepository.getEventInfoList();
@@ -49,14 +49,14 @@ public class EventRepositoryTests {
                 }
 
                 try {
-                    eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
+                    eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", "fg", timeStamp));
                     Assertions.assertEquals(eventRepository.getEventNameListByEventDate(timeStamp).isEmpty(), true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", timeStamp));
+                eventRepository.deleteEventInfo(new EventDTO.EventInfoDTO("testEventName", "fg", timeStamp));
             }
         } catch (Exception e) {
             e.printStackTrace();
