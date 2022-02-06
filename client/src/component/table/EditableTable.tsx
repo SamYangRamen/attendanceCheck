@@ -7,6 +7,7 @@ import { FgMemberSearchInfo, FgMemberTableInfo } from '../../repository/FgMember
 import useStore from '../../store/useStore';
 import { LcInfoWithFgMemberName } from '../../repository/LcRepository';
 import { LcMemberTableInfo } from '../../repository/LcMemberRepository';
+import { LcAttendanceCheckTableInfo } from 'repository/LcAttendanceCheckRepository';
 
 // type EditableTableProps = Parameters<typeof Table>[0];
 
@@ -14,19 +15,20 @@ export type DataType =
   | FgMemberTableInfo
   | LcInfoWithFgMemberName
   | FgMemberSearchInfo
-  | LcMemberTableInfo;
+  | LcMemberTableInfo
+  | LcAttendanceCheckTableInfo;
 
 interface Props {
   columns: columnType[];
   dataSource: DataType[];
   setDataSource: React.Dispatch<React.SetStateAction<DataType[]>>;
-  selectedRowKeys: React.Key[];
-  setSelectedRowKeys: (value: React.SetStateAction<React.Key[]>) => void;
+  selectedRowKeys?: React.Key[];
+  setSelectedRowKeys?: (value: React.SetStateAction<React.Key[]>) => void;
 }
 
 export interface columnType {
   title: string;
-  tableIndex: string;
+  tableIndex?: string;
   dataIndex: string;
   width?: string;
   editable?: string;
@@ -34,6 +36,7 @@ export interface columnType {
   min?: number;
   max?: number;
   dropdownContents?: (string | number)[];
+  required?: boolean;
 }
 
 // type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -81,41 +84,43 @@ const EditableTable: React.FC<Props> = ({
         min: col.min,
         max: col.max,
         dropdownContents: col.dropdownContents || undefined,
+        required: col.required,
       }),
     };
   });
 
-  const onSelectChange = (newSelectedRowKeys: Array<React.Key>) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  let rowSelection = undefined;
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      {
-        key: 'allSelectTrue',
-        text: '전체 선택',
-        onSelect: () => {
-          const newSelectedRowKeys: Array<React.Key> = dataSource.map(data => {
-            return data.key;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
+  if (!!setSelectedRowKeys) {
+    rowSelection = {
+      selectedRowKeys,
+      onChange: (newSelectedRowKeys: Array<React.Key>) => setSelectedRowKeys(newSelectedRowKeys),
+      selections: [
+        {
+          key: 'allSelectTrue',
+          text: '전체 선택',
+          onSelect: () => {
+            const newSelectedRowKeys: Array<React.Key> = dataSource.map(data => {
+              return data.key;
+            });
+            setSelectedRowKeys(newSelectedRowKeys);
+          },
         },
-      },
-      {
-        key: 'allSelectFalse',
-        text: '전체 선택 해제',
-        onSelect: () => {
-          setSelectedRowKeys([]);
+        {
+          key: 'allSelectFalse',
+          text: '전체 선택 해제',
+          onSelect: () => {
+            setSelectedRowKeys([]);
+          },
         },
-      },
-    ],
-  };
+      ],
+    };
+  }
 
   return (
     <div>
       <Table
+        className="table"
         rowSelection={rowSelection}
         components={components}
         rowClassName={() => 'editable-row'}

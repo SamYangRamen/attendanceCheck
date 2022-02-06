@@ -44,7 +44,7 @@ const LcMemberAddComponent: React.FC<Props> = ({ children }: Props) => {
       })
       .then(response => {
         if (response == true) {
-          alert('LC가 성공적으로 추가되었습니다.');
+          alert('LC 멤버가 성공적으로 추가되었습니다.');
         }
       })
       .catch(e => {

@@ -59,6 +59,16 @@ public class LcDTO {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class LcFKTableDTO {
+        private Integer key;
+        private Integer year;
+        private String lc;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class PostLcRangeDTO {
         private Integer year;
         private String lcDepartment;

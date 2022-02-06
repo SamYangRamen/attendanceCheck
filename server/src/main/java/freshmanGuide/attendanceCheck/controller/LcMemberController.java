@@ -36,7 +36,13 @@ public class LcMemberController {
 
     @PostMapping("delete/lc-member-info-by-lc-member-id-list")
     @ResponseBody
-    public Boolean deleteLcMemberInfoByLcMemberIdList(List<Integer> lcMemberIdList) {
+    public Boolean deleteLcMemberInfoByLcMemberIdList(@RequestBody List<Integer> lcMemberIdList) {
         return lcMemberService.deleteLcMemberInfoByLcMemberIdListService(lcMemberIdList);
+    }
+
+    @PutMapping("put/lc-member-info")
+    @ResponseBody
+    public Boolean putLcMemberInfo(@RequestBody LcMemberDTO.PutLcMemberInfoDTO dto) {
+        return lcMemberService.putLcMemberInfoService(dto);
     }
 }

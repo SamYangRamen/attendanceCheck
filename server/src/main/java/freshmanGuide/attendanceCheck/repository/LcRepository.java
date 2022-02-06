@@ -5,6 +5,7 @@ import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import freshmanGuide.attendanceCheck.mapper.LcMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -34,15 +35,24 @@ public class LcRepository {
         lcMapper.deleteByYearAndLc(dto);
     }
 
-    public List <LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearch(LcDTO.LcSearchInfoDTO dto) {
+    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearch(LcDTO.LcSearchInfoDTO dto) {
         return lcMapper.findByYearAndLcAndFgMemberNames(dto);
     }
 
-    public void updateFgMemberNameByFgMemberId(LcDTO.PutLcInfoDTO dto) {
+    public void putFgMemberNameByFgMemberId(LcDTO.PutLcInfoDTO dto) {
         lcMapper.updateFgMemberNameByFgMemberId(dto);
     }
 
     public void deleteLcInfoByLcIdx(Integer lcIdx) {
         lcMapper.deleteByLcIdx(lcIdx);
+    }
+
+    public List<LcDTO.LcFKTableDTO> getLcFKTableInfoListByFgMemberIdAndYear(Integer fgMemberId, Integer year) {
+        HashMap dataList = new HashMap();
+
+        dataList.put("fgMemberId", fgMemberId);
+        dataList.put("year", year);
+
+        return lcMapper.findLcFKInfoByFgMemberIdAndYear(dataList);
     }
 }

@@ -19,7 +19,9 @@ public interface EventMapper {
 
     List<String> findEventNameByEventDate(Date eventDate);
 
-    List<EventDTO.EventTableInfoDTO> findByYearAndMonth(HashMap dataList);
+    List<EventDTO.EventTableInfoDTO> findByYearAndMonthAndDayAndEventTypeForCalendar(HashMap dataList);
+
+    List<EventDTO.EventTableInfoDTO> findByYearAndMonthAndDayAndEventType(HashMap dataList);
 
     void deleteByEventIdx(Integer eventIdx);
 }

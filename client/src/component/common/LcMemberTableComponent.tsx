@@ -1,13 +1,11 @@
-import { Button, Form, Input, Select } from 'antd';
-import { ColumnType } from 'antd/lib/table';
+import { Button, Form, Input, Select, Space } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import { FgMemberTableInfo } from '../../repository/FgMemberRepository';
 import { LcMemberTableInfo } from '../../repository/LcMemberRepository';
 import useStore from '../../store/useStore';
-import { EditableContext } from '../table/EditableFormRow';
 import EditableTable, { columnType, DataType } from '../table/EditableTable';
-import FgMemberAddComponent from './FgMemberAddComponent';
 import LcMemberAddComponent from './LcMemberAddComponent';
+import 'scss/base.scss';
+import LcMemberTableSearchComponent from 'component/common/LcMemberTableSearchComponent';
 
 const { Option } = Select;
 
@@ -37,6 +35,7 @@ const columns: columnType[] = [
     sorter: (a, b) => a.department.toString().localeCompare(b.department.toString()),
     editable: 'input',
     width: '25%',
+    required: true,
   },
   {
     title: '성별',
@@ -46,6 +45,7 @@ const columns: columnType[] = [
     editable: 'select',
     dropdownContents: ['남', '여'],
     width: '10%',
+    required: true,
   },
   {
     title: '이름',
@@ -54,6 +54,7 @@ const columns: columnType[] = [
     sorter: (a, b) => a.lcMemberName.toString().localeCompare(b.lcMemberName.toString()),
     editable: 'input',
     width: '17%',
+    required: true,
   },
   {
     title: '연락처',
@@ -61,6 +62,7 @@ const columns: columnType[] = [
     dataIndex: 'contact',
     editable: 'input',
     width: '25%',
+    required: true,
   },
 ];
 
@@ -133,82 +135,16 @@ const LcMemberTableCompnent: React.FC<Props> = ({ year }: Props) => {
 
   return (
     <div>
-      <Form layout="inline" style={{ width: '100%', justifyContent: 'space-between' }}>
-        <Form.Item style={{ margin: 0 }}>
-          <Form layout="inline" initialValues={{ layout: 'inline' }}>
-            {openYearSearch ? (
-              <Form.Item label="년도">
-                <Input
-                  value={yearSearch ? yearSearch : ''}
-                  name="yearSearch"
-                  style={{ width: 130 }}
-                  onChange={e => {
-                    setYearSearch(parseInt(e.target.value));
-                  }}
-                  allowClear
-                ></Input>
-              </Form.Item>
-            ) : (
-              <></>
-            )}
-            <Form.Item label="LC">
-              <Input
-                value={lcSearch ? lcSearch : ''}
-                style={{ width: 130 }}
-                onChange={e => {
-                  setLcSearch(e.target.value);
-                }}
-                allowClear
-              ></Input>
-            </Form.Item>
-            <Form.Item label="계열">
-              <Input
-                value={departmentSearch ? departmentSearch : ''}
-                style={{ width: 130 }}
-                onChange={e => {
-                  setDepartmentSearch(e.target.value);
-                }}
-                allowClear
-              ></Input>
-            </Form.Item>
-            <Form.Item label="성별">
-              <Select
-                style={{ width: 130 }}
-                showSearch
-                optionFilterProp="children"
-                onChange={value => {
-                  setGenderSearch(value);
-                }}
-              >
-                {['', '남', '여'].map<JSX.Element>(value => (
-                  <Option value={value}>{value}</Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item label="이름">
-              <Input
-                value={lcMemberNameSearch}
-                style={{ width: 130 }}
-                onChange={e => {
-                  setLcMemberNameSearch(e.target.value);
-                }}
-                allowClear
-              ></Input>
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" onClick={onSearchClick}>
-                {yearSearch > 0 ||
-                lcSearch ||
-                departmentSearch ||
-                genderSearch ||
-                lcMemberNameSearch
-                  ? '검색'
-                  : '전체 검색'}
-              </Button>
-            </Form.Item>
-          </Form>
+      <Form layout="inline" style={{ justifyContent: 'right' }}>
+        <Form.Item>
+          <LcMemberTableSearchComponent
+            openYearSearch={openYearSearch}
+            setLcMemberTableInfo={setLcMemberTableInfo}
+          >
+            <Button type="primary">검색</Button>
+          </LcMemberTableSearchComponent>
         </Form.Item>
-        <Form.Item style={{ margin: 0 }}>
+        <Form.Item>
           <Form layout="inline" initialValues={{ layout: 'inline' }}>
             <Form.Item name={'insertLcMember'}>
               <LcMemberAddComponent>

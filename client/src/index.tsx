@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import HomeComponent from './component/HomeComponent';
 import { BrowserRouter } from 'react-router-dom';
-import RootComponent from './component/RootComponent';
+import RootComponent from 'component/RootComponent';
 import 'antd/dist/antd.css';
 
 ReactDOM.render(

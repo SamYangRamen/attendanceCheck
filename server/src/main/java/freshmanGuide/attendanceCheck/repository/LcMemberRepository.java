@@ -1,6 +1,7 @@
 package freshmanGuide.attendanceCheck.repository;
 
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
+import freshmanGuide.attendanceCheck.DTO.FgMemberDTO;
 import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import freshmanGuide.attendanceCheck.DTO.LcMemberDTO;
 import freshmanGuide.attendanceCheck.mapper.LcMemberMapper;
@@ -41,5 +42,9 @@ public class LcMemberRepository {
 
     public List<LcMemberDTO.LcMemberTableInfoDTO> getLcMemberTableInfoListBySearch(LcMemberDTO.LcMemberTableInfoDTO dto) {
         return lcMemberMapper.findByYearAndLcAndDepartmentAndGenderAndLcMemberName(dto);
+    }
+
+    public void putLcMemberInfo(LcMemberDTO.PutLcMemberInfoDTO dto) {
+        lcMemberMapper.updateByLcMemberId(dto);
     }
 }

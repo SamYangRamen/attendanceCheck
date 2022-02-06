@@ -1,10 +1,8 @@
 package freshmanGuide.attendanceCheck.repositoryTest;
 
-import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.DTO.EventDTO;
-import freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO;
 import freshmanGuide.attendanceCheck.repository.EventRepository;
-import freshmanGuide.attendanceCheck.service.AttendanceCheckService;
+import freshmanGuide.attendanceCheck.service.LcAttendanceCheckService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,12 @@ import java.util.List;
 public class EventRepositoryTests {
 
     EventRepository eventRepository;
-    AttendanceCheckService attendanceCheckService;
+    LcAttendanceCheckService attendanceCheckService;
 
     @Autowired
     public EventRepositoryTests(
             EventRepository eventRepository,
-            AttendanceCheckService attendanceCheckService
+            LcAttendanceCheckService attendanceCheckService
     ) {
         this.eventRepository = eventRepository;
         this.attendanceCheckService = attendanceCheckService;

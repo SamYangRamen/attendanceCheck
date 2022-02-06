@@ -1,10 +1,11 @@
 import { Badge, Calendar, Layout } from 'antd';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { EventTableInfo } from '../../repository/EventReposptory';
-import useStore from '../../store/useStore';
-import convertEventType from '../../util/convertEventType';
-import EventAddComponent from './EventAddComponent';
+import { EventTableInfo } from 'repository/EventReposptory';
+import useStore from 'store/useStore';
+import convertEventType from 'util/convertEventType';
+import EventSelectForAttendanceCheckComponent from 'component/user/EventSelectForAttendanceManagementComponent';
+import EventAddComponent from 'component/admin/EventAddComponent';
 
 const { Header, Content, Sider } = Layout;
 
@@ -13,12 +14,16 @@ export type lcEvent = 'success';
 export type todayEvent = 'processing';
 export type doneEvent = 'default';
 
+interface Props {
+  calenderType: string;
+}
+
 export interface CalendarData {
   type: string;
   content: string;
 }
 
-const EventCalenderComponent: React.FC = () => {
+const EventCalendarComponent: React.FC<Props> = ({ calenderType }: Props) => {
   const todayString: string = moment(new Date()).format('YYYY-MM-DD');
   const { repositoryStore } = useStore();
   const eventRepo = repositoryStore.getEventRepository();
@@ -28,9 +33,20 @@ const EventCalenderComponent: React.FC = () => {
   const [eventInfoListOfMonth, setEventInfoListOfMonth] = useState<EventTableInfo[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean | undefined>();
 
+  const eventType =
+    calenderType == 'lcAttendanceManagement'
+      ? 'LC'
+      : calenderType == 'fgAttendanceManagement'
+      ? 'FG'
+      : '';
+
   useEffect(() => {
     eventRepo
-      .getEventTableInfoByYearAndMonth(moment(todayString).year(), moment(todayString).month() + 1) // month값은 zero-indexed value이기 때문에, 1월은 0 ~ 12월은 11
+      .getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
+        moment(todayString).year(),
+        moment(todayString).month() + 1,
+        eventType
+      ) // month값은 zero-indexed value이기 때문에, 1월은 0 ~ 12월은 11
       .then(response => {
         setEventInfoListOfMonth(response);
       })
@@ -47,9 +63,10 @@ const EventCalenderComponent: React.FC = () => {
       )
     ) {
       eventRepo
-        .getEventTableInfoByYearAndMonth(
+        .getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
           moment(selectedDate).year(),
-          moment(selectedDate).month() + 1
+          moment(selectedDate).month() + 1,
+          eventType
         )
         .then(response => {
           setEventInfoListOfMonth(response);
@@ -111,13 +128,27 @@ const EventCalenderComponent: React.FC = () => {
       >
         {
           <div>
-            <EventAddComponent
-              selectedDate={beforeSelectedDate}
-              eventInfoListOfMonth={eventInfoListOfMonth}
-              setEventInfoListOfMonth={setEventInfoListOfMonth}
-              isModalVisible={isModalVisible}
-              setIsModalVisible={setIsModalVisible}
-            ></EventAddComponent>
+            {calenderType == 'eventManagement' ? (
+              <EventAddComponent
+                selectedDate={beforeSelectedDate}
+                eventInfoListOfMonth={eventInfoListOfMonth}
+                setEventInfoListOfMonth={setEventInfoListOfMonth}
+                isModalVisible={isModalVisible}
+                setIsModalVisible={setIsModalVisible}
+              ></EventAddComponent>
+            ) : (
+              <></>
+            )}
+            {calenderType == 'lcAttendanceManagement' ? (
+              <EventSelectForAttendanceCheckComponent
+                selectedDate={beforeSelectedDate}
+                eventInfoListOfMonth={eventInfoListOfMonth}
+                isModalVisible={isModalVisible}
+                setIsModalVisible={setIsModalVisible}
+              ></EventSelectForAttendanceCheckComponent>
+            ) : (
+              <></>
+            )}
             <Calendar
               value={selectedDate}
               dateCellRender={dateCellRender}
@@ -132,4 +163,4 @@ const EventCalenderComponent: React.FC = () => {
   );
 };
 
-export default EventCalenderComponent;
+export default EventCalendarComponent;

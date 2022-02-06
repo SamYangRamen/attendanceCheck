@@ -19,10 +19,16 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @GetMapping("get/event-info/calendar")
+    @ResponseBody
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendar(@RequestParam Integer year, @RequestParam Integer month, @RequestParam String eventType) {
+        return eventService.getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendarService(year, month, eventType);
+    }
+
     @GetMapping("get/event-info")
     @ResponseBody
-    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonth(@RequestParam Integer year, @RequestParam Integer month) {
-        return eventService.getEventTableInfoByYearAndMonthService(year, month);
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventType(@RequestParam Integer year, @RequestParam Integer month, @RequestParam Integer day, @RequestParam String eventType) {
+        return eventService.getEventTableInfoByYearAndMonthAndDayAndEventTypeService(year, month, day, eventType);
     }
 
     @PostMapping("post/event-info")

@@ -5,9 +5,10 @@
     <insert id="save" parameterType="freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO$LcAttendanceCheckInfoDTO">
         INSERT INTO lc_attendance_check_info
         VALUES (
-            #{lcMemberId},
-            (SELECT eventIdx FROM event_Info WHERE eventName=#{eventName} AND eventDate=#{eventDate}),
-            #{state}
+            ${lcMemberId},
+            ${eventIdx},
+            ${state},
+            '${note}'
         )
     </insert>
 
@@ -36,4 +37,39 @@
         DELETE FROM lc_attendance_check_info
         WHERE lcMemberId=${lcMemberId}
     </delete>
+
+    <select id="findDepartmentAndGenderAndLcMemberNameAndStateAndNoteByYearAndLcAndEventIdx"
+            parameterType="java.util.HashMap"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO$LcAttendanceCheckTableInfoDTO"
+    >
+        SELECT CONCAT(S1.lcMemberId, '|', ${eventIdx}) as `key`, S1.department, S1.gender, S1.lcMemberName, S2.state, S2.note
+        FROM
+        (
+            SELECT *
+            FROM lc_member_info
+            WHERE lcIdx=(SELECT lcIdx FROM lc_info WHERE year=${year} AND lc='${lc}')
+        ) S1
+        LEFT JOIN
+        (
+            SELECT *
+            FROM lc_attendance_check_info
+            where eventIdx=${eventIdx}
+        ) S2
+        ON S1.lcMemberId=S2.lcMemberId
+    </select>
+
+    <delete id="deleteByLcMemberIdAndEventIdx"
+            parameterType="java.util.HashMap"
+    >
+        DELETE FROM lc_attendance_check_info
+        WHERE lcMemberId=${lcMemberId} AND eventIdx=${eventIdx}
+    </delete>
+
+    <update id="updateByLcMemberIdAndEventIdx"
+            parameterType="freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO$PutLcAttendanceCheckInfoDTO"
+    >
+        UPDATE lc_attendance_check_info
+        SET ${columnName}=#{value}
+        WHERE lcMemberId=#{lcMemberId} AND eventIdx=#{eventIdx}
+    </update>
 </mapper>

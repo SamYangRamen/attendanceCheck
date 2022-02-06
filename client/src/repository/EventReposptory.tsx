@@ -25,10 +25,29 @@ export default class EventRepository {
     });
   }
 
-  public getEventTableInfoByYearAndMonth(year: number, month: number): Promise<EventTableInfo[]> {
-    return axios.get(`get/event-info?year=${year}&month=${month}`).then(response => {
-      return response.data;
-    });
+  public getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
+    year: number,
+    month: number,
+    eventType: string
+  ): Promise<EventTableInfo[]> {
+    return axios
+      .get(`get/event-info/calendar?year=${year}&month=${month}&eventType=${eventType}`)
+      .then(response => {
+        return response.data;
+      });
+  }
+
+  public getEventTableInfoByYearAndMonthAndDayAndEventType(
+    year: number,
+    month: number,
+    day: number,
+    eventType: string
+  ): Promise<EventTableInfo[]> {
+    return axios
+      .get(`get/event-info?year=${year}&month=${month}&day=${day}&eventType=${eventType}`)
+      .then(response => {
+        return response.data;
+      });
   }
 
   public deleteEventInfoByEventIdx(eventIdx: React.Key): Promise<boolean> {

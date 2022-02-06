@@ -1,4 +1,5 @@
 import axios from 'axios';
+import React from 'react';
 
 export interface DTO<T> {
   dto: T;
@@ -34,6 +35,12 @@ export interface PutLcInfo {
   lcIdx: number;
   columnName: string;
   fgMemberId: number | null;
+}
+
+export interface LcFKTableInfo {
+  key: React.Key;
+  year: number;
+  lc: string;
 }
 
 export default class LcRepository {
@@ -90,5 +97,18 @@ export default class LcRepository {
     return axios.post(`delete/lc-info-by-lc-idx-list`, lcIdxList).then(response => {
       return response.data;
     });
+  }
+
+  public getLcFKTableInfoListByFgMemberIdAndYear(
+    fgMemberId: number,
+    year: number
+  ): Promise<LcFKTableInfo[]> {
+    return axios
+      .get(
+        `get/lc-fk-table-info-list-by-fg-member-id-and-year?fgMemberId=${fgMemberId}&year=${year}`
+      )
+      .then(response => {
+        return response.data;
+      });
   }
 }

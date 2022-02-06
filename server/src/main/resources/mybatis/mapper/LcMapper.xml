@@ -93,4 +93,14 @@
         DELETE FROM lc_info
         WHERE lcIdx=${lcIdx}
     </delete>
+
+    <select id="findLcFKInfoByFgMemberIdAndYear" parameterType="java.util.HashMap"
+            resultType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcFKTableDTO">
+        SELECT lcIdx as `key`, year, lc
+        FROM lc_info
+        WHERE (fgMemberId1=${fgMemberId} or fgMemberId2=${fgMemberId} or fgMemberId3=${fgMemberId} or fgMemberId4=${fgMemberId})
+        <if test='year!=null and year!=0'>
+            AND year=${year}
+        </if>
+    </select>
 </mapper>

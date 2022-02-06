@@ -19,4 +19,6 @@ public interface LcService {
     Boolean putLcInfoService(LcDTO.PutLcInfoDTO dto);
 
     Boolean deleteLcInfoByLcIdxListService(List<Integer> lcIdxList);
+
+    List<LcDTO.LcFKTableDTO> getLcFKTableInfoListByFgMemberIdAndYearService(Integer fgMemberId, Integer year);
 }

@@ -30,12 +30,27 @@
         WHERE DATE(eventDate)=${eventDate}
     </select>
 
-    <select id="findByYearAndMonth" parameterType="java.util.HashMap" resultType="freshmanGuide.attendanceCheck.DTO.EventDTO$EventTableInfoDTO">
+    <select id="findByYearAndMonthAndDayAndEventTypeForCalendar" parameterType="java.util.HashMap" resultType="freshmanGuide.attendanceCheck.DTO.EventDTO$EventTableInfoDTO">
         SELECT eventIdx as `key`, eventName, eventType, eventDate
         FROM event_info
-        WHERE (YEAR(eventDate)=${year} AND MONTH(eventDate)=${month})
-            OR (YEAR(eventDate)=(SELECT YEAR(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL 1 month))) AND MONTH(eventDate)=(SELECT MONTH(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL 1 month))))
-            OR (YEAR(eventDate)=(SELECT YEAR(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL -1 month))) AND MONTH(eventDate)=(SELECT MONTH(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL -1 month))))
+        WHERE
+            (
+                (YEAR(eventDate)=${year} AND MONTH(eventDate)=${month})
+                OR (YEAR(eventDate)=(SELECT YEAR(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL 1 month))) AND MONTH(eventDate)=(SELECT MONTH(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL 1 month))))
+                OR (YEAR(eventDate)=(SELECT YEAR(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL -1 month))) AND MONTH(eventDate)=(SELECT MONTH(DATE_SUB(DATE('${year}-${month}-01'), INTERVAL -1 month))))
+            )
+        <if test='eventType!=null and !eventType.equals("")'>
+            AND eventType='${eventType}'
+        </if>
+    </select>
+
+    <select id="findByYearAndMonthAndDayAndEventType" parameterType="java.util.HashMap" resultType="freshmanGuide.attendanceCheck.DTO.EventDTO$EventTableInfoDTO">
+        SELECT eventIdx as `key`, eventName, eventType, eventDate
+        FROM event_info
+        WHERE YEAR(eventDate)=${year} AND MONTH(eventDate)=${month} AND DAY(eventDate)=${day}
+        <if test='eventType!=null and !eventType.equals("")'>
+            AND eventType='${eventType}'
+        </if>
     </select>
 
     <delete id="deleteByEventIdx" parameterType="Integer">

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import FgMemberRegisterComponent from './connect/FgMemberRegisterComponent';
-import '../scss/home.scss';
+import FgMemberRegisterComponent from './FgMemberRegisterComponent';
+import '../../scss/home.scss';
 import { RouteComponentProps, useHistory } from 'react-router';
-import LoginComponent from './connect/LoginComponent';
 import { Button, Form, Input, Radio, RadioChangeEvent } from 'antd';
-import useStore from '../store/useStore';
+import useStore from '../../store/useStore';
 import crypto from 'crypto';
 
 const HomeComponent: React.FC = () => {
@@ -46,7 +45,7 @@ const HomeComponent: React.FC = () => {
           return;
         }
 
-        window.localStorage.setItem('fgmemberId', response.fgMemberId.toString());
+        window.localStorage.setItem('fgMemberId', response.fgMemberId.toString());
         window.localStorage.setItem('isAdmin', response.isAdmin.toString());
         history.push(permission ? '/admin' : '/user');
       })

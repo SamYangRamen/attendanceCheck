@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import LcMemberRegisterComponent from '../connect/LcMemberRegisterComponent';
-import Select from 'react-select';
-import { ActionMeta } from 'react-select';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Layout, Menu } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
-import FgGenerationSelectComponent from './FgGenerationSelectComponent';
-import YearForLcSelectComponent from './YearForLcSelectComponent';
-import YearForLcMemberSelectComponent from './YearForLcMemberSelectComponent';
-import EventCalenderComponent from './EventCalenderComponent';
+import FgGenerationSelectComponent from 'component/admin/FgGenerationSelectComponent';
+import YearForLcSelectComponent from 'component/admin/YearForLcSelectComponent';
+import YearForLcMemberSelectComponent from 'component/admin/YearForLcMemberSelectComponent';
+import EventCalendarComponent from 'component/common/EventCalendarComponent';
+import { DoubleRightOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -18,6 +15,7 @@ const generationUnit = 5;
 
 const AdminComponent: React.FC = () => {
   const [nav, setNav] = useState<string>('');
+  const [isDrawerVisible, setIsDrawerVisible] = useState<boolean>(false);
 
   const onClick = (e: MenuInfo) => {
     setNav(nav == e.key ? '' : e.key);
@@ -28,6 +26,13 @@ const AdminComponent: React.FC = () => {
       <Header>
         <div className="logo" />
         <Menu theme="dark" mode="horizontal">
+          <Menu.Item>
+            <DoubleRightOutlined
+              onClick={e => {
+                setIsDrawerVisible(!isDrawerVisible);
+              }}
+            />
+          </Menu.Item>
           <Menu.Item key="FgMemberManagement" onClick={onClick}>
             FG 멤버 관리
           </Menu.Item>
@@ -49,11 +54,18 @@ const AdminComponent: React.FC = () => {
       )}
       {nav == 'LcManagement' ? <YearForLcSelectComponent></YearForLcSelectComponent> : <></>}
       {nav == 'LcMemberManagement' ? (
-        <YearForLcMemberSelectComponent></YearForLcMemberSelectComponent>
+        <YearForLcMemberSelectComponent
+          isDrawerVisible={isDrawerVisible}
+          setIsDrawerVisible={setIsDrawerVisible}
+        ></YearForLcMemberSelectComponent>
       ) : (
         <></>
       )}
-      {nav == 'EventManagement' ? <EventCalenderComponent></EventCalenderComponent> : <></>}
+      {nav == 'EventManagement' ? (
+        <EventCalendarComponent calenderType="eventManagement"></EventCalendarComponent>
+      ) : (
+        <></>
+      )}
     </Layout>
   );
 };

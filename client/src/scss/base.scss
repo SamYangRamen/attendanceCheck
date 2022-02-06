@@ -1,8 +1,66 @@
-table {
-  position: relative;
-  font-size: 0.75vw;
+@media only screen and (max-width: 640px) {
+  * {
+    font-size: 2vw;
+
+    .searchInput {
+      width: 25vw;
+    }
+
+    .calendar {
+      height: 100vh;
+    }
+
+    .drawer {
+      width: 50vw;
+    }
+
+    .attendanceCheckTable {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .table {
+        width: 90vw;
+      }
+
+      .button {
+        width: 90vw;
+        display: flex;
+        justify-content: right;
+      }
+    }
+  }
 }
 
+@media only screen and (min-width: 641px) {
+  .searchInput {
+    width: 10vw;
+  }
+
+  .drawer {
+    width: 20vw;
+  }
+
+  .attendanceCheckTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .table {
+      width: 60vw;
+    }
+
+    .button {
+      width: 60vw;
+      display: flex;
+      justify-content: right;
+    }
+  }
+}
+
+/*
+.drawer {
+  max-width: 50%;
+}
 /*
 .ribbon {
   height: 100px;
@@ -61,6 +119,7 @@ table {
 }
 */
 
+/*
 .logo {
   float: left;
   width: 120px;
@@ -77,3 +136,4 @@ table {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
 }
+*/

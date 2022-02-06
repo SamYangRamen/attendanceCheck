@@ -1,6 +1,5 @@
 package freshmanGuide.attendanceCheck.service;
 
-import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.DTO.LcDTO;
 import freshmanGuide.attendanceCheck.repository.LcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class LcServiceImpl implements LcService {
     @Override
     public Boolean putLcInfoService(LcDTO.PutLcInfoDTO dto) {
         try {
-            lcRepository.updateFgMemberNameByFgMemberId(dto);
+            lcRepository.putFgMemberNameByFgMemberId(dto);
             return true;
         } catch (Exception e) {
             return false;
@@ -76,6 +75,15 @@ public class LcServiceImpl implements LcService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public List<LcDTO.LcFKTableDTO> getLcFKTableInfoListByFgMemberIdAndYearService(Integer fgMemberId, Integer year) {
+        try {
+            return lcRepository.getLcFKTableInfoListByFgMemberIdAndYear(fgMemberId, year);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

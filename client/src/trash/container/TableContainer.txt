@@ -1,8 +1,8 @@
 import React from 'react';
 import { JsxEmit } from 'typescript';
-import { AccountInfo } from '../repository/AccountRepository';
-import { FgMemberInfo, FgMemberTableInfo } from '../repository/FgMemberRepository';
-import { LcInfo } from '../repository/LcRepository';
+import { AccountInfo } from '../../repository/AccountRepository';
+import { FgMemberInfo, FgMemberTableInfo } from '../../repository/FgMemberRepository';
+import { LcInfo } from '../../repository/LcRepository';
 import TableCellContainer from './TableCellContainer';
 import { Table, Radio, Divider } from 'antd';
 

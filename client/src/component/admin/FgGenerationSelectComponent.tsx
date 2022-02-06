@@ -1,8 +1,8 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { useEffect, useState } from 'react';
-import FgMemberTableCompnent from './FgMemberTableComponent';
+import FgMemberTableCompnent from 'component/admin/FgMemberTableComponent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;

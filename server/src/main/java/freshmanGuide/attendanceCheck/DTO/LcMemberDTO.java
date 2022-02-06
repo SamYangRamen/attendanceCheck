@@ -33,4 +33,14 @@ public class LcMemberDTO {
         private String lcMemberName;
         private String contact;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PutLcMemberInfoDTO {
+        private Integer lcMemberId;
+        private String columnName;
+        private String value;
+    }
 }

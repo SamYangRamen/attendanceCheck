@@ -85,7 +85,7 @@
                     AND lcMemberName LIKE '%${lcMemberName}%'
                 </if>
             ) AS S1
-            LEFT JOIN
+            JOIN
             (
                 SELECT *
                 FROM lc_info
@@ -101,4 +101,11 @@
         )
     </select>
 
+    <update id="updateByLcMemberId"
+            parameterType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$PutLcMemberInfoDTO"
+    >
+        UPDATE lc_member_info
+        SET ${columnName}=#{value}
+        WHERE lcMemberId=#{lcMemberId}
+    </update>
 </mapper>

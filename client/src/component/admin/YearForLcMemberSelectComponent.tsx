@@ -1,9 +1,8 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Drawer, Layout, Menu } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { MenuInfo } from 'rc-menu/lib/interface';
-import { useEffect, useState } from 'react';
-import LcTableComponent from './LcTableComponent';
-import LcMemberTableCompnent from './LcMemberTableComponent';
+import { useState } from 'react';
+import LcMemberTableCompnent from 'component/common/LcMemberTableComponent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -11,10 +10,19 @@ const { Header, Content, Sider } = Layout;
 const maxYear = new Date().getFullYear();
 const yearUnit = 10;
 
-const YearForLcMemberSelectComponent: React.FC = () => {
+interface Props {
+  isDrawerVisible: boolean;
+  setIsDrawerVisible: (value: React.SetStateAction<boolean>) => void;
+}
+
+const YearForLcMemberSelectComponent: React.FC<Props> = ({
+  isDrawerVisible,
+  setIsDrawerVisible,
+}: Props) => {
   const [year, setYear] = useState<number>(-1);
 
   const onClick = (e: MenuInfo) => {
+    alert(e.key);
     setYear(parseInt(e.key));
   };
 
@@ -47,6 +55,16 @@ const YearForLcMemberSelectComponent: React.FC = () => {
 
   return (
     <Layout>
+      {/*<div>
+     <Drawer
+        className="drawer"
+        visible={isDrawerVisible}
+        placement="left"
+        onClose={e => {
+          setIsDrawerVisible(false);
+        }}
+        width={'60vw'}
+      >*/}
       <Sider width={200} className="site-layout-background">
         <Menu
           mode="inline"
@@ -59,6 +77,7 @@ const YearForLcMemberSelectComponent: React.FC = () => {
           </Menu.Item>
           {generationList}
         </Menu>
+        {/*</Drawer>*/}
       </Sider>
       <Layout style={{ padding: '0 24px 24px' }}>
         <Content
@@ -72,6 +91,7 @@ const YearForLcMemberSelectComponent: React.FC = () => {
           {<LcMemberTableCompnent year={year} />}
         </Content>
       </Layout>
+      {/*</div>*/}
     </Layout>
   );
 };

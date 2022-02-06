@@ -38,13 +38,25 @@ public class EventRepository {
         return eventMapper.findEventNameByEventDate(java.sql.Date.valueOf((new SimpleDateFormat("yyyy-MM-dd")).format(eventDate)));
     }
 
-    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonth(Integer year, Integer month) {
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendar(Integer year, Integer month, String eventType) {
         HashMap dataList = new HashMap();
 
         dataList.put("year", year);
         dataList.put("month", month);
+        dataList.put("eventType", eventType);
 
-        return eventMapper.findByYearAndMonth(dataList);
+        return eventMapper.findByYearAndMonthAndDayAndEventTypeForCalendar(dataList);
+    }
+
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventType(Integer year, Integer month, Integer day, String eventType) {
+        HashMap dataList = new HashMap();
+
+        dataList.put("year", year);
+        dataList.put("month", month);
+        dataList.put("day", day);
+        dataList.put("eventType", eventType);
+
+        return eventMapper.findByYearAndMonthAndDayAndEventType(dataList);
     }
 
     public void deleteEventInfoByEventIdx(Integer eventIdx) {

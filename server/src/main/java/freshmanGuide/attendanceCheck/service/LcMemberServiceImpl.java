@@ -50,4 +50,14 @@ public class LcMemberServiceImpl implements LcMemberService {
             return false;
         }
     }
+
+    @Override
+    public Boolean putLcMemberInfoService(LcMemberDTO.PutLcMemberInfoDTO dto) {
+        try {
+            lcMemberRepository.putLcMemberInfo(dto);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
 }

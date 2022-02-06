@@ -54,4 +54,10 @@ public class LcController {
     public Boolean deleteLcInfoByLcIdxList(@RequestBody List<Integer> lcIdxList) {
         return lcService.deleteLcInfoByLcIdxListService(lcIdxList);
     }
+
+    @GetMapping("get/lc-fk-table-info-list-by-fg-member-id-and-year")
+    @ResponseBody
+    public List<LcDTO.LcFKTableDTO> getLcFKTableInfoListByFgMemberIdAndYear(@RequestParam Integer fgMemberId, @RequestParam Integer year) {
+        return lcService.getLcFKTableInfoListByFgMemberIdAndYearService(fgMemberId, year);
+    }
 }

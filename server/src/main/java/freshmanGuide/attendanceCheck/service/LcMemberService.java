@@ -10,4 +10,6 @@ public interface LcMemberService {
     List<LcMemberDTO.LcMemberTableInfoDTO> getLcMemberTableInfoListBySearchService(LcMemberDTO.LcMemberTableInfoDTO dto);
 
     Boolean deleteLcMemberInfoByLcMemberIdListService(List<Integer> lcMemberIdList);
+
+    Boolean putLcMemberInfoService(LcMemberDTO.PutLcMemberInfoDTO dto);
 }

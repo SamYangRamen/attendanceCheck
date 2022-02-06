@@ -14,8 +14,32 @@ public class LcAttendanceCheckDTO {
     @AllArgsConstructor
     public static class LcAttendanceCheckInfoDTO {
         private Integer lcMemberId;
-        private String eventName;
-        private Date eventDate;
-        private String state;
+        private Integer eventIdx;
+        private Integer state;
+        private String note;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LcAttendanceCheckTableInfoDTO {
+        private String key;
+        private String department;
+        private String gender;
+        private String lcMemberName;
+        private Integer state;
+        private String note;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PutLcAttendanceCheckInfoDTO {
+        private Integer lcMemberId;
+        private Integer eventIdx;
+        private String columnName;
+        private String value;
     }
 }

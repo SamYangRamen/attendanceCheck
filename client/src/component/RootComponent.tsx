@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router';
-import HomeComponent from './HomeComponent';
+import HomeComponent from './home/HomeComponent';
 import AdminComponent from './admin/AdminComponent';
-import LoginComponent from './connect/LoginComponent';
-import FgMemberRegisterComponent from './connect/FgMemberRegisterComponent';
+import FgMemberRegisterComponent from './home/FgMemberRegisterComponent';
 import UserComponent from './user/UserComponent';
-import LogoutComponent from './connect/LogoutComponent';
 import RootStore from '../store/RootStore';
 import ValueStore from '../store/ValueStore';
 import StoreProvider from '../store/StoreProvider';
 import RepositoryStore from '../store/RepositoryStore';
-import TestComponent from './admin/AdminComponent';
-
+import 'scss/base.scss';
 import { Layout, Menu } from 'antd';
 import FgMemberTableCompnent from './admin/FgMemberTableComponent';
-import FgMemberAddComponent from './admin/FgMemberAddComponent';
-import EventCalenderComponent from './admin/EventCalenderComponent';
+import EventCalendarComponent from './common/EventCalendarComponent';
+import TestComponent from './TestComponent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -30,10 +27,8 @@ const RootComponent: React.FC = () => {
     <div>
       <StoreProvider value={store}>
         <Switch>
-          <Route path="/test" component={EventCalenderComponent} />
-          <Route path="/login" component={LoginComponent} />
+          <Route path="/test" component={TestComponent} />
           <Route path="/register" component={FgMemberRegisterComponent} />
-          <Route path="/logout" component={LogoutComponent} />
           <Route path="/admin" component={AdminComponent} />
           <Route path="/user" component={UserComponent} />
           <Route path="/" exact component={HomeComponent} />

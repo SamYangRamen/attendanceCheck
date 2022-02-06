@@ -13,10 +13,9 @@ import {
 } from 'antd';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { EventTableInfo } from '../../repository/EventReposptory';
-import useStore from '../../store/useStore';
-import contactAutoWriter from '../../util/contactAutoWriter';
-import { columnType } from '../table/EditableTable';
+import { EventTableInfo } from 'repository/EventReposptory';
+import useStore from 'store/useStore';
+import { columnType } from 'component/table/EditableTable';
 
 const { Option } = Select;
 
@@ -74,6 +73,7 @@ const EventAddComponent: React.FC<Props> = ({
   }, [selectedDate]);
 
   const closeModal = () => {
+    setSelectedEventInfoForDelete(undefined);
     setIsModalVisible(false);
   };
 
@@ -98,7 +98,11 @@ const EventAddComponent: React.FC<Props> = ({
               selectedDate.month() == eventDate.month()
             ) {
               eventRepo
-                .getEventTableInfoByYearAndMonth(eventDate.year(), eventDate.month() + 1)
+                .getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
+                  eventDate.year(),
+                  eventDate.month() + 1,
+                  ''
+                )
                 .then(response => {
                   setEventInfoListOfMonth(response);
                 })
@@ -238,6 +242,9 @@ const EventAddComponent: React.FC<Props> = ({
             <Form.Item rules={[{ required: true }]}>
               <Table
                 rowSelection={{
+                  selectedRowKeys: selectedEventInfoForDelete
+                    ? [selectedEventInfoForDelete.key]
+                    : undefined,
                   type: 'radio',
                   onSelect: onRowSelect,
                 }}

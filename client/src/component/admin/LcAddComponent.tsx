@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useState } from 'react';
-import useStore from '../../store/useStore';
+import useStore from 'store/useStore';
 
 const { Option } = Select;
 
@@ -52,7 +52,7 @@ const LcAddComponent: React.FC<Props> = ({ children }: Props) => {
     <div>
       {<div onClick={openModal}>{children ? children : ''}</div>}
       <Modal
-        width={'800px'}
+        width={'400px'}
         visible={isModalVisible}
         onOk={closeModal}
         onCancel={closeModal}
@@ -66,18 +66,12 @@ const LcAddComponent: React.FC<Props> = ({ children }: Props) => {
         ]}
       >
         <br />
-        <Form
-          id="lcAdd"
-          form={form}
-          layout="inline"
-          initialValues={{ layout: 'inline' }}
-          onFinish={onFinish}
-        >
+        <Form id="lcAdd" form={form} onFinish={onFinish}>
           <Form.Item label="년도" rules={[{ required: true }]}>
             <Select
               showSearch
               defaultValue={year.toString()}
-              style={{ minWidth: 130 }}
+              style={{ width: 130 }}
               optionFilterProp="children"
               onChange={value => {
                 setYear(parseInt(value));

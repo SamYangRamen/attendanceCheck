@@ -3,12 +3,16 @@ package freshmanGuide.attendanceCheck.repository;
 import freshmanGuide.attendanceCheck.DTO.BasicDTO;
 import freshmanGuide.attendanceCheck.DTO.LcAttendanceCheckDTO;
 import freshmanGuide.attendanceCheck.mapper.LcAttendanceCheckMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 
+@Slf4j
 @Repository
 public class LcAttendanceCheckRepository {
 
@@ -44,5 +48,32 @@ public class LcAttendanceCheckRepository {
 
     public void deleteAttendanceCheckInfo(Integer lcMemberId) {
         lcAttendanceCheckMapper.deleteByLcMemberId(lcMemberId);
+    }
+
+    public List<LcAttendanceCheckDTO.LcAttendanceCheckTableInfoDTO> getLcAttendanceCheckTableInfoBySearch(Integer year, String lc, Integer eventIdx) {
+        HashMap dataList = new HashMap();
+
+        dataList.put("year", year);
+        dataList.put("lc", lc);
+        dataList.put("eventIdx", eventIdx);
+
+        return lcAttendanceCheckMapper.findDepartmentAndGenderAndLcMemberNameAndStateAndNoteByYearAndLcAndEventIdx(dataList);
+    }
+
+    public void deleteLcAttendanceCheckInfo(Integer lcMemberId, Integer eventIdx) {
+        HashMap dataList = new HashMap();
+
+        dataList.put("lcMemberId", lcMemberId);
+        dataList.put("eventIdx", eventIdx);
+
+        lcAttendanceCheckMapper.deleteByLcMemberIdAndEventIdx(dataList);
+    }
+
+    public void postLcAttendanceCheckTableInfo(LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
+        lcAttendanceCheckMapper.save(dto);
+    }
+
+    public void putLcAttendanceCheckTableInfo(LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
+        lcAttendanceCheckMapper.updateByLcMemberIdAndEventIdx(dto);
     }
 }

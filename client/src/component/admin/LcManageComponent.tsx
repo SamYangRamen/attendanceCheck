@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import DropdownContainer from '../../container/DropdownContainer';
-import LcMemberRegisterComponent from '../connect/LcMemberRegisterComponent';
-import LcRegisterComponent from '../connect/LcRegisterComponent';
-import LcTableComponent from './LcTableComponent';
+import React from 'react';
+import LcTableComponent from 'component/admin/LcTableComponent';
 
 interface Props {
   year: number;
