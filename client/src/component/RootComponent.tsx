@@ -12,7 +12,7 @@ import 'scss/base.scss';
 import { Layout, Menu } from 'antd';
 import FgMemberTableCompnent from './admin/FgMemberTableComponent';
 import EventCalendarComponent from './common/EventCalendarComponent';
-import TestComponent from './TestComponent';
+import TestComponent from './admin/TestComponent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
