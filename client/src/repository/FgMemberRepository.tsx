@@ -51,13 +51,13 @@ export default class FgMemberRepository {
   }
 
   public postFgMemberInfo(fgMemberInfo: FgMemberInfo): Promise<boolean> {
-    return axios.post(`fg-member-info`, fgMemberInfo).then(response => {
+    return axios.post(`/fg-member-info`, fgMemberInfo).then(response => {
       return response.data;
     });
   }
 
   public putFgMemberInfo(putFgMememberInfo: PutFgMemberInfo): Promise<boolean> {
-    return axios.put(`fg-member-info`, putFgMememberInfo).then(response => {
+    return axios.put(`/fg-member-info`, putFgMememberInfo).then(response => {
       return response.data;
     });
   }
@@ -65,7 +65,7 @@ export default class FgMemberRepository {
   public getFgMemberTableInfoListByGeneration(
     generation: number
   ): Promise<Array<FgMemberTableInfo>> {
-    return axios.get(`fg-member-info/table?generation=${generation}`).then(response => {
+    return axios.get(`/fg-member-info/table?generation=${generation}`).then(response => {
       return response.data;
     });
   }
@@ -77,7 +77,7 @@ export default class FgMemberRepository {
   ): Promise<Array<FgMemberSearchInfo>> {
     return axios
       .get(
-        `fg-member-info/search/search?generation=${generation}&position=${position}&fgMemberName=${fgMemberName}`
+        `/fg-member-info/search/search?generation=${generation}&position=${position}&fgMemberName=${fgMemberName}`
       )
       .then(response => {
         return response.data;
@@ -93,7 +93,7 @@ export default class FgMemberRepository {
   ): Promise<Array<FgMemberTableInfo>> {
     return axios
       .get(
-        `fg-member-info/search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
+        `/fg-member-info/search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
       )
       .then(response => {
         return response.data;
@@ -101,7 +101,7 @@ export default class FgMemberRepository {
   }
 
   public deletefgMemberInfoByfgMemberIdList(fgMemberIdList: number[]): Promise<boolean> {
-    return axios.post(`fg-member-info/fg-member-id`, fgMemberIdList).then(response => {
+    return axios.post(`/fg-member-info/fg-member-id`, fgMemberIdList).then(response => {
       return response.data;
     });
   }

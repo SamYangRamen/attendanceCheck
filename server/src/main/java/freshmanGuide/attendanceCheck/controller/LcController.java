@@ -20,30 +20,30 @@ public class LcController {
         this.lcService = lcService;
     }
 
-    @PostMapping("lc-info/range")
+    @PostMapping("/lc-info/range")
     @ResponseBody
     public Boolean postLcRange(@RequestBody LcDTO.PostLcRangeDTO dto) {
         return lcService.postLcRangeService(dto);
     }
 
-    @GetMapping("lc-info/fg-member-name/search")
+    @GetMapping("/lc-info/fg-member-name/search")
     @ResponseBody
     public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcInfoListBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String fgMemberName1, @RequestParam String fgMemberName2) {
         return lcService.getLcListInfoBySearchService(year, lc, fgMemberName1, fgMemberName2);
     }
 
-    @PutMapping("lc-info")
+    @PutMapping("/lc-info")
     public Boolean putLcInfo(@RequestBody LcDTO.PutLcInfoDTO dto) {
         return lcService.putLcInfoService(dto);
     }
 
-    @PostMapping("lc-info/lc-idx")
+    @PostMapping("/lc-info/lc-idx")
     @ResponseBody
     public Boolean deleteLcInfoByLcIdxList(@RequestBody List<Integer> lcIdxList) {
         return lcService.deleteLcInfoByLcIdxListService(lcIdxList);
     }
 
-    @GetMapping("lc-info/fk/table")
+    @GetMapping("/lc-info/fk/table")
     @ResponseBody
     public List<LcDTO.LcFKTableDTO> getLcFKTableInfoListByFgMemberIdAndYear(@RequestParam Integer fgMemberId, @RequestParam Integer year) {
         return lcService.getLcFKTableInfoListByFgMemberIdAndYearService(fgMemberId, year);

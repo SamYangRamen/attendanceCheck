@@ -20,25 +20,25 @@ public class FgMemberController {
         this.fgMemberService = fgMemberService;
     }
 
-    @PostMapping("fg-member-info")
+    @PostMapping("/fg-member-info")
     @ResponseBody
     public Boolean postFgMemberInfo(@RequestBody FgMemberDTO.FgMemberInfoDTO dto) {
         return fgMemberService.postFgMemberInfoService(dto);
     }
 
-    @PutMapping("fg-member-info")
+    @PutMapping("/fg-member-info")
     @ResponseBody
     public Boolean putFgMemberInfo(@RequestBody FgMemberDTO.PutFgMemberInfoDTO dto) {
         return fgMemberService.putFgMemberInfoService(dto);
     }
 
-    @GetMapping("fg-member-info/table")
+    @GetMapping("/fg-member-info/table")
     @ResponseBody
     public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGeneration(@RequestParam Integer generation) {
         return fgMemberService.getFgMemberTableInfoListByGenerationService(generation);
     }
 
-    @GetMapping("fg-member-info/search/search")
+    @GetMapping("/fg-member-info/search/search")
     @ResponseBody
     public List<FgMemberDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearch(@RequestParam Integer generation, @RequestParam String position, @RequestParam String fgMemberName) {
         return fgMemberService.getFgMemberSearchInfoListBySearchService(new FgMemberDTO.FgMemberSearchInfoDTO(null, generation, null, fgMemberName, position));

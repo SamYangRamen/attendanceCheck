@@ -16,19 +16,19 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("account-info")
+    @PostMapping("/account-info")
     @ResponseBody
     public Boolean postAccountInfo(@RequestBody AccountDTO.AccountInfoDTO dto) {
         return accountService.postAccountInfoService(dto);
     }
 
-    @GetMapping("account-info")
+    @GetMapping("/account-info")
     @ResponseBody
     public AccountDTO.AccountInfoDTO getAccountInfo(@RequestParam("account") String account) {
         return accountService.getAccountInfoService(account);
     }
 
-    @PutMapping("account-info")
+    @PutMapping("/account-info")
     @ResponseBody
     public Boolean putAccountInfo(@RequestBody AccountDTO.PutAccountInfoDTO dto) {
         return accountService.putAccountInfoService(dto);

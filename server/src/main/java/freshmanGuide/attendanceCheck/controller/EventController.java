@@ -19,25 +19,25 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("event-info/table/calendar")
+    @GetMapping("/event-info/table/calendar")
     @ResponseBody
     public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendar(@RequestParam Integer year, @RequestParam Integer month, @RequestParam String eventType) {
         return eventService.getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendarService(year, month, eventType);
     }
 
-    @GetMapping("event-info/table")
+    @GetMapping("/event-info/table")
     @ResponseBody
     public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventType(@RequestParam Integer year, @RequestParam Integer month, @RequestParam Integer day, @RequestParam String eventType) {
         return eventService.getEventTableInfoByYearAndMonthAndDayAndEventTypeService(year, month, day, eventType);
     }
 
-    @PostMapping("event-info")
+    @PostMapping("/event-info")
     @ResponseBody
     public Boolean postEventInfo(@RequestBody EventDTO.EventInfoDTO dto) {
         return eventService.postEventInfoService(dto);
     }
 
-    @DeleteMapping("event-info")
+    @DeleteMapping("/event-info")
     @ResponseBody
     public Boolean deleteEventInfoByEventIdx(@RequestParam Integer eventIdx) {
         return eventService.deleteEventInfoByEventIdxService(eventIdx);

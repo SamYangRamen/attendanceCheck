@@ -35,13 +35,13 @@ export default class LcMemberRepository {
   }
 
   public postLcMemberInfo(lcMemberInfo: LcMemberInfo): Promise<boolean> {
-    return axios.post(`lc-member-info`, lcMemberInfo).then(response => {
+    return axios.post(`/lc-member-info`, lcMemberInfo).then(response => {
       return response.data;
     });
   }
 
   public putLcMemberInfo(putLcMememberInfo: PutLcMemberInfo): Promise<boolean> {
-    return axios.put(`lc-member-info`, putLcMememberInfo).then(response => {
+    return axios.put(`/lc-member-info`, putLcMememberInfo).then(response => {
       return response.data;
     });
   }
@@ -55,7 +55,7 @@ export default class LcMemberRepository {
   ): Promise<Array<LcMemberTableInfo>> {
     return axios
       .get(
-        `lc-member-info/table/search?year=${year}&lc=${lc}&department=${department}&gender=${gender}&lcMemberName=${lcMemberName}`
+        `/lc-member-info/table/search?year=${year}&lc=${lc}&department=${department}&gender=${gender}&lcMemberName=${lcMemberName}`
       )
       .then(response => {
         return response.data;
@@ -63,7 +63,7 @@ export default class LcMemberRepository {
   }
 
   public deleteLcMemberInfoByLcMemberIdList(lcMemberIdList: number[]): Promise<boolean> {
-    return axios.post(`lc-member-info/lc-member-id`, lcMemberIdList).then(response => {
+    return axios.post(`/lc-member-info/lc-member-id`, lcMemberIdList).then(response => {
       return response.data;
     });
   }

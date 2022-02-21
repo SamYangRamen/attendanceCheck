@@ -20,25 +20,25 @@ public class LcAttendanceCheckController {
         this.lcAttendanceCheckService = lcAttendanceCheckService;
     }
 
-    @GetMapping("lc-attendance-check-info/table/search")
+    @GetMapping("/lc-attendance-check-info/table/search")
     @ResponseBody
     public List<LcAttendanceCheckDTO.LcAttendanceCheckTableInfoDTO> getLcAttendanceCheckTableInfoBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam Integer eventIdx) {
         return lcAttendanceCheckService.getLcAttendanceCheckTableInfoBySearchService(year, lc, eventIdx);
     }
 
-    @DeleteMapping("lc-attendance-check-info")
+    @DeleteMapping("/lc-attendance-check-info")
     @ResponseBody
     public Boolean deleteLcAttendanceCheckInfo(@RequestParam Integer lcMemberId, @RequestParam Integer eventIdx) {
         return lcAttendanceCheckService.deleteLcAttendanceCheckInfoService(lcMemberId, eventIdx);
     }
 
-    @PostMapping("lc-attendance-check-info")
+    @PostMapping("/lc-attendance-check-info")
     @ResponseBody
     public Boolean postLcAttendanceCheckTableInfo(@RequestBody LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
         return lcAttendanceCheckService.postLcAttendanceCheckInfoService(dto);
     }
 
-    @PutMapping("lc-attendance-check-info")
+    @PutMapping("/lc-attendance-check-info")
     @ResponseBody
     public Boolean putLcAttendanceCheckTableInfo(@RequestBody LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
         return lcAttendanceCheckService.putLcAttendanceCheckInfoService(dto);

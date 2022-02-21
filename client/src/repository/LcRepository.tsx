@@ -49,7 +49,7 @@ export default class LcRepository {
   }
 
   public postLcRange(lcInfo: PostLcRange): Promise<boolean> {
-    return axios.post(`lc-info/range`, lcInfo).then(response => {
+    return axios.post(`/lc-info/range`, lcInfo).then(response => {
       return response.data;
     });
   }
@@ -62,7 +62,7 @@ export default class LcRepository {
   ): Promise<Array<LcInfoWithFgMemberName>> {
     return axios
       .get(
-        `lc-info/fg-member-name/search?year=${year}&lc=${lc}&fgMemberName1=${fgMemberName1}&fgMemberName2=${fgMemberName2}`
+        `/lc-info/fg-member-name/search?year=${year}&lc=${lc}&fgMemberName1=${fgMemberName1}&fgMemberName2=${fgMemberName2}`
       )
       .then(response => {
         return response.data;
@@ -70,13 +70,13 @@ export default class LcRepository {
   }
 
   public putLcInfo(putLcInfo: PutLcInfo): Promise<boolean> {
-    return axios.put(`lc-info`, putLcInfo).then(response => {
+    return axios.put(`/lc-info`, putLcInfo).then(response => {
       return response.data;
     });
   }
 
   public deleteLcInfoByLcIdxList(lcIdxList: number[]): Promise<boolean> {
-    return axios.post(`lc-info/lc-idx`, lcIdxList).then(response => {
+    return axios.post(`/lc-info/lc-idx`, lcIdxList).then(response => {
       return response.data;
     });
   }
@@ -85,7 +85,7 @@ export default class LcRepository {
     fgMemberId: number,
     year: number
   ): Promise<LcFKTableInfo[]> {
-    return axios.get(`lc-info/fk/table?fgMemberId=${fgMemberId}&year=${year}`).then(response => {
+    return axios.get(`/lc-info/fk/table?fgMemberId=${fgMemberId}&year=${year}`).then(response => {
       return response.data;
     });
   }

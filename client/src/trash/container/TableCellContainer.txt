@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import useStore from '../store/useStore';
-import ValueStore from '../store/ValueStore';
+import useStore from '../../store/useStore';
+import ValueStore from '../../store/ValueStore';
 import DropdownContainer from './DropdownContainer';
 import { ColumnInfo } from './TableContainer';
 

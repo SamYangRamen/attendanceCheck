@@ -36,19 +36,19 @@ export default class AccountRepository {
   }
 
   public postAccountInfo(accountInfo: AccountInfo): Promise<boolean> {
-    return axios.post(`account-info`, accountInfo).then(response => {
+    return axios.post(`/account-info`, accountInfo).then(response => {
       return response.data;
     });
   }
 
   public getAccountInfo(account: string): Promise<AccountInfo> {
-    return axios.get(`account-info?account=${account}`).then(response => {
+    return axios.get(`/account-info?account=${account}`).then(response => {
       return response.data;
     });
   }
 
   public putAccountInfo(putAccountInfo: PutAccountInfo): Promise<boolean> {
-    return axios.put(`account-info`, putAccountInfo).then(response => {
+    return axios.put(`/account-info`, putAccountInfo).then(response => {
       return response.data;
     });
   }

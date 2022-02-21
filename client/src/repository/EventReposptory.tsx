@@ -20,7 +20,7 @@ export default class EventRepository {
   }
 
   public postEventInfo(eventInfo: EventInfo): Promise<boolean> {
-    return axios.post(`event-info`, eventInfo).then(response => {
+    return axios.post(`/event-info`, eventInfo).then(response => {
       return response.data;
     });
   }
@@ -31,7 +31,7 @@ export default class EventRepository {
     eventType: string
   ): Promise<EventTableInfo[]> {
     return axios
-      .get(`event-info/table/calendar?year=${year}&month=${month}&eventType=${eventType}`)
+      .get(`/event-info/table/calendar?year=${year}&month=${month}&eventType=${eventType}`)
       .then(response => {
         return response.data;
       });
@@ -44,14 +44,14 @@ export default class EventRepository {
     eventType: string
   ): Promise<EventTableInfo[]> {
     return axios
-      .get(`event-info/table?year=${year}&month=${month}&day=${day}&eventType=${eventType}`)
+      .get(`/event-info/table?year=${year}&month=${month}&day=${day}&eventType=${eventType}`)
       .then(response => {
         return response.data;
       });
   }
 
   public deleteEventInfoByEventIdx(eventIdx: React.Key): Promise<boolean> {
-    return axios.delete(`event-info?eventIdx=${eventIdx}`).then(response => {
+    return axios.delete(`/event-info?eventIdx=${eventIdx}`).then(response => {
       return response.data;
     });
   }
