@@ -14,9 +14,6 @@ import FgMemberTableCompnent from './admin/FgMemberTableComponent';
 import EventCalendarComponent from './common/EventCalendarComponent';
 import TestComponent from './TestComponent';
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider, Footer } = Layout;
-
 const RootComponent: React.FC = () => {
   const [store] = useState<RootStore>({
     valueStore: new ValueStore(),

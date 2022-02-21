@@ -120,7 +120,9 @@ const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
       >
         <Form.Item>
           <LcTableSearchComponent openYearSearch={openYearSearch} setLcTableInfo={setLcTableInfo}>
-            <Button type="primary">검색</Button>
+            <Button className="manageButton" type="primary">
+              검색
+            </Button>
           </LcTableSearchComponent>
         </Form.Item>
         <Form.Item>
@@ -130,11 +132,18 @@ const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
           <Form layout="inline" initialValues={{ layout: 'inline' }}>
             <Form.Item name={'insertLc'}>
               <LcAddComponent>
-                <Button type="primary">추가</Button>
+                <Button className="manageButton" type="primary">
+                  추가
+                </Button>
               </LcAddComponent>
             </Form.Item>
             <Form.Item name={'deleteLc'}>
-              <Button type="primary" onClick={onDeleteClick} disabled={!selectedRowKeys.length}>
+              <Button
+                className="manageButton"
+                type="primary"
+                onClick={onDeleteClick}
+                disabled={!selectedRowKeys.length}
+              >
                 삭제
               </Button>
             </Form.Item>

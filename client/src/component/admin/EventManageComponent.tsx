@@ -45,7 +45,7 @@ const columns: columnType[] = [
   },
 ];
 
-const EventAddComponent: React.FC<Props> = ({
+const EventManageComponent: React.FC<Props> = ({
   selectedDate,
   eventInfoListOfMonth,
   setEventInfoListOfMonth,
@@ -261,4 +261,4 @@ const EventAddComponent: React.FC<Props> = ({
   );
 };
 
-export default EventAddComponent;
+export default EventManageComponent;

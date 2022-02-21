@@ -5,7 +5,7 @@ import { EventTableInfo } from 'repository/EventReposptory';
 import useStore from 'store/useStore';
 import convertEventType from 'util/convertEventType';
 import EventSelectForAttendanceCheckComponent from 'component/user/EventSelectForAttendanceManagementComponent';
-import EventAddComponent from 'component/admin/EventAddComponent';
+import EventManageComponent from 'component/admin/EventManageComponent';
 
 const { Header, Content, Sider } = Layout;
 
@@ -129,13 +129,13 @@ const EventCalendarComponent: React.FC<Props> = ({ calenderType }: Props) => {
         {
           <div>
             {calenderType == 'eventManagement' ? (
-              <EventAddComponent
+              <EventManageComponent
                 selectedDate={beforeSelectedDate}
                 eventInfoListOfMonth={eventInfoListOfMonth}
                 setEventInfoListOfMonth={setEventInfoListOfMonth}
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
-              ></EventAddComponent>
+              ></EventManageComponent>
             ) : (
               <></>
             )}

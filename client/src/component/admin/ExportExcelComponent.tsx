@@ -33,7 +33,7 @@ const ExportExcelComponent: React.FC<Props> = ({ rowList }: Props) => {
   };
 
   return (
-    <Button type="primary" onClick={onClick} disabled={!rowList.length}>
+    <Button className="manageButton" type="primary" onClick={onClick} disabled={!rowList.length}>
       엑셀로 저장
     </Button>
   );

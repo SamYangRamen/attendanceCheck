@@ -153,20 +153,23 @@ const FgMemberTableCompnent: React.FC<Props> = ({ generation }: Props) => {
             openGenerationSearch={openGenerationSearch}
             setFgMemberTableInfo={setFgMemberTableInfo}
           >
-            <Button type="primary">검색</Button>
+            <Button className={'manageButton'} type="primary">
+              검색
+            </Button>
           </FgMemberTableSearchComponent>
         </Form.Item>
         <Form.Item>
           <ExportExcelComponent rowList={fgMemberTableInfo}></ExportExcelComponent>
         </Form.Item>
-        <Form.Item>
-          <Form layout="inline" initialValues={{ layout: 'inline' }}>
-            <Form.Item name={'deleteFgMember'}>
-              <Button type="primary" onClick={onDeleteClick} disabled={!selectedRowKeys.length}>
-                삭제
-              </Button>
-            </Form.Item>
-          </Form>
+        <Form.Item name={'deleteFgMember'}>
+          <Button
+            className="manageButton"
+            type="primary"
+            onClick={onDeleteClick}
+            disabled={!selectedRowKeys.length}
+          >
+            삭제
+          </Button>
         </Form.Item>
       </Form>
       <br />

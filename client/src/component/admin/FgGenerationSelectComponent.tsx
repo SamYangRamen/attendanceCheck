@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Drawer, Layout, Menu } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,15 @@ const { Header, Content, Sider } = Layout;
 const maxGeneration = new Date().getFullYear() - 2006;
 const generationUnit = 5;
 
-const FgGenerationSelectComponent: React.FC = () => {
+interface Props {
+  isDrawerVisible: boolean;
+  setIsDrawerVisible: (value: React.SetStateAction<boolean>) => void;
+}
+
+const FgGenerationSelectComponent: React.FC<Props> = ({
+  isDrawerVisible,
+  setIsDrawerVisible,
+}: Props) => {
   const [generation, setGeneration] = useState<number>(-1);
 
   const onClick = (e: MenuInfo) => {
@@ -44,19 +52,29 @@ const FgGenerationSelectComponent: React.FC = () => {
 
   return (
     <Layout>
-      <Sider width={200} className="site-layout-background">
-        <Menu
-          mode="inline"
-          //defaultSelectedKeys={['']}
-          //defaultOpenKeys={['1-5']}
-          style={{ height: '100%', borderRight: 0 }}
-        >
-          <Menu.Item key={0} onClick={onClick}>
-            전체
-          </Menu.Item>
-          {generationList}
-        </Menu>
-      </Sider>
+      <Drawer
+        className="drawer"
+        visible={isDrawerVisible}
+        placement="left"
+        onClose={e => {
+          setIsDrawerVisible(false);
+        }}
+        width={'250'}
+      >
+        <Sider width={200} className="site-layout-background">
+          <Menu
+            mode="inline"
+            //defaultSelectedKeys={['']}
+            //defaultOpenKeys={['1-5']}
+            style={{ height: '100%', borderRight: 0 }}
+          >
+            <Menu.Item key={0} onClick={onClick}>
+              전체
+            </Menu.Item>
+            {generationList}
+          </Menu>
+        </Sider>
+      </Drawer>
       <Layout style={{ padding: '0 24px 24px' }}>
         <Content
           className="site-layout-background"

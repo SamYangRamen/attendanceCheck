@@ -22,7 +22,6 @@ const YearForLcMemberSelectComponent: React.FC<Props> = ({
   const [year, setYear] = useState<number>(-1);
 
   const onClick = (e: MenuInfo) => {
-    alert(e.key);
     setYear(parseInt(e.key));
   };
 
@@ -55,30 +54,29 @@ const YearForLcMemberSelectComponent: React.FC<Props> = ({
 
   return (
     <Layout>
-      {/*<div>
-     <Drawer
+      <Drawer
         className="drawer"
         visible={isDrawerVisible}
         placement="left"
         onClose={e => {
           setIsDrawerVisible(false);
         }}
-        width={'60vw'}
-      >*/}
-      <Sider width={200} className="site-layout-background">
-        <Menu
-          mode="inline"
-          //defaultSelectedKeys={['']}
-          //defaultOpenKeys={['1-5']}
-          style={{ height: '100%', borderRight: 0 }}
-        >
-          <Menu.Item key={0} onClick={onClick}>
-            전체
-          </Menu.Item>
-          {generationList}
-        </Menu>
-        {/*</Drawer>*/}
-      </Sider>
+        width={'250'}
+      >
+        <Sider width={200} className="site-layout-background">
+          <Menu
+            mode="inline"
+            //defaultSelectedKeys={['']}
+            //defaultOpenKeys={['1-5']}
+            style={{ height: '100%', borderRight: 0 }}
+          >
+            <Menu.Item key={0} onClick={onClick}>
+              전체
+            </Menu.Item>
+            {generationList}
+          </Menu>
+        </Sider>
+      </Drawer>
       <Layout style={{ padding: '0 24px 24px' }}>
         <Content
           className="site-layout-background"
@@ -91,7 +89,6 @@ const YearForLcMemberSelectComponent: React.FC<Props> = ({
           {<LcMemberTableCompnent year={year} />}
         </Content>
       </Layout>
-      {/*</div>*/}
     </Layout>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import FgGenerationSelectComponent from 'component/admin/FgGenerationSelectComponent';
 import YearForLcSelectComponent from 'component/admin/YearForLcSelectComponent';
@@ -7,11 +7,7 @@ import YearForLcMemberSelectComponent from 'component/admin/YearForLcMemberSelec
 import EventCalendarComponent from 'component/common/EventCalendarComponent';
 import { DoubleRightOutlined } from '@ant-design/icons';
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
-
-const maxGeneration = new Date().getFullYear() - 2006;
-const generationUnit = 5;
+const { Header } = Layout;
 
 const AdminComponent: React.FC = () => {
   const [nav, setNav] = useState<string>('');
@@ -22,17 +18,24 @@ const AdminComponent: React.FC = () => {
   };
 
   return (
-    <Layout>
-      <Header>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal">
-          <Menu.Item>
-            <DoubleRightOutlined
-              onClick={e => {
-                setIsDrawerVisible(!isDrawerVisible);
-              }}
-            />
+    <div>
+      <Layout>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          selectable={false}
+          style={{ position: 'absolute', width: 54 }}
+        >
+          <Menu.Item
+            key="openDrawerButton"
+            onClick={e => {
+              setIsDrawerVisible(!isDrawerVisible);
+            }}
+          >
+            <DoubleRightOutlined />
           </Menu.Item>
+        </Menu>
+        <Menu theme="dark" mode="horizontal" selectable={true} style={{ marginLeft: 54 }}>
           <Menu.Item key="FgMemberManagement" onClick={onClick}>
             FG 멤버 관리
           </Menu.Item>
@@ -46,27 +49,37 @@ const AdminComponent: React.FC = () => {
             행사 관리
           </Menu.Item>
         </Menu>
-      </Header>
-      {nav == 'FgMemberManagement' ? (
-        <FgGenerationSelectComponent></FgGenerationSelectComponent>
-      ) : (
-        <></>
-      )}
-      {nav == 'LcManagement' ? <YearForLcSelectComponent></YearForLcSelectComponent> : <></>}
-      {nav == 'LcMemberManagement' ? (
-        <YearForLcMemberSelectComponent
-          isDrawerVisible={isDrawerVisible}
-          setIsDrawerVisible={setIsDrawerVisible}
-        ></YearForLcMemberSelectComponent>
-      ) : (
-        <></>
-      )}
-      {nav == 'EventManagement' ? (
-        <EventCalendarComponent calenderType="eventManagement"></EventCalendarComponent>
-      ) : (
-        <></>
-      )}
-    </Layout>
+        {nav == 'FgMemberManagement' ? (
+          <FgGenerationSelectComponent
+            isDrawerVisible={isDrawerVisible}
+            setIsDrawerVisible={setIsDrawerVisible}
+          ></FgGenerationSelectComponent>
+        ) : (
+          <></>
+        )}
+        {nav == 'LcManagement' ? (
+          <YearForLcSelectComponent
+            isDrawerVisible={isDrawerVisible}
+            setIsDrawerVisible={setIsDrawerVisible}
+          ></YearForLcSelectComponent>
+        ) : (
+          <></>
+        )}
+        {nav == 'LcMemberManagement' ? (
+          <YearForLcMemberSelectComponent
+            isDrawerVisible={isDrawerVisible}
+            setIsDrawerVisible={setIsDrawerVisible}
+          ></YearForLcMemberSelectComponent>
+        ) : (
+          <></>
+        )}
+        {nav == 'EventManagement' ? (
+          <EventCalendarComponent calenderType="eventManagement"></EventCalendarComponent>
+        ) : (
+          <></>
+        )}
+      </Layout>
+    </div>
   );
 };
 
