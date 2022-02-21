@@ -12,13 +12,9 @@ public interface LcMapper {
 
     void save(LcDTO.LcFKDTO dto);
 
-    List<LcDTO.LcInfoDTO> findAll();
-
     List<String> findLcByYear(Integer year);
 
     void deleteByYearAndLc(LcDTO.LcFKDTO dto);
-
-    List<LcDTO.LcInfoDTO> findAllByYear(Integer year);
 
     List<LcDTO.LcInfoWithFgMemberNameDTO> findByYearAndLcAndFgMemberNames(LcDTO.LcSearchInfoDTO dto);
 

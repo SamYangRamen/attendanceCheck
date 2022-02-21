@@ -36,30 +36,19 @@ export default class AccountRepository {
   }
 
   public postAccountInfo(accountInfo: AccountInfo): Promise<boolean> {
-    return axios.post(`post/account-info`, accountInfo).then(response => {
+    return axios.post(`account-info`, accountInfo).then(response => {
       return response.data;
     });
   }
 
   public getAccountInfo(account: string): Promise<AccountInfo> {
-    return axios.get(`get/account-info?account=${account}`).then(response => {
+    return axios.get(`account-info?account=${account}`).then(response => {
       return response.data;
     });
   }
 
-  public getPassword(account: LoginInfoDTO): Promise<string> {
-    return axios
-      .get(`get/password?account=${account}`)
-      .then(response => {
-        return response.data;
-      })
-      .catch(() => {
-        return null;
-      });
-  }
-
   public putAccountInfo(putAccountInfo: PutAccountInfo): Promise<boolean> {
-    return axios.put(`put/account-info`, putAccountInfo).then(response => {
+    return axios.put(`account-info`, putAccountInfo).then(response => {
       return response.data;
     });
   }

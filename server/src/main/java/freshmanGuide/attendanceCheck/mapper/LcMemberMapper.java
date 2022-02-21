@@ -16,10 +16,6 @@ public interface LcMemberMapper {
 
     void deleteByLcMemberId(Integer lcMemberId);
 
-    List<LcMemberDTO.LcMemberInfoDTO> findAll();
-
-    List<LcMemberDTO.LcMemberInfoDTO> findByYearAndLc(LcDTO.LcFKDTO dto);
-
     List<LcMemberDTO.LcMemberTableInfoDTO> findByYearAndLcAndDepartmentAndGenderAndLcMemberName(LcMemberDTO.LcMemberTableInfoDTO dto);
 
     void updateByLcMemberId(LcMemberDTO.PutLcMemberInfoDTO dto);

@@ -20,49 +20,37 @@ public class FgMemberController {
         this.fgMemberService = fgMemberService;
     }
 
-    @PostMapping("post/fg-member-info")
+    @PostMapping("fg-member-info")
     @ResponseBody
     public Boolean postFgMemberInfo(@RequestBody FgMemberDTO.FgMemberInfoDTO dto) {
         return fgMemberService.postFgMemberInfoService(dto);
     }
 
-    @GetMapping("get/isFgMemberInfoCorrect")
-    @ResponseBody
-    public Boolean getIsFgMemberInfoCorrect(@RequestBody FgMemberDTO.FgMemberInfoDTO dto) {
-        return fgMemberService.getIsFgMemberInfoCorrectService(dto);
-    }
-
-    @PutMapping("put/fg-member-info")
+    @PutMapping("fg-member-info")
     @ResponseBody
     public Boolean putFgMemberInfo(@RequestBody FgMemberDTO.PutFgMemberInfoDTO dto) {
         return fgMemberService.putFgMemberInfoService(dto);
     }
 
-    @GetMapping("get/fg-member-info-list-by-generation")
-    @ResponseBody
-    public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGeneration(@RequestParam Integer generation) {
-        return fgMemberService.getFgMemberInfoListByGenerationService(generation);
-    }
-
-    @GetMapping("get/fg-member-info-list-by-generation/table")
+    @GetMapping("fg-member-info/table")
     @ResponseBody
     public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGeneration(@RequestParam Integer generation) {
         return fgMemberService.getFgMemberTableInfoListByGenerationService(generation);
     }
 
-    @GetMapping("get/fg-member-search-info-list-by-search")
+    @GetMapping("fg-member-info/search/search")
     @ResponseBody
     public List<FgMemberDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearch(@RequestParam Integer generation, @RequestParam String position, @RequestParam String fgMemberName) {
         return fgMemberService.getFgMemberSearchInfoListBySearchService(new FgMemberDTO.FgMemberSearchInfoDTO(null, generation, null, fgMemberName, position));
     }
 
-    @GetMapping("get/fg-member-info-list-by-search")
+    @GetMapping("fg-member-info/search")
     @ResponseBody
     public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(@RequestParam Integer fgMemberId, @RequestParam Integer generation, @RequestParam String fgMemberName, @RequestParam String position, @RequestParam String state) {
         return fgMemberService.getFgMemberInfoListBySearchService(new FgMemberDTO.FgMemberInfoDTO(fgMemberId, generation, fgMemberName, position, state, null, null));
     }
 
-    @PostMapping("delete/fg-member-info-by-fg-member-id-list")
+    @PostMapping("fg-member-info/fg-member-id")
     @ResponseBody
     public Boolean deleteLcInfoByLcIdxList(@RequestBody List<Integer> fgMemberIdList) {
         return fgMemberService.deleteFgMemberInfoByFgMemberIdListService(fgMemberIdList);

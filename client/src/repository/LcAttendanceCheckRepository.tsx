@@ -34,7 +34,7 @@ export default class LcAttendanceCheckRepository {
     eventIdx: number
   ): Promise<LcAttendanceCheckTableInfo[]> {
     return axios
-      .get(`get/lc-attendance-check-info-by-search?year=${year}&lc=${lc}&eventIdx=${eventIdx}`)
+      .get(`lc-attendance-check-info/table/search?year=${year}&lc=${lc}&eventIdx=${eventIdx}`)
       .then(response => {
         return (response.data as LcAttendanceCheckTableInfo[]).map(value => {
           return { ...value, state: value.state == undefined ? 0 : value.state };
@@ -44,14 +44,14 @@ export default class LcAttendanceCheckRepository {
 
   public deleteLcAttendanceCheckInfo(lcMemberId: number, eventIdx: number): Promise<boolean> {
     return axios
-      .delete(`delete/lc-attendance-check-info?lcMemberId=${lcMemberId}&eventIdx=${eventIdx}`)
+      .delete(`lc-attendance-check-info?lcMemberId=${lcMemberId}&eventIdx=${eventIdx}`)
       .then(response => {
         return response.data;
       });
   }
 
   public postLcAttendanceCheckInfo(savedValues: LcAttendanceCheckInfo): Promise<boolean> {
-    return axios.post(`post/lc-attendance-check-info`, savedValues).then(response => {
+    return axios.post(`lc-attendance-check-info`, savedValues).then(response => {
       return response.data;
     });
   }
@@ -59,7 +59,7 @@ export default class LcAttendanceCheckRepository {
   public putLcAttendanceCheckInfo(
     putLcAttendanceCheckInfo: PutLcAttendanceCheckInfo
   ): Promise<boolean> {
-    return axios.put(`put/lc-attendance-check-info`, putLcAttendanceCheckInfo).then(response => {
+    return axios.put(`lc-attendance-check-info`, putLcAttendanceCheckInfo).then(response => {
       return response.data;
     });
   }

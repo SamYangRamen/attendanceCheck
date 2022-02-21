@@ -49,19 +49,7 @@ export default class LcRepository {
   }
 
   public postLcRange(lcInfo: PostLcRange): Promise<boolean> {
-    return axios.post(`post/lc-info`, lcInfo).then(response => {
-      return response.data;
-    });
-  }
-
-  public getIsLcInfo(year: number, lc: number): Promise<boolean> {
-    return axios.get(`get/is-lc-info?year=${year}&lc=${lc}`).then(response => {
-      return response.data;
-    });
-  }
-
-  public getLcInfoListByYear(year: number): Promise<Array<LcInfo>> {
-    return axios.get(`get/lc-info-list-by-year?year=${year}`).then(response => {
+    return axios.post(`lc-info/range`, lcInfo).then(response => {
       return response.data;
     });
   }
@@ -74,27 +62,21 @@ export default class LcRepository {
   ): Promise<Array<LcInfoWithFgMemberName>> {
     return axios
       .get(
-        `get/lc-info-list-by-search?year=${year}&lc=${lc}&fgMemberName1=${fgMemberName1}&fgMemberName2=${fgMemberName2}`
+        `lc-info/fg-member-name/search?year=${year}&lc=${lc}&fgMemberName1=${fgMemberName1}&fgMemberName2=${fgMemberName2}`
       )
       .then(response => {
         return response.data;
       });
   }
 
-  public getLcListByYear(year: number): Promise<Array<string>> {
-    return axios.get(`get/lc-list-by-year?year=${year}`).then(response => {
-      return response.data;
-    });
-  }
-
   public putLcInfo(putLcInfo: PutLcInfo): Promise<boolean> {
-    return axios.put(`put/lc-info`, putLcInfo).then(response => {
+    return axios.put(`lc-info`, putLcInfo).then(response => {
       return response.data;
     });
   }
 
   public deleteLcInfoByLcIdxList(lcIdxList: number[]): Promise<boolean> {
-    return axios.post(`delete/lc-info-by-lc-idx-list`, lcIdxList).then(response => {
+    return axios.post(`lc-info/lc-idx`, lcIdxList).then(response => {
       return response.data;
     });
   }
@@ -103,12 +85,8 @@ export default class LcRepository {
     fgMemberId: number,
     year: number
   ): Promise<LcFKTableInfo[]> {
-    return axios
-      .get(
-        `get/lc-fk-table-info-list-by-fg-member-id-and-year?fgMemberId=${fgMemberId}&year=${year}`
-      )
-      .then(response => {
-        return response.data;
-      });
+    return axios.get(`lc-info/fk/table?fgMemberId=${fgMemberId}&year=${year}`).then(response => {
+      return response.data;
+    });
   }
 }

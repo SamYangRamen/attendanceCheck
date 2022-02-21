@@ -51,25 +51,6 @@
         WHERE fgMemberId=${fgMemberId}
     </select>
 
-    <select id="findPasswordByMail"
-            parameterType="String"
-            resultType="String"
-    >
-        SELECT password
-        FROM
-        (
-            SELECT *
-            FROM fg_member_info
-            WHERE mail=${mail}
-        ) AS S1
-        LEFT JOIN
-        (
-            SELECT *
-            FROM account_info
-        ) AS S2
-        ON S1.fgMemberId=S2.fgMemberId
-    </select>
-
     <select id="findAccountCheckInfoByFgMemberId"
             parameterType="Integer"
             resultType="freshmanGuide.attendanceCheck.DTO.AccountDTO$AccountCheckInfoDTO"
@@ -77,25 +58,6 @@
         SELECT password, salt, isAdmin, registerApproval
         FROM account_info
         WHERE fgMemberId=${fgMemberId}
-    </select>
-
-    <select id="findAccountCheckInfoByMail"
-            parameterType="String"
-            resultType="freshmanGuide.attendanceCheck.DTO.AccountDTO$AccountCheckInfoDTO"
-    >
-        SELECT password, salt, isAdmin, registerApproval
-        FROM
-        (
-            SELECT *
-            FROM fg_member_info
-            WHERE mail=${mail}
-        ) AS S1
-        LEFT JOIN
-        (
-            SELECT *
-            FROM account_info
-        ) AS S2
-        ON S1.fgMemberId=S2.fgMemberId
     </select>
 
     <update id="updateIsAdmin" parameterType="Integer">

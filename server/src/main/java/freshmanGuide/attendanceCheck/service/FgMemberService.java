@@ -9,11 +9,7 @@ public interface FgMemberService {
 
     Boolean postFgMemberInfoService(FgMemberDTO.FgMemberInfoDTO dto);
 
-    Boolean getIsFgMemberInfoCorrectService(FgMemberDTO.FgMemberInfoDTO dto);
-
     Boolean putFgMemberInfoService(FgMemberDTO.PutFgMemberInfoDTO dto);
-
-    List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation);
 
     List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListByGenerationService(Integer generation);
 

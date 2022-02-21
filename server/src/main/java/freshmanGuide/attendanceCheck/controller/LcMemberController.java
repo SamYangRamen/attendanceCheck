@@ -22,25 +22,25 @@ public class LcMemberController {
         this.lcMemberService = lcMemberService;
     }
 
-    @PostMapping("post/lc-member-info")
+    @PostMapping("lc-member-info")
     @ResponseBody
     public Boolean postLcMemberInfoService(@RequestBody LcMemberDTO.LcMemberInfoDTO dto) {
         return lcMemberService.postLcMemberInfoService(dto);
     }
 
-    @GetMapping("get/lc-member-table-info-list-by-search")
+    @GetMapping("lc-member-info/table/search")
     @ResponseBody
     public List<LcMemberDTO.LcMemberTableInfoDTO> getLcMemberTableInfoListBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String department, @RequestParam String gender, @RequestParam String lcMemberName) {
         return lcMemberService.getLcMemberTableInfoListBySearchService(new LcMemberDTO.LcMemberTableInfoDTO(null, year, lc, department, gender, lcMemberName, null));
     }
 
-    @PostMapping("delete/lc-member-info-by-lc-member-id-list")
+    @PostMapping("lc-member-info/lc-member-id")
     @ResponseBody
     public Boolean deleteLcMemberInfoByLcMemberIdList(@RequestBody List<Integer> lcMemberIdList) {
         return lcMemberService.deleteLcMemberInfoByLcMemberIdListService(lcMemberIdList);
     }
 
-    @PutMapping("put/lc-member-info")
+    @PutMapping("lc-member-info")
     @ResponseBody
     public Boolean putLcMemberInfo(@RequestBody LcMemberDTO.PutLcMemberInfoDTO dto) {
         return lcMemberService.putLcMemberInfoService(dto);

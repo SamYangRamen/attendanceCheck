@@ -30,24 +30,6 @@ public class LcServiceImpl implements LcService {
     }
 
     @Override
-    public List<String> getLcListByYearService(Integer year) {
-        try {
-            return lcRepository.getLcListByYear(year);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public List<LcDTO.LcInfoDTO> getLcListInfoByYearService(Integer year) {
-        try {
-            return lcRepository.getLcInfoListByYear(year);
-        } catch(Exception e) {
-            return null;
-        }
-    }
-
-    @Override
     public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearchService(Integer year, String lc, String fgMemberName1, String fgMemberName2) {
         try {
             return lcRepository.getLcListInfoBySearch(new LcDTO.LcSearchInfoDTO(year, lc, fgMemberName1, fgMemberName2));

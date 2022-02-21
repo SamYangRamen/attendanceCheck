@@ -15,8 +15,6 @@ public interface FgMemberMapper {
 
     void updateByFgMemberId(FgMemberDTO.PutFgMemberInfoDTO dto);
 
-    List<FgMemberDTO.FgMemberInfoDTO> findAll();
-
     List<FgMemberDTO.FgMemberInfoDTO> findByGeneration(Integer Generation);
 
     List<FgMemberDTO.FgMemberTableInfoDTO> findFgMemberInfoTableByGeneration(Integer generation);

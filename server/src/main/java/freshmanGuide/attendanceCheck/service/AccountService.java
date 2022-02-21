@@ -10,7 +10,5 @@ public interface AccountService {
 
     AccountDTO.AccountInfoDTO getAccountInfoService(String account);
 
-    Boolean getIsLoginInfoCorrectService(AccountDTO.LoginInfoDTO dto);
-
     Boolean putAccountInfoService(AccountDTO.PutAccountInfoDTO dto);
 }

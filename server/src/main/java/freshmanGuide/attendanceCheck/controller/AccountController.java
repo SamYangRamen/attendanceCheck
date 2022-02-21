@@ -16,25 +16,19 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("post/account-info")
+    @PostMapping("account-info")
     @ResponseBody
     public Boolean postAccountInfo(@RequestBody AccountDTO.AccountInfoDTO dto) {
         return accountService.postAccountInfoService(dto);
     }
 
-    @GetMapping("get/account-info")
+    @GetMapping("account-info")
     @ResponseBody
     public AccountDTO.AccountInfoDTO getAccountInfo(@RequestParam("account") String account) {
         return accountService.getAccountInfoService(account);
     }
 
-    @GetMapping("get/is-login-info-correct")
-    @ResponseBody
-    public Boolean getIsLoginInfoCorrect(AccountDTO.LoginInfoDTO dto) {
-        return accountService.getIsLoginInfoCorrectService(dto);
-    }
-
-    @PutMapping("put/account-info")
+    @PutMapping("account-info")
     @ResponseBody
     public Boolean putAccountInfo(@RequestBody AccountDTO.PutAccountInfoDTO dto) {
         return accountService.putAccountInfoService(dto);

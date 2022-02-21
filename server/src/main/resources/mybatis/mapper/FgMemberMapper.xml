@@ -60,13 +60,6 @@
         ON S1.fgMemberId=S2.fgMemberId
     </select>
 
-    <select id="findAll"
-            resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberInfoDTO"
-    >
-        SELECT *
-        FROM fg_member_info
-    </select>
-
     <select id="findByGenerationAndPositionAndFgMemberName"
             parameterType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberSearchInfoDTO"
             resultType="freshmanGuide.attendanceCheck.DTO.FgMemberDTO$FgMemberSearchInfoDTO">

@@ -10,10 +10,6 @@ public interface LcService {
 
     Boolean postLcRangeService(LcDTO.PostLcRangeDTO dto);
 
-    List<LcDTO.LcInfoDTO> getLcListInfoByYearService(Integer year);
-
-    List<String> getLcListByYearService(Integer year);
-
     List<LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearchService(Integer year, String lc, String fgMemberName1, String fgMemberName2);
 
     Boolean putLcInfoService(LcDTO.PutLcInfoDTO dto);

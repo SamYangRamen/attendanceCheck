@@ -50,10 +50,6 @@ public class FgMemberRepository {
         }
     }
 
-    public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoList() {
-        return fgMemberMapper.findAll();
-    }
-
     public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGeneration(Integer generation) {
         return fgMemberMapper.findByGeneration(generation);
     }

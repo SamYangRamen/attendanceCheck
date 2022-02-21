@@ -32,14 +32,6 @@ public class LcMemberRepository {
         lcMemberMapper.deleteByLcMemberId(lcMemberId);
     }
 
-    public List<LcMemberDTO.LcMemberInfoDTO> getLcMemberInfoList() {
-        return lcMemberMapper.findAll();
-    }
-
-    public List<LcMemberDTO.LcMemberInfoDTO> getLcMemberInfoListByYearAndLc(Integer year, String lc) {
-        return lcMemberMapper.findByYearAndLc(new LcDTO.LcFKDTO(year, lc));
-    }
-
     public List<LcMemberDTO.LcMemberTableInfoDTO> getLcMemberTableInfoListBySearch(LcMemberDTO.LcMemberTableInfoDTO dto) {
         return lcMemberMapper.findByYearAndLcAndDepartmentAndGenderAndLcMemberName(dto);
     }

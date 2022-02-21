@@ -16,11 +16,6 @@
         )
     </insert>
 
-    <select id="findAll" resultType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcInfoDTO">
-        SELECT year, LC, fgMemberId1, fgMemberId2, fgMemberId3, fgMemberId4
-        FROM lc_info
-    </select>
-
     <select id="findLcByYear"
             parameterType="Integer"
             resultType="String"
@@ -28,16 +23,6 @@
         SELECT lc
         FROM lc_info
         WHERE year=${year}
-    </select>
-
-    <select id="findAllByYear"
-            parameterType="Integer"
-            resultType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcInfoDTO"
-    >
-        SELECT year, lc, fgMemberId1, fgMemberId2, fgMemberId3, fgMemberId4
-        FROM lc_info
-        WHERE year=${year}
-        ORDER BY year, lc
     </select>
 
     <delete id="deleteByYearAndLc" parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcFKDTO">

@@ -38,32 +38,6 @@
         WHERE lcMemberId=${lcMemberId}
     </delete>
 
-    <select id="findAll"
-            resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO"
-    >
-        SELECT *
-        FROM lc_member_info
-    </select>
-
-    <select id="findByYearAndLc"
-            parameterType="freshmanGuide.attendanceCheck.DTO.LcDTO$LcFKDTO"
-            resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberInfoDTO"
-    >
-        SELECT lcMemberId, lcMemberName, year, lc, isPearLeader, contact, mail
-        FROM
-        (
-            SELECT *
-            FROM lc_member_info
-        ) AS S1
-        LEFT JOIN
-        (
-            SELECT *
-            FROM lc_info
-            WHERE year=#{year} AND lc=#{lc}
-        ) AS S2
-        ON S1.lcIdx=S2.lcIdx
-    </select>
-
     <select id="findByYearAndLcAndDepartmentAndGenderAndLcMemberName"
             parameterType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberTableInfoDTO"
             resultType="freshmanGuide.attendanceCheck.DTO.LcMemberDTO$LcMemberTableInfoDTO"

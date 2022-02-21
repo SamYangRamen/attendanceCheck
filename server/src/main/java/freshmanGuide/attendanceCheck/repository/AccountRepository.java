@@ -36,10 +36,6 @@ public class AccountRepository {
         return accountMapper.findAccountCheckInfoByFgMemberId(fgMemberId);
     }
 
-    public AccountDTO.AccountCheckInfoDTO getPasswordAndIsAdminAndRegisterApprovalByMail(String mail) {
-        return accountMapper.findAccountCheckInfoByMail(mail);
-    }
-
     public void putIsAdmin(Integer fgMemberId) {
         accountMapper.updateIsAdmin(fgMemberId);
     }

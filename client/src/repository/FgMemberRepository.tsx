@@ -51,39 +51,23 @@ export default class FgMemberRepository {
   }
 
   public postFgMemberInfo(fgMemberInfo: FgMemberInfo): Promise<boolean> {
-    return axios.post(`post/fg-member-info`, fgMemberInfo).then(response => {
-      return response.data;
-    });
-  }
-
-  public getFgMemberInfo(fgMemberId: number): Promise<FgMemberInfo> {
-    return axios.get(`get/fg-member-info?fgMemberId=${fgMemberId}`).then(response => {
+    return axios.post(`fg-member-info`, fgMemberInfo).then(response => {
       return response.data;
     });
   }
 
   public putFgMemberInfo(putFgMememberInfo: PutFgMemberInfo): Promise<boolean> {
-    return axios.put(`put/fg-member-info`, putFgMememberInfo).then(response => {
+    return axios.put(`fg-member-info`, putFgMememberInfo).then(response => {
       return response.data;
     });
-  }
-
-  public getFgMemberInfoListByGeneration(generation: number): Promise<Array<FgMemberInfo>> {
-    return axios
-      .get(`get/fg-member-info-list-by-generation?generation=${generation}`)
-      .then(response => {
-        return response.data;
-      });
   }
 
   public getFgMemberTableInfoListByGeneration(
     generation: number
   ): Promise<Array<FgMemberTableInfo>> {
-    return axios
-      .get(`get/fg-member-info-list-by-generation/table?generation=${generation}`)
-      .then(response => {
-        return response.data;
-      });
+    return axios.get(`fg-member-info/table?generation=${generation}`).then(response => {
+      return response.data;
+    });
   }
 
   public getFgMemberSearchInfoListBySearch(
@@ -93,7 +77,7 @@ export default class FgMemberRepository {
   ): Promise<Array<FgMemberSearchInfo>> {
     return axios
       .get(
-        `get/fg-member-search-info-list-by-search?generation=${generation}&position=${position}&fgMemberName=${fgMemberName}`
+        `fg-member-info/search/search?generation=${generation}&position=${position}&fgMemberName=${fgMemberName}`
       )
       .then(response => {
         return response.data;
@@ -109,7 +93,7 @@ export default class FgMemberRepository {
   ): Promise<Array<FgMemberTableInfo>> {
     return axios
       .get(
-        `get/fg-member-info-list-by-search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
+        `fg-member-info/search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
       )
       .then(response => {
         return response.data;
@@ -117,25 +101,8 @@ export default class FgMemberRepository {
   }
 
   public deletefgMemberInfoByfgMemberIdList(fgMemberIdList: number[]): Promise<boolean> {
-    return axios
-      .post(`delete/fg-member-info-by-fg-member-id-list`, fgMemberIdList)
-      .then(response => {
-        return response.data;
-      });
-  }
-
-  public makeTwoDimArray(data: Array<any>): Array<Array<any>> {
-    // let arr: Array<Array<any>> = [];
-    Object.keys(data[0]).forEach((key, i) => data[0].key);
-    return Array.from({ length: data.length }, (_, i) => Object.values(data[i]));
-    /*
-    for (let i = 0; i < data.length; i++) {
-      arr.push(Object.values(data[i]));
-    }
-
-    data.forEach((value, index) => {
-      Object.keys(data[0]).forEach(k => data[0].k);
+    return axios.post(`fg-member-info/fg-member-id`, fgMemberIdList).then(response => {
+      return response.data;
     });
-    */
   }
 }

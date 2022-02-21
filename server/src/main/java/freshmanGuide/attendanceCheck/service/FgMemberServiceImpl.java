@@ -32,25 +32,8 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public Boolean getIsFgMemberInfoCorrectService(FgMemberDTO.FgMemberInfoDTO dto) {
-        FgMemberDTO.FgMemberInfoDTO insertedData = fgMemberRepository.getFgMemberInfo(dto.getFgMemberId());
-
-        return insertedData == dto ? true : false;
-    }
-
-    @Override
     public Boolean putFgMemberInfoService(FgMemberDTO.PutFgMemberInfoDTO dto) {
         return fgMemberRepository.putFgMemberInfo(dto);
-    }
-
-    @Override
-    public List<FgMemberDTO.FgMemberInfoDTO> getFgMemberInfoListByGenerationService(Integer generation) {
-        try {
-            return fgMemberRepository.getFgMemberInfoListByGeneration(generation);
-        } catch (Exception e) {
-            return null;
-        }
-
     }
 
     @Override

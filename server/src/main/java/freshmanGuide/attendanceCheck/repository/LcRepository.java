@@ -21,15 +21,9 @@ public class LcRepository {
         lcMapper.save(dto);
     }
 
-    public List<LcDTO.LcInfoDTO> getLcInfoList() {
-        return lcMapper.findAll();
-    }
-
     public List<String> getLcListByYear(Integer year) {
         return lcMapper.findLcByYear(year);
     }
-
-    public List<LcDTO.LcInfoDTO> getLcInfoListByYear(Integer year) { return lcMapper.findAllByYear(year); }
 
     public void deleteLcInfo(LcDTO.LcFKDTO dto) {
         lcMapper.deleteByYearAndLc(dto);
