@@ -6,6 +6,7 @@ import { Input, Button, Form } from 'antd';
 import EditableTable, { columnType, DataType } from 'component/table/EditableTable';
 import LcAddComponent from 'component/admin/LcAddComponent';
 import LcTableSearchComponent from 'component/admin/LcTableSearchComponent';
+import ExportExcelComponent from './ExportExcelComponent';
 
 interface Props {
   year: number;
@@ -121,6 +122,9 @@ const LcTableComponent: React.FC<Props> = ({ year }: Props) => {
           <LcTableSearchComponent openYearSearch={openYearSearch} setLcTableInfo={setLcTableInfo}>
             <Button type="primary">검색</Button>
           </LcTableSearchComponent>
+        </Form.Item>
+        <Form.Item>
+          <ExportExcelComponent rowList={lcTableInfo}></ExportExcelComponent>
         </Form.Item>
         <Form.Item style={{ margin: 0 }}>
           <Form layout="inline" initialValues={{ layout: 'inline' }}>

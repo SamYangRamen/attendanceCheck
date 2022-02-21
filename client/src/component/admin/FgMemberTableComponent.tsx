@@ -4,6 +4,7 @@ import { FgMemberTableInfo } from 'repository/FgMemberRepository';
 import useStore from 'store/useStore';
 import EditableTable, { columnType, DataType } from 'component/table/EditableTable';
 import FgMemberTableSearchComponent from './FgMemberTableSearchComponent';
+import ExportExcelComponent from './ExportExcelComponent';
 
 const { Option } = Select;
 
@@ -154,6 +155,9 @@ const FgMemberTableCompnent: React.FC<Props> = ({ generation }: Props) => {
           >
             <Button type="primary">검색</Button>
           </FgMemberTableSearchComponent>
+        </Form.Item>
+        <Form.Item>
+          <ExportExcelComponent rowList={fgMemberTableInfo}></ExportExcelComponent>
         </Form.Item>
         <Form.Item>
           <Form layout="inline" initialValues={{ layout: 'inline' }}>

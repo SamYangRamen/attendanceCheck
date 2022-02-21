@@ -25,7 +25,8 @@
     "react-select": "^5.2.1",
     "sha256": "^0.2.0",
     "typescript": "^4.5.2",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "xlsx": "^0.18.2"
   },
   "scripts": {
     "start": "react-scripts start",

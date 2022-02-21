@@ -6,6 +6,8 @@ import EditableTable, { columnType, DataType } from '../table/EditableTable';
 import LcMemberAddComponent from './LcMemberAddComponent';
 import 'scss/base.scss';
 import LcMemberTableSearchComponent from 'component/common/LcMemberTableSearchComponent';
+import ExportExcelComponent from 'component/admin/ExportExcelComponent';
+import ImportExcelComponent from 'component/admin/ImportExcelComponent';
 
 const { Option } = Select;
 
@@ -71,12 +73,6 @@ const LcMemberTableCompnent: React.FC<Props> = ({ year }: Props) => {
   const lcMemberRepo = repositoryStore.getLcMemberRepository();
   const [lcMemberTableInfo, setLcMemberTableInfo] = useState<DataType[]>([]);
 
-  const [yearSearch, setYearSearch] = useState<number>(0);
-  const [lcSearch, setLcSearch] = useState<string>('');
-  const [departmentSearch, setDepartmentSearch] = useState<string>('');
-  const [genderSearch, setGenderSearch] = useState<string>('');
-  const [lcMemberNameSearch, setLcMemberNameSearch] = useState<string>('');
-
   const [openYearSearch, setOpenYearSearch] = useState<boolean>(false);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<React.Key>>([]);
@@ -90,20 +86,6 @@ const LcMemberTableCompnent: React.FC<Props> = ({ year }: Props) => {
       });
     }
   }, [year]);
-
-  const onSearchClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    lcMemberRepo
-      .getLcMemberTableInfoListBySearch(
-        yearSearch,
-        lcSearch.trim(),
-        departmentSearch.trim(),
-        genderSearch.trim(),
-        lcMemberNameSearch.trim()
-      )
-      .then(response => {
-        setLcMemberTableInfo(response);
-      });
-  };
 
   const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const fgMemberIdList: number[] = selectedRowKeys as number[];
@@ -145,18 +127,22 @@ const LcMemberTableCompnent: React.FC<Props> = ({ year }: Props) => {
           </LcMemberTableSearchComponent>
         </Form.Item>
         <Form.Item>
-          <Form layout="inline" initialValues={{ layout: 'inline' }}>
-            <Form.Item name={'insertLcMember'}>
-              <LcMemberAddComponent>
-                <Button type="primary">추가</Button>
-              </LcMemberAddComponent>
-            </Form.Item>
-            <Form.Item name={'deleteLcMember'}>
-              <Button type="primary" onClick={onDeleteClick} disabled={!selectedRowKeys.length}>
-                삭제
-              </Button>
-            </Form.Item>
-          </Form>
+          <ExportExcelComponent rowList={lcMemberTableInfo}></ExportExcelComponent>
+        </Form.Item>
+        <Form.Item name={'insertLcMember'}>
+          <LcMemberAddComponent>
+            <Button type="primary">추가</Button>
+          </LcMemberAddComponent>
+        </Form.Item>
+        <Form.Item name={'insertLcMemberFromExcel'}>
+          <ImportExcelComponent tableName="lc_member_info">
+            <Button type="primary">엑셀로 추가</Button>
+          </ImportExcelComponent>
+        </Form.Item>
+        <Form.Item name={'deleteLcMember'}>
+          <Button type="primary" onClick={onDeleteClick} disabled={!selectedRowKeys.length}>
+            삭제
+          </Button>
         </Form.Item>
       </Form>
       <br />
