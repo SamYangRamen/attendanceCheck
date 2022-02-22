@@ -44,10 +44,10 @@ public class FgMemberController {
         return fgMemberService.getFgMemberSearchInfoListBySearchService(new FgMemberDTO.FgMemberSearchInfoDTO(null, generation, null, fgMemberName, position));
     }
 
-    @GetMapping("fg-member-info/search")
+    @GetMapping("fg-member-info/table/search")
     @ResponseBody
-    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(@RequestParam Integer fgMemberId, @RequestParam Integer generation, @RequestParam String fgMemberName, @RequestParam String position, @RequestParam String state) {
-        return fgMemberService.getFgMemberInfoListBySearchService(new FgMemberDTO.FgMemberInfoDTO(fgMemberId, generation, fgMemberName, position, state, null, null));
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListBySearch(@RequestParam Integer fgMemberId, @RequestParam Integer generation, @RequestParam String fgMemberName, @RequestParam String position, @RequestParam String state) {
+        return fgMemberService.getFgMemberTableInfoListBySearchService(new FgMemberDTO.FgMemberInfoDTO(fgMemberId, generation, fgMemberName, position, state, null, null));
     }
 
     @PostMapping("fg-member-info/fg-member-id")

@@ -25,7 +25,7 @@ export default class EventRepository {
     });
   }
 
-  public getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
+  public getEventTableInfoOfMonthForCalendar(
     year: number,
     month: number,
     eventType: string
@@ -37,7 +37,7 @@ export default class EventRepository {
       });
   }
 
-  public getEventTableInfoByYearAndMonthAndDayAndEventType(
+  public getEventTableInfoOfDay(
     year: number,
     month: number,
     day: number,

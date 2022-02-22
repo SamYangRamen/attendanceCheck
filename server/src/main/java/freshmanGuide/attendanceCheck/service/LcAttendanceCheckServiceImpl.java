@@ -58,7 +58,7 @@ public class LcAttendanceCheckServiceImpl implements LcAttendanceCheckService {
     @Override
     public Boolean postLcAttendanceCheckInfoService(LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
         try {
-            lcAttendanceCheckRepository.postLcAttendanceCheckTableInfo(dto);
+            lcAttendanceCheckRepository.postLcAttendanceCheckInfo(dto);
             return true;
         } catch(Exception e) {
             return false;
@@ -68,14 +68,14 @@ public class LcAttendanceCheckServiceImpl implements LcAttendanceCheckService {
     @Override
     public Boolean putLcAttendanceCheckInfoService(LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
         try {
-            lcAttendanceCheckRepository.putLcAttendanceCheckTableInfo(dto);
+            lcAttendanceCheckRepository.putLcAttendanceCheckInfo(dto);
             return true;
         } catch(Exception e) {
             try {
                 if(dto.getColumnName() == "state") {
-                    lcAttendanceCheckRepository.postLcAttendanceCheckTableInfo(new LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO(dto.getLcMemberId(), dto.getEventIdx(), Integer.parseInt(dto.getValue()), null));
+                    lcAttendanceCheckRepository.postLcAttendanceCheckInfo(new LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO(dto.getLcMemberId(), dto.getEventIdx(), Integer.parseInt(dto.getValue()), null));
                 } else if(dto.getColumnName() == "note") {
-                    lcAttendanceCheckRepository.postLcAttendanceCheckTableInfo(new LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO(dto.getLcMemberId(), dto.getEventIdx(), null, dto.getValue()));
+                    lcAttendanceCheckRepository.postLcAttendanceCheckInfo(new LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO(dto.getLcMemberId(), dto.getEventIdx(), null, dto.getValue()));
                 } else {
                     return false;
                 }

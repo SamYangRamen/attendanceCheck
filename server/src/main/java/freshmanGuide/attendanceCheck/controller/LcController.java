@@ -28,8 +28,8 @@ public class LcController {
 
     @GetMapping("/lc-info/fg-member-name/search")
     @ResponseBody
-    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcInfoListBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String fgMemberName1, @RequestParam String fgMemberName2) {
-        return lcService.getLcListInfoBySearchService(year, lc, fgMemberName1, fgMemberName2);
+    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcInfoListWithFgMemberNameBySearch(@RequestParam Integer year, @RequestParam String lc, @RequestParam String fgMemberName1, @RequestParam String fgMemberName2) {
+        return lcService.getLcInfoListWithFgMemberNameBySearchService(year, lc, fgMemberName1, fgMemberName2);
     }
 
     @PutMapping("/lc-info")

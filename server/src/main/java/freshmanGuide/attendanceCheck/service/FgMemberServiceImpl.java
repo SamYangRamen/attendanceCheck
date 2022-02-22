@@ -55,9 +55,9 @@ public class FgMemberServiceImpl implements FgMemberService {
     }
 
     @Override
-    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(FgMemberDTO.FgMemberInfoDTO dto) {
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListBySearchService(FgMemberDTO.FgMemberInfoDTO dto) {
         try {
-            return fgMemberRepository.getFgMemberInfoListBySearch(dto);
+            return fgMemberRepository.getFgMemberTableInfoListBySearch(dto);
         } catch (Exception e) {
             return null;
         }

@@ -98,11 +98,7 @@ const EventManageComponent: React.FC<Props> = ({
               selectedDate.month() == eventDate.month()
             ) {
               eventRepo
-                .getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
-                  eventDate.year(),
-                  eventDate.month() + 1,
-                  ''
-                )
+                .getEventTableInfoOfMonthForCalendar(eventDate.year(), eventDate.month() + 1, '')
                 .then(response => {
                   setEventInfoListOfMonth(response);
                 })

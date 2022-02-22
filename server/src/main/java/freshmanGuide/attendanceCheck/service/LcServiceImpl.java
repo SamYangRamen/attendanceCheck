@@ -30,9 +30,9 @@ public class LcServiceImpl implements LcService {
     }
 
     @Override
-    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearchService(Integer year, String lc, String fgMemberName1, String fgMemberName2) {
+    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcInfoListWithFgMemberNameBySearchService(Integer year, String lc, String fgMemberName1, String fgMemberName2) {
         try {
-            return lcRepository.getLcListInfoBySearch(new LcDTO.LcSearchInfoDTO(year, lc, fgMemberName1, fgMemberName2));
+            return lcRepository.getLcInfoListWithFgMemberNameBySearch(new LcDTO.LcSearchInfoDTO(year, lc, fgMemberName1, fgMemberName2));
         } catch (Exception e) {
             return null;
         }

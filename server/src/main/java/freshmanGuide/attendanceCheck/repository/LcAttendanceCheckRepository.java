@@ -69,11 +69,7 @@ public class LcAttendanceCheckRepository {
         lcAttendanceCheckMapper.deleteByLcMemberIdAndEventIdx(dataList);
     }
 
-    public void postLcAttendanceCheckTableInfo(LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
-        lcAttendanceCheckMapper.save(dto);
-    }
-
-    public void putLcAttendanceCheckTableInfo(LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
+    public void putLcAttendanceCheckInfo(LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
         lcAttendanceCheckMapper.updateByLcMemberIdAndEventIdx(dto);
     }
 }

@@ -62,7 +62,7 @@ public class FgMemberRepository {
         return fgMemberMapper.findByGenerationAndPositionAndFgMemberName(dto);
     }
 
-    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearch(FgMemberDTO.FgMemberInfoDTO dto) {
+    public List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListBySearch(FgMemberDTO.FgMemberInfoDTO dto) {
         return fgMemberMapper.findByFgMemberIdAndGenerationAndFgMemberNameAndPositionAndState(dto);
     }
 

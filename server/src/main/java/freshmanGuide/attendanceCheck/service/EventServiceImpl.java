@@ -21,18 +21,18 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendarService(Integer year, Integer month, String eventType) {
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoOfMonthForCalendarService(Integer year, Integer month, String eventType) {
         try {
-            return eventRepository.getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendar(year, month, eventType);
+            return eventRepository.getEventTableInfoOfMonthForCalendar(year, month, eventType);
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventTypeService(Integer year, Integer month, Integer day, String eventType) {
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoOfDayService(Integer year, Integer month, Integer day, String eventType) {
         try {
-            return eventRepository.getEventTableInfoByYearAndMonthAndDayAndEventType(year, month, day, eventType);
+            return eventRepository.getEventTableInfoOfDay(year, month, day, eventType);
         } catch (Exception e) {
             return null;
         }

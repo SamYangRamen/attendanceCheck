@@ -21,14 +21,14 @@ public class EventController {
 
     @GetMapping("/event-info/table/calendar")
     @ResponseBody
-    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendar(@RequestParam Integer year, @RequestParam Integer month, @RequestParam String eventType) {
-        return eventService.getEventTableInfoByYearAndMonthAndDayAndEventTypeForCalendarService(year, month, eventType);
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoOfMonthForCalendar(@RequestParam Integer year, @RequestParam Integer month, @RequestParam String eventType) {
+        return eventService.getEventTableInfoOfMonthForCalendarService(year, month, eventType);
     }
 
     @GetMapping("/event-info/table")
     @ResponseBody
-    public List<EventDTO.EventTableInfoDTO> getEventTableInfoByYearAndMonthAndDayAndEventType(@RequestParam Integer year, @RequestParam Integer month, @RequestParam Integer day, @RequestParam String eventType) {
-        return eventService.getEventTableInfoByYearAndMonthAndDayAndEventTypeService(year, month, day, eventType);
+    public List<EventDTO.EventTableInfoDTO> getEventTableInfoOfDay(@RequestParam Integer year, @RequestParam Integer month, @RequestParam Integer day, @RequestParam String eventType) {
+        return eventService.getEventTableInfoOfDayService(year, month, day, eventType);
     }
 
     @PostMapping("/event-info")

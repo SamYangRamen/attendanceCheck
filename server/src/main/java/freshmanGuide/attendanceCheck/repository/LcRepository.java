@@ -29,7 +29,7 @@ public class LcRepository {
         lcMapper.deleteByYearAndLc(dto);
     }
 
-    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcListInfoBySearch(LcDTO.LcSearchInfoDTO dto) {
+    public List<LcDTO.LcInfoWithFgMemberNameDTO> getLcInfoListWithFgMemberNameBySearch(LcDTO.LcSearchInfoDTO dto) {
         return lcMapper.findByYearAndLcAndFgMemberNames(dto);
     }
 

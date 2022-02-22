@@ -84,7 +84,7 @@ export default class FgMemberRepository {
       });
   }
 
-  public getFgMemberInfoListBySearch(
+  public getFgMemberTableInfoListBySearch(
     fgMemberId: number,
     generation: number,
     fgMemberName: string,
@@ -93,14 +93,14 @@ export default class FgMemberRepository {
   ): Promise<Array<FgMemberTableInfo>> {
     return axios
       .get(
-        `/fg-member-info/search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
+        `/fg-member-info/table/search?fgMemberId=${fgMemberId}&generation=${generation}&fgMemberName=${fgMemberName}&position=${position}&state=${state}`
       )
       .then(response => {
         return response.data;
       });
   }
 
-  public deletefgMemberInfoByfgMemberIdList(fgMemberIdList: number[]): Promise<boolean> {
+  public deleteFgMemberInfoByFgMemberIdList(fgMemberIdList: number[]): Promise<boolean> {
     return axios.post(`/fg-member-info/fg-member-id`, fgMemberIdList).then(response => {
       return response.data;
     });

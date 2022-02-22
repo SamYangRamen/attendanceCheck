@@ -15,7 +15,7 @@ public interface FgMemberService {
 
     List<FgMemberDTO.FgMemberSearchInfoDTO> getFgMemberSearchInfoListBySearchService(FgMemberDTO.FgMemberSearchInfoDTO dto);
 
-    List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberInfoListBySearchService(FgMemberDTO.FgMemberInfoDTO dto);
+    List<FgMemberDTO.FgMemberTableInfoDTO> getFgMemberTableInfoListBySearchService(FgMemberDTO.FgMemberInfoDTO dto);
 
     Boolean deleteFgMemberInfoByFgMemberIdListService(List<Integer> fgMemberIdList);
 }

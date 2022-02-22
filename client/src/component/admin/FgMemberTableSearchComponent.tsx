@@ -30,7 +30,7 @@ const FgMemberTableSearchComponent: React.FC<Props> = ({
 
   const onFinish = (e: React.MouseEvent<HTMLButtonElement>) => {
     fgMemberRepo
-      .getFgMemberInfoListBySearch(
+      .getFgMemberTableInfoListBySearch(
         fgMemberIdSearch,
         generationSearch,
         fgMemberNameSearch.trim(),

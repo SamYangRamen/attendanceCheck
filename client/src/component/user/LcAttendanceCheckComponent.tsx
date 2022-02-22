@@ -39,7 +39,7 @@ const LcAttendanceCheckComponent: React.FC = () => {
 
   useEffect(() => {
     eventRepo
-      .getEventTableInfoByYearAndMonthAndDayAndEventType(
+      .getEventTableInfoOfDay(
         moment(todayString).year(),
         moment(todayString).month() + 1,
         moment(todayString).date(),

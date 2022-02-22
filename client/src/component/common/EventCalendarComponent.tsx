@@ -42,7 +42,7 @@ const EventCalendarComponent: React.FC<Props> = ({ calenderType }: Props) => {
 
   useEffect(() => {
     eventRepo
-      .getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
+      .getEventTableInfoOfMonthForCalendar(
         moment(todayString).year(),
         moment(todayString).month() + 1,
         eventType
@@ -63,7 +63,7 @@ const EventCalendarComponent: React.FC<Props> = ({ calenderType }: Props) => {
       )
     ) {
       eventRepo
-        .getEventTableInfoByYearAndMonthAndEventTypeForCalendar(
+        .getEventTableInfoOfMonthForCalendar(
           moment(selectedDate).year(),
           moment(selectedDate).month() + 1,
           eventType

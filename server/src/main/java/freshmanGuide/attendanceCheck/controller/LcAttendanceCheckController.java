@@ -34,13 +34,13 @@ public class LcAttendanceCheckController {
 
     @PostMapping("/lc-attendance-check-info")
     @ResponseBody
-    public Boolean postLcAttendanceCheckTableInfo(@RequestBody LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
+    public Boolean postLcAttendanceCheckInfo(@RequestBody LcAttendanceCheckDTO.LcAttendanceCheckInfoDTO dto) {
         return lcAttendanceCheckService.postLcAttendanceCheckInfoService(dto);
     }
 
     @PutMapping("/lc-attendance-check-info")
     @ResponseBody
-    public Boolean putLcAttendanceCheckTableInfo(@RequestBody LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
+    public Boolean putLcAttendanceCheckInfo(@RequestBody LcAttendanceCheckDTO.PutLcAttendanceCheckInfoDTO dto) {
         return lcAttendanceCheckService.putLcAttendanceCheckInfoService(dto);
     }
 }

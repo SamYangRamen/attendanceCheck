@@ -118,7 +118,7 @@ const FgMemberTableCompnent: React.FC<Props> = ({ generation }: Props) => {
       alert('삭제할 FG 멤버 정보가 없습니다.');
     } else {
       fgMemberRepo
-        .deletefgMemberInfoByfgMemberIdList(fgMemberIdList)
+        .deleteFgMemberInfoByFgMemberIdList(fgMemberIdList)
         .then(response => {
           setSelectedRowKeys([]);
           if (response) {
