@@ -18,26 +18,32 @@ const UserComponent: React.FC = () => {
 
   return (
     <Layout>
-      <Header>
-        <Menu theme="dark" mode="horizontal">
-          <Menu.Item>
-            <DoubleRightOutlined
-              onClick={e => {
-                setIsDrawerVisible(!isDrawerVisible);
-              }}
-            />
-          </Menu.Item>
-          <Menu.Item key="LcMemberManagement" onClick={onClick}>
-            LC 멤버 관리
-          </Menu.Item>
-          <Menu.Item key="LcAttendanceCheck" onClick={onClick}>
-            LC 출석 체크
-          </Menu.Item>
-          <Menu.Item key="LcAttendanceManagement" onClick={onClick}>
-            LC 출결 관리
-          </Menu.Item>
-        </Menu>
-      </Header>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        selectable={false}
+        style={{ position: 'absolute', width: 54 }}
+      >
+        <Menu.Item
+          key="openDrawerButton"
+          onClick={e => {
+            setIsDrawerVisible(!isDrawerVisible);
+          }}
+        >
+          <DoubleRightOutlined />
+        </Menu.Item>
+      </Menu>
+      <Menu theme="dark" mode="horizontal" selectable={true} style={{ marginLeft: 54 }}>
+        <Menu.Item key="LcMemberManagement" onClick={onClick}>
+          LC 멤버 관리
+        </Menu.Item>
+        <Menu.Item key="LcAttendanceCheck" onClick={onClick}>
+          LC 출석 체크
+        </Menu.Item>
+        <Menu.Item key="LcAttendanceManagement" onClick={onClick}>
+          LC 출결 관리
+        </Menu.Item>
+      </Menu>
       <Content>
         {nav == 'LcMemberManagement' ? (
           <YearForLcMemberSelectComponent

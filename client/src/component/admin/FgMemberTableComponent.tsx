@@ -105,7 +105,7 @@ const FgMemberTableCompnent: React.FC<Props> = ({ generation }: Props) => {
     setOpenGenerationSearch(generation <= 0 ? true : false);
 
     if (generation != -1) {
-      fgMemberRepo.getFgMemberTableInfoListByGeneration(generation).then(response => {
+      fgMemberRepo.getFgMemberTableInfoListBySearch(0, generation, '', '', '').then(response => {
         setFgMemberTableInfo(response);
       });
     }
