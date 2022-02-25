@@ -11,14 +11,14 @@
 1. [서론](#1.-서론)
 2. [본 시스템의 용도](#2.-본-시스템의-용도)
 3. [시스템 설명](#3.-시스템-설명)
-   1. [시스템 아키텍쳐](#3-1.-시스템-아키텍쳐)
-   2. [DB Table Schema](#3-2.-DB-Table-Schema)
-   3. [UX 설계](#3-3.-UX-설계)
-   4. [UI 설계](#3-4.-UI-설계)
-   5. [API 설계](#3-5.-API-설계)
+   1. [시스템 아키텍쳐](#3.1.-시스템-아키텍쳐)
+   2. [DB Table Schema](#3.2.-DB-Table-Schema)
+   3. [UX 설계](#3.3.-UX-설계)
+   4. [UI 설계](#3.4.-UI-설계)
+   5. [API 설계](#3.5.-API-설계)
 4. [시행착오](#4.-시행착오)
-   1. [프론트엔드 개발](#4-1.-프론트엔드-개발)
-   2. [백엔드 개발](#4-2.-백엔드-개발)
+   1. [프론트엔드 개발](#4.1.-프론트엔드-개발)
+   2. [백엔드 개발](#4.2.-백엔드-개발)
 
 부록. [사용 시나리오](#부록.-사용-시나리오)
 
@@ -55,7 +55,7 @@
 
 ### 3. 시스템 설명
 
-#### 3-1. 시스템 아키텍쳐
+#### 3.1. 시스템 아키텍쳐
 
 ![image](https://user-images.githubusercontent.com/53200166/149263675-72e4cdf0-1f95-416c-aff8-fb72da3dc01d.png)
 
@@ -67,7 +67,7 @@
 
 
 
-#### 3-2. DB Table Schema
+#### 3.2. DB Table Schema
 
 ![image](https://user-images.githubusercontent.com/53200166/154897101-2080489a-bfac-461a-b25c-7a5982e4d5ee.png)
 
@@ -106,56 +106,56 @@
 
 
 
-#### 3-3. UX 설계
+#### 3.3. UX 설계
 
 ![image](https://user-images.githubusercontent.com/53200166/154908822-13a5aabe-0677-468f-859d-2afbb966aaf6.png)
 
 
 
-#### 3-4. UI 설계
+#### 3.4. UI 설계
 
 ![image](https://user-images.githubusercontent.com/53200166/155120863-f70a4e6b-db28-460c-9ba9-343019cc5a6c.png)
 
 
 
-#### 3-5. API 설계
+#### 3.5. API 설계
 
 - 불가피한 경우를 제외하고 REST API URI 명명 규칙을 최대한 따르고자 하였음
 - 아래 제목들은 클라이언트에 구현한 Axios 메서드들을 DB 테이블 기준으로 분류해 놓은 클래스들임
 
 
 
-#### 3-5-1. AccountRepository
+#### 3.5.1. AccountRepository
 
 ![image](https://user-images.githubusercontent.com/53200166/155120920-1718b16d-b4b2-4dcd-868f-2abed58fe063.png)
 
 
 
-#### 3-5-2. EventRepository
+#### 3.5.2. EventRepository
 
 ![image](https://user-images.githubusercontent.com/53200166/155120974-3c6bf34d-406e-4ade-b2c4-9941b3215e50.png)
 
 
 
-#### 3-5-3. FgMemberRepository
+#### 3.5.3. FgMemberRepository
 
 ![image](https://user-images.githubusercontent.com/53200166/155121001-a4d99509-e0a6-464e-b5cc-8118c095ba5f.png)
 
 
 
-#### 3-5-4. LcAttendanceCheckRepository
+#### 3.5.4. LcAttendanceCheckRepository
 
 ![image](https://user-images.githubusercontent.com/53200166/155121019-2cd744ac-f5b3-41ae-a802-bc53ed3f35f3.png)
 
 
 
-#### 3-5-5. LcMemberRepository
+#### 3.5.5. LcMemberRepository
 
 ![image](https://user-images.githubusercontent.com/53200166/155121091-162aa1c8-8bb5-4644-afd2-5cef4fb42573.png)
 
 
 
-#### 3-5-6. LcRepository
+#### 3.5.6. LcRepository
 
 ![image](https://user-images.githubusercontent.com/53200166/155121127-a41a5d55-d68f-466c-86a4-d3e8a51f626b.png)
 
@@ -171,7 +171,7 @@
 
 
 
-#### 4-1. 프론트엔드 개발
+#### 4.1. 프론트엔드 개발
 
 ##### Module 'react-router' has no exported member 'switch'
 
@@ -358,7 +358,7 @@ https://stackoverflow.com/questions/70224700/value-prop-does-not-show-data-in-in
 
 
 
-#### 4-2.  백엔드 개발
+#### 4.2. 백엔드 개발
 
 ##### CORS Policy
 
