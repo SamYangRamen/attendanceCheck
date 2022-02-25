@@ -1,71 +1,33 @@
-# Freshman Guide 출석체크 시스템
+## 환경설정
 
 
 
-성균관대학교 내 신입생 교육 목적의 공인 단체 Freshman Guide에서 내부적으로 기존에 사용하던 출석체크 시스템이 뻗어버려서, 이를 대체하는 신규 시스템을 개발하고자 본 프로젝트를 시작하게 되었음
+### Linux에 MariaDB 설치하는 과정
 
+1. 설치
 
+   - `sudo apt-get instrall mariadb-server`
 
-## 개발 과정
+2. 비밀번호 설정 (https://m.blog.naver.com/6116949/221992559683)
 
-### JPA vs MyBatis?
+   1. `sudo mysql`
 
-JPA의 기능이 방대하고 거대한 것 같아서 본 프로젝트에서 사용하기에는 한계가 있는 듯
+   2. 아래 둘 중 하나를 적용
 
-- 구글링 정보만으로는 한계를 느껴서 김영한님의 JPA 프로그래밍 교재를 구매하였음
+      ```
+      update user set plugin='' where User='root';
+      set password = password('777777');
+      flush privileges;
+      ```
 
-- 스프레드시트 프로젝트의 경우 개발하면서 배워나간다는 느낌으로 JPA를 적용하였으나, 이와 달리 본 프로젝트는 당장 구현해서 실사용에 돌입해야 한다는 느낌이 강하므로, 티맥스소프트에서 익숙해져 있던 MyBatis로 변경하기로 함
+      ```
+      set password for 'root'@'localhost' = password('777777');
+      ```
 
+3. DB 편집기
 
+   - DBeaver 21.2.4 (https://dbeaver.io/download/)
 
+4. Linux OS에 MariaDB를 설치했을 때 기본적으로 설정되는 URL
 
-## Trial And Error
-
-
-
-### Errer Message
-
-
-
-#### Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test
-
-[스프링부트 에러\] Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test (tistory.com)](https://jjunii486.tistory.com/172)
-
-`@SpringBootApplication` Annotation이 붙은 클래스가 존재하는 패키지의 하위 패키지에 테스트 코드를 두어야 한다.
-
-
-
-#### 0x7e) was found in the public identifier.
-
-https://stackoverflow.com/questions/2834453/tilde-not-recognised-in-xml-public-identifier
-
-xml 인코딩 문제 때문에 발생한 에러로, `~` 문자를 `%7e` 로 바꾸면 해결된다.
-
-
-
-#### invalid bound statement (not found)
-
-[[Mybatis\]invalid bound statement (not found) 에러 | 두발로걷는개 (twofootdog.github.io)](https://twofootdog.github.io/Mybatis-Invalid-bound-statement(not-found)-에러/)
-
-```javascript
-mybatis.type-aliases-package=mybatis.mapper.mybatis-config.xml
-mybatis.mapper-locations=mybatis.mapper.**.*.xml
-```
-
-경로 중 `**`로 표현되는 부분 때문에 Mapper의 xml 경로를 찾지 못해서 발생하는 문제였다. 아래와 같이 `/`를 사용하여 경로를 나타내주었더니 문제가 해결되었다.
-
-```javascript
-mybatis.type-aliases-package=mybatis/mapper/mybatis-config.xml
-mybatis.mapper-locations=mybatis/mapper/**/*.xml
-```
-
-
-
-### 같은 String끼리 == 연산자로 비교했는데 False가 뜨는 문제
-
-JAVA에서는 두 String을 ==로 비교할 때, 절댓값이 아니라 각 객체의 참조 주소가 같은지를 보는 것이기 때문에 `equals()` 메서드를 통해 String을 비교해야 한다.
-
-```java
-str1.equals(str2) // 같으면 true 반환
-```
-
+   - `jdbc:mysql://localhost:3306/`
