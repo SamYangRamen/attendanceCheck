@@ -63,7 +63,7 @@
 - Back-End : `Spring Boot`, `MyBatis`, `REST API`
 - DB : `MariaDB`
 
-- 형상관리 : `git` (https://github.com/SamYangRamen/attendanceCheck)
+- 형상관리 : `git`
 
 
 
